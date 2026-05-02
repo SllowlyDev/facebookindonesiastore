@@ -2,8 +2,8 @@
 <html lang="id" class="dark">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Admin Dashboard - SllowlyStore</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SllowlyStore - Toko Akun & Tools Digital</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
@@ -28,13 +28,28 @@
     </script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
-        * { font-family: 'Inter', sans-serif; box-sizing: border-box; }
+        * { font-family: 'Inter', sans-serif; }
 
         .glass {
             background: rgba(26, 26, 46, 0.7);
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
             border: 1px solid rgba(139, 92, 246, 0.15);
+        }
+
+        .glass-light {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(139, 92, 246, 0.15);
+        }
+
+        .glow {
+            box-shadow: 0 0 30px rgba(107, 33, 168, 0.3), 0 0 60px rgba(139, 92, 246, 0.1);
+        }
+
+        .glow-hover:hover {
+            box-shadow: 0 0 40px rgba(107, 33, 168, 0.5), 0 0 80px rgba(139, 92, 246, 0.2);
         }
 
         .btn-gradient {
@@ -49,386 +64,368 @@
             100% { background-position: 0% 50%; }
         }
 
-        .sidebar-item {
-            transition: all 0.3s ease;
-        }
-        .sidebar-item:hover, .sidebar-item.active {
-            background: rgba(139, 92, 246, 0.15);
-            border-right: 3px solid #8B5CF6;
+        .card-hover {
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        .stat-card {
-            transition: all 0.3s ease;
-        }
-        .stat-card:hover {
-            transform: translateY(-4px);
+        .card-hover:hover {
+            transform: translateY(-8px) scale(1.02);
         }
 
-        .order-row {
+        .float {
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+
+        .particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: rgba(139, 92, 246, 0.4);
+            border-radius: 50%;
+            animation: particleFloat 15s infinite;
+        }
+
+        @keyframes particleFloat {
+            0%, 100% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { transform: translateY(-100vh) rotate(720deg); opacity: 0; }
+        }
+
+        .shimmer {
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+            background-size: 200% 100%;
+            animation: shimmer 2s infinite;
+        }
+
+        @keyframes shimmer {
+            0% { background-position: -200% 0; }
+            100% { background-position: 200% 0; }
+        }
+
+        .scroll-reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease;
+        }
+
+        .scroll-reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .badge-glow {
+            animation: badgePulse 2s ease-in-out infinite;
+        }
+
+        @keyframes badgePulse {
+            0%, 100% { box-shadow: 0 0 5px rgba(139, 92, 246, 0.5); }
+            50% { box-shadow: 0 0 20px rgba(139, 92, 246, 0.8); }
+        }
+
+        .cart-bounce {
+            animation: cartBounce 0.5s ease;
+        }
+
+        @keyframes cartBounce {
+            0%, 100% { transform: scale(1); }
+            25% { transform: scale(1.3); }
+            50% { transform: scale(0.9); }
+            75% { transform: scale(1.1); }
+        }
+
+        /* Quantity Selector Styles */
+        .qty-btn {
             transition: all 0.2s ease;
         }
-        .order-row:hover {
-            background: rgba(139, 92, 246, 0.05);
+        .qty-btn:active {
+            transform: scale(0.9);
+        }
+        .qty-btn:hover {
+            background: rgba(139, 92, 246, 0.3);
         }
 
-        .tab-btn {
+        .qty-input {
+            -moz-appearance: textfield;
+        }
+        .qty-input::-webkit-outer-spin-button,
+        .qty-input::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+
+        .qty-selector {
             transition: all 0.3s ease;
         }
-        .tab-btn.active {
-            background: rgba(139, 92, 246, 0.2);
-            color: #A78BFA;
-            border-color: #8B5CF6;
+
+        .qty-selector:focus-within {
+            box-shadow: 0 0 20px rgba(139, 92, 246, 0.3);
+            border-color: rgba(139, 92, 246, 0.5);
         }
 
-        .modal-overlay {
-            backdrop-filter: blur(10px);
+        .add-to-cart-anim {
+            animation: addToCartPulse 0.6s ease;
         }
 
-        /* Mobile fixes */
-        @media (max-width: 1024px) {
-            .admin-sidebar {
-                display: none;
-            }
-            .admin-main {
-                margin-left: 0 !important;
-            }
+        @keyframes addToCartPulse {
+            0% { transform: scale(1); }
+            30% { transform: scale(0.95); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
         }
 
-        @media (max-width: 640px) {
-            .stat-grid {
-                grid-template-columns: repeat(2, 1fr) !important;
-            }
-            .stat-card {
-                padding: 1rem !important;
-            }
-            .stat-card .text-2xl {
-                font-size: 1.25rem !important;
-            }
+        .stock-bar {
+            transition: width 0.5s ease;
+        }
+
+        .price-tag {
+            background: linear-gradient(135deg, rgba(107, 33, 168, 0.2), rgba(139, 92, 246, 0.1));
+        }
+
+        /* Product Logo Styles */
+        .product-logo {
+            transition: all 0.3s ease;
+        }
+        .card-hover:hover .product-logo {
+            transform: scale(1.1) rotate(5deg);
+        }
+
+        .product-icon-bg {
+            transition: all 0.4s ease;
+        }
+        .card-hover:hover .product-icon-bg {
+            filter: brightness(1.2);
         }
 
         ::-webkit-scrollbar { width: 8px; }
         ::-webkit-scrollbar-track { background: #0F0F1A; }
         ::-webkit-scrollbar-thumb { background: #6B21A8; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #8B5CF6; }
     </style>
 <base target="_blank">
 </head>
-<body class="bg-dark text-gray-100 min-h-screen">
-    <!-- Login Screen -->
-    <div id="loginScreen" class="fixed inset-0 z-50 flex items-center justify-center bg-dark">
-        <div class="absolute inset-0 bg-gradient-to-br from-purple-900/20 via-transparent to-violet-900/20"></div>
-        <div class="glass rounded-3xl p-8 w-full max-w-sm mx-4 relative z-10">
-            <div class="text-center mb-8">
-                <div class="w-16 h-16 rounded-2xl btn-gradient flex items-center justify-center mx-auto mb-4">
-                    <i class="fas fa-lock text-white text-2xl"></i>
-                </div>
-                <h1 class="text-2xl font-bold text-white">Admin Login</h1>
-                <p class="text-gray-500 mt-1 text-sm">SllowlyStore Dashboard</p>
-            </div>
-            <div class="space-y-4">
-                <div>
-                    <label class="block text-sm text-gray-400 mb-2">Username</label>
-                    <input type="text" id="adminUser" class="w-full px-4 py-3 rounded-xl bg-surface border border-purple-500/20 text-white placeholder-gray-500 focus:outline-none focus:border-purple-500" placeholder="admin">
-                </div>
-                <div>
-                    <label class="block text-sm text-gray-400 mb-2">Password</label>
-                    <div class="relative">
-                        <input type="password" id="adminPass" class="w-full px-4 py-3 rounded-xl bg-surface border border-purple-500/20 text-white placeholder-gray-500 focus:outline-none focus:border-purple-500" placeholder="••••••••">
-                        <button onclick="togglePassword()" class="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500">
-                            <i class="fas fa-eye" id="passIcon"></i>
-                        </button>
-                    </div>
-                </div>
-                <button onclick="login()" class="w-full btn-gradient py-3 rounded-xl text-white font-bold hover:shadow-lg transition-all">
-                    <i class="fas fa-sign-in-alt mr-2"></i>Masuk
-                </button>
-            </div>
-        </div>
-    </div>
+<body class="bg-dark text-gray-100 min-h-screen overflow-x-hidden">
+    <!-- Particles Background -->
+    <div id="particles" class="fixed inset-0 pointer-events-none z-0 overflow-hidden"></div>
 
-    <!-- Dashboard -->
-    <div id="dashboard" class="hidden">
-        <!-- Sidebar (Desktop) -->
-        <aside class="admin-sidebar fixed left-0 top-0 bottom-0 w-64 glass border-r border-purple-500/10 z-40">
-            <div class="p-6">
-                <a href="index.html" class="flex items-center space-x-3 mb-10">
-                    <div class="w-10 h-10 rounded-xl btn-gradient flex items-center justify-center">
-                        <i class="fas fa-bolt text-white"></i>
+    <!-- Header -->
+    <header class="fixed top-0 left-0 right-0 z-50 glass">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <!-- Logo -->
+                <a href="index.html" class="flex items-center space-x-3 group">
+                    <div class="w-10 h-10 rounded-xl btn-gradient flex items-center justify-center transform group-hover:rotate-12 transition-transform duration-300">
+                        <i class="fas fa-bolt text-white text-lg"></i>
                     </div>
-                    <span class="text-lg font-bold text-white">SllowlyStore</span>
+                    <span class="text-xl font-bold bg-gradient-to-r from-purple-400 to-violet-300 bg-clip-text text-transparent">
+                        SllowlyStore
+                    </span>
                 </a>
 
-                <nav class="space-y-2">
-                    <button onclick="showTab('overview')" class="sidebar-item active w-full flex items-center space-x-3 px-4 py-3 rounded-xl text-left" id="tab-overview">
-                        <i class="fas fa-chart-line text-purple-400 w-5"></i>
-                        <span>Overview</span>
-                    </button>
-                    <button onclick="showTab('products')" class="sidebar-item w-full flex items-center space-x-3 px-4 py-3 rounded-xl text-left text-gray-400" id="tab-products">
-                        <i class="fas fa-box text-purple-400 w-5"></i>
-                        <span>Kelola Produk</span>
-                    </button>
-                    <button onclick="showTab('orders')" class="sidebar-item w-full flex items-center space-x-3 px-4 py-3 rounded-xl text-left text-gray-400" id="tab-orders">
-                        <i class="fas fa-shopping-bag text-purple-400 w-5"></i>
-                        <span>Daftar Pesanan</span>
-                    </button>
-                    <a href="index.html" class="sidebar-item w-full flex items-center space-x-3 px-4 py-3 rounded-xl text-left text-gray-400">
-                        <i class="fas fa-store text-purple-400 w-5"></i>
-                        <span>Lihat Toko</span>
+                <!-- Navigation -->
+                <nav class="hidden md:flex items-center space-x-1">
+                    <a href="#products" class="px-4 py-2 rounded-xl text-sm font-medium text-purple-300 hover:text-white hover:bg-purple-500/20 transition-all duration-300">
+                        <i class="fas fa-box mr-2"></i>Produk
+                    </a>
+                    <a href="invoice-status.html" class="px-4 py-2 rounded-xl text-sm font-medium text-gray-400 hover:text-white hover:bg-purple-500/20 transition-all duration-300">
+                        <i class="fas fa-search mr-2"></i>Cek Pesanan
+                    </a>
+                    <a href="admin.html" class="px-4 py-2 rounded-xl text-sm font-medium text-gray-400 hover:text-white hover:bg-purple-500/20 transition-all duration-300">
+                        <i class="fas fa-cog mr-2"></i>Admin
                     </a>
                 </nav>
-            </div>
 
-            <div class="absolute bottom-0 left-0 right-0 p-6">
-                <button onclick="logout()" class="w-full flex items-center justify-center space-x-2 px-4 py-3 rounded-xl glass hover:bg-red-500/20 text-red-400 transition-all">
-                    <i class="fas fa-sign-out-alt"></i>
-                    <span>Keluar</span>
-                </button>
-            </div>
-        </aside>
-
-        <!-- Mobile Header -->
-        <header class="lg:hidden fixed top-0 left-0 right-0 z-30 glass">
-            <div class="flex items-center justify-between px-4 h-14">
+                <!-- Right Side -->
                 <div class="flex items-center space-x-3">
-                    <div class="w-8 h-8 rounded-lg btn-gradient flex items-center justify-center">
-                        <i class="fas fa-bolt text-white text-sm"></i>
-                    </div>
-                    <span class="font-bold text-white">Admin</span>
-                </div>
-                <div class="flex items-center space-x-2">
-                    <button id="themeToggle" class="w-9 h-9 rounded-lg glass flex items-center justify-center">
-                        <i class="fas fa-sun text-yellow-400 text-sm" id="themeIcon"></i>
+                    <!-- Dark Mode Toggle -->
+                    <button id="themeToggle" class="w-10 h-10 rounded-xl glass flex items-center justify-center hover:bg-purple-500/20 transition-all duration-300 group">
+                        <i class="fas fa-sun text-yellow-400 group-hover:rotate-180 transition-transform duration-500" id="themeIcon"></i>
                     </button>
-                    <button onclick="logout()" class="text-red-400 px-3 py-1 rounded-lg glass text-sm">
-                        <i class="fas fa-sign-out-alt"></i>
-                    </button>
-                </div>
-            </div>
-        </header>
 
-        <!-- Mobile Nav -->
-        <nav class="lg:hidden fixed bottom-0 left-0 right-0 z-30 glass border-t border-purple-500/10">
-            <div class="flex items-center justify-around py-2">
-                <button onclick="showTab('overview')" class="flex flex-col items-center py-2 px-4 text-purple-300" id="mobile-tab-overview">
-                    <i class="fas fa-chart-line text-lg mb-1"></i>
-                    <span class="text-[10px]">Overview</span>
-                </button>
-                <button onclick="showTab('products')" class="flex flex-col items-center py-2 px-4 text-gray-500" id="mobile-tab-products">
-                    <i class="fas fa-box text-lg mb-1"></i>
-                    <span class="text-[10px]">Produk</span>
-                </button>
-                <button onclick="showTab('orders')" class="flex flex-col items-center py-2 px-4 text-gray-500" id="mobile-tab-orders">
-                    <i class="fas fa-shopping-bag text-lg mb-1"></i>
-                    <span class="text-[10px]">Pesanan</span>
-                </button>
-            </div>
-        </nav>
+                    <!-- Cart -->
+                    <a href="checkout.html" class="relative w-10 h-10 rounded-xl glass flex items-center justify-center hover:bg-purple-500/20 transition-all duration-300 group" id="cartBtn">
+                        <i class="fas fa-shopping-cart text-purple-300 group-hover:text-white transition-colors"></i>
+                        <span id="cartCount" class="absolute -top-1 -right-1 w-5 h-5 rounded-full bg-gradient-to-r from-red-500 to-pink-500 text-xs flex items-center justify-center font-bold text-white hidden">0</span>
+                    </a>
 
-        <!-- Main Content -->
-        <main class="admin-main lg:ml-64 pt-14 lg:pt-0 pb-20 lg:pb-12 px-4 sm:px-6 lg:px-8">
-            <div class="max-w-7xl mx-auto py-6 lg:py-8">
-                <!-- Header -->
-                <div class="flex items-center justify-between mb-6 lg:mb-8">
-                    <div>
-                        <h1 class="text-xl lg:text-2xl font-bold text-white" id="pageTitle">Dashboard Overview</h1>
-                        <p class="text-gray-500 text-sm mt-1">Kelola toko Anda dengan mudah</p>
-                    </div>
-                    <button id="themeToggleDesktop" class="hidden lg:flex w-10 h-10 rounded-xl glass items-center justify-center hover:bg-purple-500/20 transition-all">
-                        <i class="fas fa-sun text-yellow-400" id="themeIconDesktop"></i>
+                    <!-- Mobile Menu -->
+                    <button id="mobileMenuBtn" class="md:hidden w-10 h-10 rounded-xl glass flex items-center justify-center">
+                        <i class="fas fa-bars text-purple-300"></i>
                     </button>
                 </div>
-
-                <!-- Overview Tab -->
-                <div id="content-overview" class="space-y-6">
-                    <!-- Stats -->
-                    <div class="stat-grid grid grid-cols-2 lg:grid-cols-4 gap-3 lg:gap-4">
-                        <div class="stat-card glass rounded-2xl p-4 lg:p-5">
-                            <div class="flex items-center justify-between mb-2">
-                                <div class="w-8 h-8 lg:w-10 lg:h-10 rounded-xl bg-purple-500/20 flex items-center justify-center">
-                                    <i class="fas fa-shopping-bag text-purple-400 text-sm lg:text-base"></i>
-                                </div>
-                                <span class="text-xs text-green-400 bg-green-500/10 px-2 py-1 rounded-full">+12%</span>
-                            </div>
-                            <div class="text-xl lg:text-2xl font-bold text-white" id="statTotalOrders">0</div>
-                            <div class="text-xs lg:text-sm text-gray-500">Total Pesanan</div>
-                        </div>
-                        <div class="stat-card glass rounded-2xl p-4 lg:p-5">
-                            <div class="flex items-center justify-between mb-2">
-                                <div class="w-8 h-8 lg:w-10 lg:h-10 rounded-xl bg-green-500/20 flex items-center justify-center">
-                                    <i class="fas fa-check-circle text-green-400 text-sm lg:text-base"></i>
-                                </div>
-                                <span class="text-xs text-green-400 bg-green-500/10 px-2 py-1 rounded-full">+8%</span>
-                            </div>
-                            <div class="text-xl lg:text-2xl font-bold text-white" id="statSuccess">0</div>
-                            <div class="text-xs lg:text-sm text-gray-500">Terverifikasi</div>
-                        </div>
-                        <div class="stat-card glass rounded-2xl p-4 lg:p-5">
-                            <div class="flex items-center justify-between mb-2">
-                                <div class="w-8 h-8 lg:w-10 lg:h-10 rounded-xl bg-yellow-500/20 flex items-center justify-center">
-                                    <i class="fas fa-clock text-yellow-400 text-sm lg:text-base"></i>
-                                </div>
-                                <span class="text-xs text-yellow-400 bg-yellow-500/10 px-2 py-1 rounded-full" id="statPendingBadge">0</span>
-                            </div>
-                            <div class="text-xl lg:text-2xl font-bold text-white" id="statPending">0</div>
-                            <div class="text-xs lg:text-sm text-gray-500">Menunggu</div>
-                        </div>
-                        <div class="stat-card glass rounded-2xl p-4 lg:p-5">
-                            <div class="flex items-center justify-between mb-2">
-                                <div class="w-8 h-8 lg:w-10 lg:h-10 rounded-xl bg-blue-500/20 flex items-center justify-center">
-                                    <i class="fas fa-money-bill-wave text-blue-400 text-sm lg:text-base"></i>
-                                </div>
-                            </div>
-                            <div class="text-xl lg:text-2xl font-bold text-white" id="statRevenue">Rp0</div>
-                            <div class="text-xs lg:text-sm text-gray-500">Pendapatan</div>
-                        </div>
-                    </div>
-
-                    <!-- Recent Orders -->
-                    <div class="glass rounded-2xl lg:rounded-3xl p-4 lg:p-6">
-                        <div class="flex items-center justify-between mb-4">
-                            <h2 class="text-base lg:text-lg font-bold">Pesanan Terbaru</h2>
-                            <button onclick="showTab('orders')" class="text-sm text-purple-400 hover:text-purple-300">
-                                Lihat Semua <i class="fas fa-arrow-right ml-1"></i>
-                            </button>
-                        </div>
-                        <div class="overflow-x-auto">
-                            <table class="w-full min-w-[600px]">
-                                <thead>
-                                    <tr class="text-left text-gray-500 text-xs lg:text-sm border-b border-purple-500/10">
-                                        <th class="pb-3 font-medium pr-4">Invoice</th>
-                                        <th class="pb-3 font-medium pr-4">Pelanggan</th>
-                                        <th class="pb-3 font-medium pr-4">Produk</th>
-                                        <th class="pb-3 font-medium pr-4">Total</th>
-                                        <th class="pb-3 font-medium pr-4">Status</th>
-                                        <th class="pb-3 font-medium">Tanggal</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="recentOrdersTable" class="text-xs lg:text-sm"></tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Products Tab -->
-                <div id="content-products" class="hidden space-y-4">
-                    <div class="glass rounded-2xl lg:rounded-3xl p-4 lg:p-6">
-                        <h2 class="text-base lg:text-lg font-bold mb-4">Kelola Produk & Stok</h2>
-                        <div id="adminProductList" class="space-y-3"></div>
-                    </div>
-                </div>
-
-                <!-- Orders Tab -->
-                <div id="content-orders" class="hidden space-y-4">
-                    <!-- Filter Tabs -->
-                    <div class="flex flex-wrap gap-2">
-                        <button onclick="filterOrders('all')" class="tab-btn active px-3 py-2 rounded-xl glass border border-purple-500/20 text-sm font-medium" data-filter="all">
-                            <i class="fas fa-list mr-1"></i> Semua
-                        </button>
-                        <button onclick="filterOrders('diproses')" class="tab-btn px-3 py-2 rounded-xl glass border border-purple-500/20 text-sm font-medium text-gray-400" data-filter="diproses">
-                            <i class="fas fa-clock mr-1"></i> Diproses
-                        </button>
-                        <button onclick="filterOrders('berhasil')" class="tab-btn px-3 py-2 rounded-xl glass border border-purple-500/20 text-sm font-medium text-gray-400" data-filter="berhasil">
-                            <i class="fas fa-check mr-1"></i> Berhasil
-                        </button>
-                        <button onclick="filterOrders('ditolak')" class="tab-btn px-3 py-2 rounded-xl glass border border-purple-500/20 text-sm font-medium text-gray-400" data-filter="ditolak">
-                            <i class="fas fa-times mr-1"></i> Ditolak
-                        </button>
-                    </div>
-
-                    <!-- Verification Stats -->
-                    <div class="grid grid-cols-2 lg:grid-cols-4 gap-3">
-                        <div class="glass rounded-xl p-3">
-                            <div class="flex items-center justify-between mb-1">
-                                <div class="w-7 h-7 rounded-lg bg-yellow-500/20 flex items-center justify-center">
-                                    <i class="fas fa-clock text-yellow-400 text-xs"></i>
-                                </div>
-                                <span class="text-xs text-yellow-400 bg-yellow-500/10 px-2 py-0.5 rounded-full" id="pendingCount">0</span>
-                            </div>
-                            <div class="text-base font-bold text-white">Menunggu</div>
-                            <div class="text-xs text-gray-500">Verifikasi</div>
-                        </div>
-                        <div class="glass rounded-xl p-3">
-                            <div class="flex items-center justify-between mb-1">
-                                <div class="w-7 h-7 rounded-lg bg-green-500/20 flex items-center justify-center">
-                                    <i class="fas fa-check text-green-400 text-xs"></i>
-                                </div>
-                                <span class="text-xs text-green-400 bg-green-500/10 px-2 py-0.5 rounded-full" id="verifiedCount">0</span>
-                            </div>
-                            <div class="text-base font-bold text-white">Terverifikasi</div>
-                            <div class="text-xs text-gray-500">Diterima</div>
-                        </div>
-                        <div class="glass rounded-xl p-3">
-                            <div class="flex items-center justify-between mb-1">
-                                <div class="w-7 h-7 rounded-lg bg-red-500/20 flex items-center justify-center">
-                                    <i class="fas fa-times text-red-400 text-xs"></i>
-                                </div>
-                                <span class="text-xs text-red-400 bg-red-500/10 px-2 py-0.5 rounded-full" id="rejectedCount">0</span>
-                            </div>
-                            <div class="text-base font-bold text-white">Ditolak</div>
-                            <div class="text-xs text-gray-500">Dibatalkan</div>
-                        </div>
-                        <div class="glass rounded-xl p-3">
-                            <div class="flex items-center justify-between mb-1">
-                                <div class="w-7 h-7 rounded-lg bg-blue-500/20 flex items-center justify-center">
-                                    <i class="fas fa-money-bill-wave text-blue-400 text-xs"></i>
-                                </div>
-                                <span class="text-xs text-blue-400 bg-blue-500/10 px-2 py-0.5 rounded-full" id="totalRevenue">Rp0</span>
-                            </div>
-                            <div class="text-base font-bold text-white">Pendapatan</div>
-                            <div class="text-xs text-gray-500">Terverifikasi</div>
-                        </div>
-                    </div>
-
-                    <div class="glass rounded-2xl lg:rounded-3xl p-4 lg:p-6">
-                        <div class="flex items-center justify-between mb-4">
-                            <h3 class="font-bold text-white text-sm lg:text-base flex items-center gap-2">
-                                <i class="fas fa-clipboard-check text-purple-400"></i>
-                                Verifikasi Transaksi
-                            </h3>
-                        </div>
-                        <div class="overflow-x-auto">
-                            <table class="w-full min-w-[700px]">
-                                <thead>
-                                    <tr class="text-left text-gray-500 text-xs lg:text-sm border-b border-purple-500/10">
-                                        <th class="pb-3 font-medium pr-4">Invoice</th>
-                                        <th class="pb-3 font-medium pr-4">Pelanggan</th>
-                                        <th class="pb-3 font-medium pr-4">Produk</th>
-                                        <th class="pb-3 font-medium pr-4">Total</th>
-                                        <th class="pb-3 font-medium pr-4">Status</th>
-                                        <th class="pb-3 font-medium pr-4">Bukti</th>
-                                        <th class="pb-3 font-medium">Aksi</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="allOrdersTable" class="text-xs lg:text-sm"></tbody>
-                            </table>
-                        </div>
-                        <div id="noOrdersMsg" class="hidden text-center py-8">
-                            <i class="fas fa-inbox text-3xl text-gray-600 mb-3"></i>
-                            <p class="text-gray-500 text-sm">Tidak ada pesanan</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </main>
-    </div>
-
-    <!-- Order Detail Modal -->
-    <div id="orderModal" class="fixed inset-0 z-50 hidden">
-        <div class="modal-overlay absolute inset-0 bg-black/60" onclick="closeOrderModal()"></div>
-        <div class="absolute inset-0 flex items-center justify-center p-4">
-            <div class="glass rounded-2xl p-5 w-full max-w-md max-h-[90vh] overflow-y-auto relative">
-                <button onclick="closeOrderModal()" class="absolute top-3 right-3 w-8 h-8 rounded-full glass flex items-center justify-center">
-                    <i class="fas fa-times text-gray-400"></i>
-                </button>
-                <div id="modalContent"></div>
             </div>
         </div>
-    </div>
+
+        <!-- Mobile Menu -->
+        <div id="mobileMenu" class="md:hidden hidden glass border-t border-purple-500/10">
+            <div class="px-4 py-3 space-y-2">
+                <a href="#products" class="block px-4 py-2 rounded-xl text-sm font-medium text-purple-300 bg-purple-500/10">
+                    <i class="fas fa-box mr-2"></i>Produk
+                </a>
+                <a href="invoice-status.html" class="block px-4 py-2 rounded-xl text-sm font-medium text-gray-400 hover:bg-purple-500/10 hover:text-white transition-all">
+                    <i class="fas fa-search mr-2"></i>Cek Pesanan
+                </a>
+                <a href="admin.html" class="block px-4 py-2 rounded-xl text-sm font-medium text-gray-400 hover:bg-purple-500/10 hover:text-white transition-all">
+                    <i class="fas fa-cog mr-2"></i>Admin
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="relative pt-32 pb-20 px-4 sm:px-6 lg:px-8 overflow-hidden">
+        <div class="absolute inset-0 bg-gradient-to-b from-purple-900/20 via-transparent to-transparent"></div>
+        <div class="max-w-7xl mx-auto relative z-10">
+            <div class="text-center">
+                <div class="inline-flex items-center px-4 py-2 rounded-full glass mb-6 badge-glow">
+                    <span class="w-2 h-2 rounded-full bg-green-400 mr-2 animate-pulse"></span>
+                    <span class="text-sm text-purple-300">Toko Digital Terpercaya</span>
+                </div>
+                <h1 class="text-4xl sm:text-5xl lg:text-7xl font-extrabold mb-6 leading-tight">
+                    <span class="bg-gradient-to-r from-purple-400 via-violet-300 to-purple-500 bg-clip-text text-transparent">
+                        Akun & Tools
+                    </span>
+                    <br>
+                    <span class="text-white">Berkualitas Tinggi</span>
+                </h1>
+                <p class="text-lg sm:text-xl text-gray-400 max-w-2xl mx-auto mb-10 leading-relaxed">
+                    Jual beli akun Facebook, Gmail, dan tools otomatis dengan harga terjangkau. 
+                    Proses cepat, aman, dan terpercaya.
+                </p>
+                <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+                    <a href="#products" class="btn-gradient px-8 py-4 rounded-full text-white font-semibold text-lg hover:shadow-lg hover:shadow-purple-500/30 transition-all duration-300 transform hover:scale-105">
+                        <i class="fas fa-shopping-bag mr-2"></i>Lihat Produk
+                    </a>
+                    <a href="invoice-status.html" class="glass px-8 py-4 rounded-full text-purple-300 font-semibold text-lg hover:bg-purple-500/20 transition-all duration-300 border border-purple-500/30">
+                        <i class="fas fa-search mr-2"></i>Cek Pesanan
+                    </a>
+                </div>
+
+                <!-- Stats -->
+                <div class="mt-16 grid grid-cols-2 sm:grid-cols-4 gap-6 max-w-3xl mx-auto">
+                    <div class="glass rounded-2xl p-4 float" style="animation-delay: 0s;">
+                        <div class="text-2xl font-bold text-purple-400">500+</div>
+                        <div class="text-sm text-gray-500">Produk Terjual</div>
+                    </div>
+                    <div class="glass rounded-2xl p-4 float" style="animation-delay: 0.5s;">
+                        <div class="text-2xl font-bold text-purple-400">99%</div>
+                        <div class="text-sm text-gray-500">Pelanggan Puas</div>
+                    </div>
+                    <div class="glass rounded-2xl p-4 float" style="animation-delay: 1s;">
+                        <div class="text-2xl font-bold text-purple-400">24/7</div>
+                        <div class="text-sm text-gray-500">Layanan Support</div>
+                    </div>
+                    <div class="glass rounded-2xl p-4 float" style="animation-delay: 1.5s;">
+                        <div class="text-2xl font-bold text-purple-400">100%</div>
+                        <div class="text-sm text-gray-500">Aman & Terpercaya</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Products Section - ETALASE LANGSUNG DI LANDING PAGE -->
+    <section id="products" class="py-20 px-4 sm:px-6 lg:px-8">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-16 scroll-reveal">
+                <div class="inline-flex items-center px-4 py-2 rounded-full glass mb-4 badge-glow">
+                    <i class="fas fa-fire text-orange-400 mr-2"></i>
+                    <span class="text-sm text-purple-300">Produk Unggulan</span>
+                </div>
+                <h2 class="text-3xl sm:text-4xl font-bold mb-4">
+                    <span class="bg-gradient-to-r from-purple-400 to-violet-300 bg-clip-text text-transparent">Etalase Produk</span>
+                </h2>
+                <p class="text-gray-400 max-w-xl mx-auto">Pilih produk dan atur jumlah yang diinginkan. Klik tombol + untuk menambah ke keranjang.</p>
+            </div>
+
+            <!-- Product Grid with Color-Matching Logos -->
+            <div id="productGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                <!-- Products rendered here with color-matching logos -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="py-20 px-4 sm:px-6 lg:px-8">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-16 scroll-reveal">
+                <h2 class="text-3xl sm:text-4xl font-bold mb-4">
+                    <span class="bg-gradient-to-r from-purple-400 to-violet-300 bg-clip-text text-transparent">Mengapa Memilih Kami?</span>
+                </h2>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="glass rounded-3xl p-8 card-hover scroll-reveal">
+                    <div class="w-16 h-16 rounded-2xl btn-gradient flex items-center justify-center mb-6">
+                        <i class="fas fa-shield-alt text-white text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3 text-white">Aman & Terpercaya</h3>
+                    <p class="text-gray-400 leading-relaxed">Semua transaksi dilindungi dengan sistem verifikasi bukti transfer. Garansi uang kembali jika produk bermasalah.</p>
+                </div>
+                <div class="glass rounded-3xl p-8 card-hover scroll-reveal">
+                    <div class="w-16 h-16 rounded-2xl btn-gradient flex items-center justify-center mb-6">
+                        <i class="fas fa-bolt text-white text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3 text-white">Proses Cepat</h3>
+                    <p class="text-gray-400 leading-relaxed">Pesanan diproses dalam hitungan menit setelah pembayaran dikonfirmasi. Tidak perlu menunggu lama.</p>
+                </div>
+                <div class="glass rounded-3xl p-8 card-hover scroll-reveal">
+                    <div class="w-16 h-16 rounded-2xl btn-gradient flex items-center justify-center mb-6">
+                        <i class="fas fa-headset text-white text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3 text-white">Support 24/7</h3>
+                    <p class="text-gray-400 leading-relaxed">Tim support kami siap membantu kapan saja melalui WhatsApp. Respon cepat dan ramah.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="border-t border-purple-500/10 py-12 px-4 sm:px-6 lg:px-8 mt-20">
+        <div class="max-w-7xl mx-auto">
+            <div class="flex flex-col md:flex-row items-center justify-between gap-6">
+                <div class="flex items-center space-x-3">
+                    <div class="w-10 h-10 rounded-xl btn-gradient flex items-center justify-center">
+                        <i class="fas fa-bolt text-white text-lg"></i>
+                    </div>
+                    <div>
+                        <span class="text-lg font-bold text-white">SllowlyStore</span>
+                        <p class="text-sm text-gray-500">Toko Digital Terpercaya</p>
+                    </div>
+                </div>
+                <div class="flex items-center space-x-6 text-sm text-gray-500">
+                    <span>© 2024 SllowlyStore. All rights reserved.</span>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <a href="#" class="w-10 h-10 rounded-xl glass flex items-center justify-center hover:bg-purple-500/20 transition-all">
+                        <i class="fab fa-whatsapp text-green-400"></i>
+                    </a>
+                    <a href="#" class="w-10 h-10 rounded-xl glass flex items-center justify-center hover:bg-purple-500/20 transition-all">
+                        <i class="fab fa-telegram text-blue-400"></i>
+                    </a>
+                    <a href="#" class="w-10 h-10 rounded-xl glass flex items-center justify-center hover:bg-purple-500/20 transition-all">
+                        <i class="fab fa-instagram text-pink-400"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
 
     <script src="script.js"></script>
     <script>
+        // Initialize index page with quantity selector and color-matching logos
         document.addEventListener('DOMContentLoaded', () => {
             initTheme();
-            checkAdminLogin();
+            initData();
+            renderProductsWithQty();
+            updateCartCount();
+            initParticles();
+            initScrollReveal();
+            initMobileMenu();
         });
     </script>
 </body>
