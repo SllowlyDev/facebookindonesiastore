@@ -326,6 +326,48 @@
                 <!-- Settings Tab -->
                 <div id="tab-settings" class="tab-content hidden">
                     <div class="max-w-2xl">
+                        <!-- WhatsApp Settings -->
+                        <div class="bg-white dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700 p-6 mb-6">
+                            <div class="flex items-center space-x-3 mb-6">
+                                <div class="w-10 h-10 rounded-xl bg-green-100 dark:bg-green-900/30 flex items-center justify-center">
+                                    <i class="fab fa-whatsapp text-green-600 dark:text-green-400 text-xl"></i>
+                                </div>
+                                <div>
+                                    <h3 class="font-bold text-lg">Pengaturan WhatsApp</h3>
+                                    <p class="text-sm text-gray-500">Nomor untuk notifikasi order customer</p>
+                                </div>
+                            </div>
+
+                            <div class="space-y-4">
+                                <div>
+                                    <label class="block text-sm font-medium mb-2">Nomor WhatsApp Admin <span class="text-red-500">*</span></label>
+                                    <div class="relative">
+                                        <span class="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 font-medium">+62</span>
+                                        <input type="tel" id="waNumber" class="w-full pl-14 pr-4 py-3 rounded-xl border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 focus:outline-none focus:border-primary font-mono text-lg" placeholder="81234567890" maxlength="13">
+                                    </div>
+                                    <p class="text-xs text-gray-500 mt-2">
+                                        <i class="fas fa-info-circle mr-1"></i>
+                                        Format: 81234567890 (tanpa awalan 0)
+                                    </p>
+                                </div>
+
+                                <div class="p-4 bg-gray-50 dark:bg-gray-900 rounded-xl">
+                                    <p class="text-sm font-medium mb-2">Preview Link WhatsApp:</p>
+                                    <code id="waPreview" class="text-xs text-primary break-all">https://wa.me/62...</code>
+                                </div>
+                            </div>
+
+                            <div class="flex space-x-3 mt-6">
+                                <button onclick="saveWASettings()" class="flex-1 btn-primary py-3 rounded-xl text-white font-semibold">
+                                    <i class="fas fa-save mr-2"></i> Simpan Nomor
+                                </button>
+                                <button onclick="testWA()" class="px-6 py-3 rounded-xl border-2 border-green-500 text-green-600 font-semibold hover:bg-green-50 transition-all">
+                                    <i class="fab fa-whatsapp mr-2"></i> Test
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Store Settings -->
                         <div class="bg-white dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700 p-6 mb-6">
                             <h3 class="font-bold text-lg mb-6">Pengaturan Toko</h3>
                             <div class="space-y-4">
@@ -334,19 +376,16 @@
                                     <input type="text" id="storeName" class="w-full px-4 py-3 rounded-xl border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 focus:outline-none focus:border-primary" value="SllowlyStore">
                                 </div>
                                 <div>
-                                    <label class="block text-sm font-medium mb-2">Nomor WhatsApp Admin</label>
-                                    <input type="text" id="storePhone" class="w-full px-4 py-3 rounded-xl border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 focus:outline-none focus:border-primary" value="082123829824">
-                                </div>
-                                <div>
                                     <label class="block text-sm font-medium mb-2">Email Admin</label>
                                     <input type="email" id="storeEmail" class="w-full px-4 py-3 rounded-xl border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 focus:outline-none focus:border-primary" value="admin@sllowlystore.com">
                                 </div>
                             </div>
-                            <button onclick="saveSettings()" class="mt-6 btn-primary px-6 py-3 rounded-xl text-white font-semibold">
+                            <button onclick="saveStoreSettings()" class="mt-6 btn-primary px-6 py-3 rounded-xl text-white font-semibold">
                                 <i class="fas fa-save mr-2"></i> Simpan Pengaturan
                             </button>
                         </div>
 
+                        <!-- Danger Zone -->
                         <div class="bg-white dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700 p-6">
                             <h3 class="font-bold text-lg mb-4 text-red-500">Zona Berbahaya</h3>
                             <div class="space-y-4">
@@ -392,6 +431,18 @@
         document.addEventListener('DOMContentLoaded', function() {
             initDarkMode();
             checkLogin();
+
+            // WA number input listener
+            const waInput = document.getElementById('waNumber');
+            if (waInput) {
+                waInput.addEventListener('input', function() {
+                    let val = this.value.replace(/\D/g, '');
+                    if (val.startsWith('0')) val = val.substring(1);
+                    if (val.startsWith('62')) val = val.substring(2);
+                    this.value = val.substring(0, 13);
+                    updateWAPreview(val);
+                });
+            }
         });
 
         function checkLogin() {
@@ -492,6 +543,7 @@
             if (tab === 'dashboard') updateDashboard();
             if (tab === 'orders') renderOrdersTable();
             if (tab === 'products') renderProductsTable();
+            if (tab === 'settings') loadWASettings();
         }
 
         function updateDashboard() {
@@ -875,7 +927,62 @@
             });
         }
 
-        function saveSettings() {
+        // WhatsApp Settings Functions
+        function loadWASettings() {
+            const saved = localStorage.getItem('sllowly_wa_number');
+            const input = document.getElementById('waNumber');
+            if (saved && input) {
+                input.value = saved;
+                updateWAPreview(saved);
+            }
+        }
+
+        function updateWAPreview(number) {
+            const preview = document.getElementById('waPreview');
+            if (preview && number) {
+                preview.textContent = `https://wa.me/62${number}`;
+            }
+        }
+
+        function saveWASettings() {
+            const number = document.getElementById('waNumber').value.trim().replace(/\D/g, '');
+
+            if (!number || number.length < 10) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Nomor Tidak Valid',
+                    text: 'Masukkan nomor WhatsApp minimal 10 digit (tanpa awalan 0)',
+                    confirmButtonColor: '#7C3AED'
+                });
+                return;
+            }
+
+            localStorage.setItem('sllowly_wa_number', number);
+            updateWAPreview(number);
+
+            Swal.fire({
+                icon: 'success',
+                title: 'Nomor Tersimpan!',
+                html: `<p>Nomor WhatsApp admin diperbarui ke:</p><p class="font-bold text-primary mt-2">+62 ${number}</p>`,
+                confirmButtonColor: '#7C3AED'
+            });
+        }
+
+        function testWA() {
+            const number = localStorage.getItem('sllowly_wa_number') || document.getElementById('waNumber').value.replace(/\D/g, '');
+            if (!number) {
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'Nomor Belum Diatur',
+                    text: 'Simpan nomor terlebih dahulu',
+                    confirmButtonColor: '#7C3AED'
+                });
+                return;
+            }
+            window.open(`https://wa.me/62${number}?text=Test%20notifikasi%20dari%20SllowlyStore`, '_blank');
+        }
+
+        function saveStoreSettings() {
             Swal.fire({
                 icon: 'success',
                 title: 'Pengaturan Tersimpan',
