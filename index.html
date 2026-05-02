@@ -218,6 +218,11 @@
         </div>
     </nav>
 
+    <!-- Live Order Notifications -->
+    <div id="orderNotifications" class="fixed top-20 right-4 z-40 space-y-2 pointer-events-none">
+        <!-- Notifications injected here -->
+    </div>
+
     <!-- Hero Section -->
     <section class="relative min-h-screen flex items-center justify-center overflow-hidden hero-gradient">
         <!-- Animated Blobs -->
@@ -349,61 +354,29 @@
     </section>
 
     <!-- Footer -->
-    <footer class="bg-gray-900 text-white py-12 border-t border-gray-800">
+    <footer class="bg-gray-900 text-white py-6 border-t border-gray-800">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
-                <div class="md:col-span-2">
-                    <div class="flex items-center space-x-3 mb-4">
-                        <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-primary to-primary-light flex items-center justify-center">
-                            <i class="fas fa-bolt text-white text-lg"></i>
-                        </div>
-                        <span class="text-2xl font-bold">SllowlyStore</span>
+            <div class="flex flex-col md:flex-row justify-between items-center gap-4">
+                <div class="flex items-center space-x-3">
+                    <div class="w-8 h-8 rounded-lg bg-gradient-to-br from-primary to-primary-light flex items-center justify-center">
+                        <i class="fas fa-bolt text-white text-sm"></i>
                     </div>
-                    <p class="text-gray-400 mb-4 max-w-md">
-                        Toko digital terpercaya untuk kebutuhan akun dan tools. 
-                        Kami menyediakan produk berkualitas dengan harga kompetitif.
-                    </p>
-                    <div class="flex space-x-4">
-                        <a href="#" class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-primary transition-colors">
-                            <i class="fab fa-whatsapp"></i>
-                        </a>
-                        <a href="#" class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-primary transition-colors">
-                            <i class="fab fa-instagram"></i>
-                        </a>
-                        <a href="#" class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-primary transition-colors">
-                            <i class="fab fa-telegram"></i>
-                        </a>
-                    </div>
+                    <span class="text-lg font-bold">SllowlyStore</span>
                 </div>
-                <div>
-                    <h4 class="font-bold text-lg mb-4">Menu</h4>
-                    <ul class="space-y-2 text-gray-400">
-                        <li><a href="#products" class="hover:text-primary transition-colors">Produk</a></li>
-                        <li><a href="checkout.html" class="hover:text-primary transition-colors">Checkout</a></li>
-                        <li><a href="invoice-status.html" class="hover:text-primary transition-colors">Cek Pesanan</a></li>
-                        <li><a href="admin.html" class="hover:text-primary transition-colors">Admin</a></li>
-                    </ul>
+                <div class="flex items-center space-x-6 text-sm text-gray-400">
+                    <a href="https://wa.me/6282123829824" target="_blank" class="flex items-center space-x-2 hover:text-green-400 transition-colors">
+                        <i class="fab fa-whatsapp"></i>
+                        <span>0821-2382-9824</span>
+                    </a>
+                    <span class="hidden sm:inline">|</span>
+                    <span class="flex items-center space-x-2">
+                        <i class="fas fa-clock text-yellow-500"></i>
+                        <span>24 Jam Online</span>
+                    </span>
                 </div>
-                <div>
-                    <h4 class="font-bold text-lg mb-4">Kontak</h4>
-                    <ul class="space-y-2 text-gray-400">
-                        <li class="flex items-center space-x-2">
-                            <i class="fab fa-whatsapp text-green-500"></i>
-                            <span>0857-7884-3364</span>
-                        </li>
-                        <li class="flex items-center space-x-2">
-                            <i class="fas fa-envelope text-primary"></i>
-                            <span>admin@sllowlystore.com</span>
-                        </li>
-                        <li class="flex items-center space-x-2">
-                            <i class="fas fa-clock text-yellow-500"></i>
-                            <span>24 Jam Online</span>
-                        </li>
-                    </ul>
+                <div class="text-sm text-gray-500">
+                     2026 SllowlyStore
                 </div>
-            </div>
-            <div class="border-t border-gray-800 pt-8 text-center text-gray-500">
-                <p> 2026 SllowlyStore. All rights reserved.</p>
             </div>
         </div>
     </footer>
@@ -440,6 +413,66 @@
 
     <script src="script.js"></script>
     <script>
+        // Order notification messages
+        const orderMessages = [
+            { name: 'Ahmad', product: 'Tools Auto Create Facebook', time: '2 menit lalu' },
+            { name: 'Budi', product: 'Akun Facebook Fresh', time: '5 menit lalu' },
+            { name: 'Citra', product: 'Akun Gmail Fresh', time: '8 menit lalu' },
+            { name: 'Dewi', product: 'Akun Facebook Medium', time: '12 menit lalu' },
+            { name: 'Eko', product: 'Akun Facebook Mentah', time: '15 menit lalu' },
+            { name: 'Fani', product: 'Akun Gmail Bekas', time: '18 menit lalu' },
+            { name: 'Gita', product: 'Tools Auto Create Facebook', time: '21 menit lalu' },
+            { name: 'Hadi', product: 'Akun Facebook Fresh Low', time: '25 menit lalu' }
+        ];
+
+        function showOrderNotification() {
+            const container = document.getElementById('orderNotifications');
+            if (!container) return;
+
+            const msg = orderMessages[Math.floor(Math.random() * orderMessages.length)];
+            const notif = document.createElement('div');
+            notif.className = 'bg-white dark:bg-gray-800 rounded-xl shadow-lg border border-gray-200 dark:border-gray-700 p-3 flex items-center space-x-3 transform translate-x-full opacity-0 transition-all duration-500 pointer-events-auto max-w-xs';
+            notif.innerHTML = `
+                <div class="w-10 h-10 rounded-full bg-gradient-to-br from-green-400 to-green-600 flex items-center justify-center flex-shrink-0">
+                    <i class="fas fa-check text-white text-sm"></i>
+                </div>
+                <div class="flex-1 min-w-0">
+                    <p class="text-sm font-semibold text-gray-900 dark:text-white truncate">${msg.name}</p>
+                    <p class="text-xs text-gray-500">Berhasil order ${msg.product}</p>
+                    <p class="text-xs text-gray-400">${msg.time}</p>
+                </div>
+            `;
+
+            container.appendChild(notif);
+
+            // Animate in
+            setTimeout(() => {
+                notif.classList.remove('translate-x-full', 'opacity-0');
+            }, 100);
+
+            // Remove after 4 seconds
+            setTimeout(() => {
+                notif.classList.add('translate-x-full', 'opacity-0');
+                setTimeout(() => {
+                    notif.remove();
+                }, 500);
+            }, 4000);
+        }
+
+        // Show notifications periodically
+        function startOrderNotifications() {
+            // Show first notification after 3 seconds
+            setTimeout(() => {
+                showOrderNotification();
+                // Then every 8-15 seconds
+                setInterval(() => {
+                    if (Math.random() > 0.3) { // 70% chance to show
+                        showOrderNotification();
+                    }
+                }, 8000 + Math.random() * 7000);
+            }, 3000);
+        }
+
         // Initialize products on page load
         document.addEventListener('DOMContentLoaded', function() {
             initProducts();
@@ -447,6 +480,7 @@
             updateCartUI();
             initDarkMode();
             animateStats();
+            startOrderNotifications();
         });
 
         // Animate stats
