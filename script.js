@@ -1,3 +1,8 @@
+// ==========================================
+// SllowlyStore - Main JavaScript
+// ==========================================
+
+// Default Products Data
 const defaultProducts = [
     {
         id: 'fb-tools',
@@ -92,6 +97,10 @@ const defaultProducts = [
     }
 ];
 
+// ==========================================
+// UTILITY FUNCTIONS
+// ==========================================
+
 function formatPrice(price) {
     return price.toLocaleString('id-ID');
 }
@@ -117,6 +126,10 @@ function generateInvoice() {
     return prefix + result;
 }
 
+function getAdminWhatsApp() {
+    return localStorage.getItem('sllowly_wa_number') || '82123829824';
+}
+
 function showLoading() {
     const overlay = document.getElementById('loadingOverlay');
     if (overlay) {
@@ -130,6 +143,10 @@ function hideLoading() {
         overlay.classList.remove('active');
     }
 }
+
+// ==========================================
+// DARK MODE
+// ==========================================
 
 function initDarkMode() {
     const darkMode = localStorage.getItem('sllowly_darkmode') === 'true';
@@ -157,6 +174,10 @@ function updateDarkModeIcons() {
         }
     });
 }
+
+// ==========================================
+// PRODUCTS
+// ==========================================
 
 function initProducts() {
     if (!localStorage.getItem('sllowly_products')) {
@@ -241,6 +262,10 @@ function decreaseQty(productId) {
         }
     }
 }
+
+// ==========================================
+// CART
+// ==========================================
 
 function getCart() {
     return JSON.parse(localStorage.getItem('sllowly_cart') || '[]');
@@ -491,6 +516,10 @@ function goToCheckout() {
     window.location.href = 'checkout.html';
 }
 
+// ==========================================
+// STOCK MANAGEMENT
+// ==========================================
+
 function updateStockAfterOrder(cart) {
     const products = getProducts();
     cart.forEach(item => {
@@ -501,6 +530,10 @@ function updateStockAfterOrder(cart) {
     });
     localStorage.setItem('sllowly_products', JSON.stringify(products));
 }
+
+// ==========================================
+// STATUS ICONS
+// ==========================================
 
 function getStatusIcon(status) {
     const icons = {
