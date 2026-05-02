@@ -389,21 +389,13 @@
                         </div>
                     </div>
 
-                    <!-- Proof Image -->
-                    ${order.proofImage ? `
-                    <div class="p-6 border-t border-gray-200 dark:border-gray-700">
-                        <h3 class="font-bold mb-4 flex items-center space-x-2">
-                            <i class="fas fa-image text-primary"></i>
-                            <span>Bukti Transfer</span>
-                        </h3>
-                        <img src="${order.proofImage}" class="max-w-full rounded-xl shadow-md cursor-pointer hover:opacity-90 transition-opacity" onclick="viewImage('${order.proofImage}')">
-                    </div>
-                    ` : ''}
+                    <!-- Proof Image (Hidden from customer view - admin only) -->
+                    <!-- Bukti transfer tersimpan di sistem admin -->
 
                     <!-- Actions -->
                     <div class="p-6 border-t border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-900/50">
                         <div class="flex flex-col sm:flex-row gap-3">
-                            <a href="https://wa.me/628998915333?text=Halo%20admin,%20saya%20ingin%20menanyakan%20pesanan%20${order.invoice}" target="_blank" class="flex-1 btn-primary py-3 rounded-xl text-white font-semibold text-center flex items-center justify-center space-x-2">
+                            <a href="https://wa.me/6282123829824?text=Halo%20admin,%20saya%20ingin%20menanyakan%20pesanan%20${order.invoice}" target="_blank" class="flex-1 btn-primary py-3 rounded-xl text-white font-semibold text-center flex items-center justify-center space-x-2">
                                 <i class="fab fa-whatsapp"></i>
                                 <span>Hubungi Admin</span>
                             </a>
