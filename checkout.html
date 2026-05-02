@@ -752,37 +752,31 @@
 
         function generateWhatsAppMessage(order) {
             let items = order.items.map(item => 
-                `• ${item.productName}
-   Jumlah: ${item.qty}x
-   Harga: Rp${formatPrice(item.price * item.qty)}`
-            ).join('
+                "• " + item.productName + "\n" +
+                "  Jumlah: " + item.qty + "x\n" +
+                "  Harga: Rp" + formatPrice(item.price * item.qty)
+            ).join("\n\n");
 
-');
-
-            return `🛒 *PESANAN BARU - SllowlyStore*
-
-━━━━━━━━━━━━━━━━━━━━
-📋 *DATA PEMESAN*
-━━━━━━━━━━━━━━━━━━━━
-👤 Nama: ${order.customer.name}
-📧 Email: ${order.customer.email}
-📱 WhatsApp: ${order.customer.phone}
-
-━━━━━━━━━━━━━━━━━━━━
-📦 *DETAIL PESANAN*
-━━━━━━━━━━━━━━━━━━━━
-${items}
-
-━━━━━━━━━━━━━━━━━━━━
-💳 *RINGKASAN PEMBAYARAN*
-━━━━━━━━━━━━━━━━━━━━
-💰 Total Pembayaran: *Rp${formatPrice(order.total)}*
-🏦 Metode: ${order.paymentMethod.toUpperCase()}
-📊 Status: ${order.status}
-
-━━━━━━━━━━━━━━━━━━━━
-✅ Bukti transfer telah dikirim melalui website.
-🔔 Mohon segera diproses. Terima kasih!`;
+            return "🛒 *PESANAN BARU - SllowlyStore*\n\n" +
+                "━━━━━━━━━━━━━━━━━━━━\n" +
+                "📋 *DATA PEMESAN*\n" +
+                "━━━━━━━━━━━━━━━━━━━━\n" +
+                "👤 Nama: " + order.customer.name + "\n" +
+                "📧 Email: " + order.customer.email + "\n" +
+                "📱 WhatsApp: " + order.customer.phone + "\n\n" +
+                "━━━━━━━━━━━━━━━━━━━━\n" +
+                "📦 *DETAIL PESANAN*\n" +
+                "━━━━━━━━━━━━━━━━━━━━\n" +
+                items + "\n\n" +
+                "━━━━━━━━━━━━━━━━━━━━\n" +
+                "💳 *RINGKASAN PEMBAYARAN*\n" +
+                "━━━━━━━━━━━━━━━━━━━━\n" +
+                "💰 Total Pembayaran: *Rp" + formatPrice(order.total) + "*\n" +
+                "🏦 Metode: " + order.paymentMethod.toUpperCase() + "\n" +
+                "📊 Status: " + order.status + "\n\n" +
+                "━━━━━━━━━━━━━━━━━━━━\n" +
+                "✅ Bukti transfer telah dikirim melalui website.\n" +
+                "🔔 Mohon segera diproses. Terima kasih!";
         }
 
         function isValidEmail(email) {
