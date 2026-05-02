@@ -1,166 +1,490 @@
 <!DOCTYPE html>
-<html lang="id" class="dark">
+<html lang="id">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cek Status Pesanan - SllowlyStore</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <script>
         tailwind.config = {
             darkMode: 'class',
             theme: {
                 extend: {
+                    fontFamily: { sans: ['Inter', 'sans-serif'] },
                     colors: {
-                        primary: '#6B21A8',
-                        secondary: '#8B5CF6',
-                        accent: '#A78BFA',
-                        dark: '#0F0F1A',
-                        darker: '#08080F',
-                        card: '#1A1A2E',
-                        surface: '#16162A',
+                        primary: { DEFAULT: '#7C3AED', light: '#8B5CF6', dark: '#6B21A8' },
                     }
                 }
             }
         }
     </script>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
-        * { font-family: 'Inter', sans-serif; }
-
+        * { scroll-behavior: smooth; }
+        body { font-family: 'Inter', sans-serif; }
         .glass {
-            background: rgba(26, 26, 46, 0.7);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border: 1px solid rgba(139, 92, 246, 0.15);
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
-
-        .btn-gradient {
-            background: linear-gradient(135deg, #6B21A8 0%, #8B5CF6 50%, #A78BFA 100%);
-            background-size: 200% 200%;
-            animation: gradientShift 3s ease infinite;
+        .gradient-text {
+            background: linear-gradient(135deg, #8B5CF6 0%, #A78BFA 50%, #C4B5FD 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
-
-        @keyframes gradientShift {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
+        .btn-primary {
+            background: linear-gradient(135deg, #7C3AED 0%, #8B5CF6 100%);
+            transition: all 0.3s ease;
         }
-
+        .btn-primary:hover {
+            background: linear-gradient(135deg, #6B21A8 0%, #7C3AED 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px -10px rgba(124, 58, 237, 0.5);
+        }
         .status-badge {
-            animation: statusPulse 2s ease-in-out infinite;
+            display: inline-flex;
+            align-items: center;
+            padding: 0.5rem 1rem;
+            border-radius: 9999px;
+            font-weight: 600;
+            font-size: 0.875rem;
         }
-
-        @keyframes statusPulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.8; }
+        .status-diproses {
+            background: #FEF3C7;
+            color: #D97706;
         }
-
+        .dark .status-diproses {
+            background: rgba(217, 119, 6, 0.2);
+            color: #FBBF24;
+        }
+        .status-berhasil {
+            background: #D1FAE5;
+            color: #059669;
+        }
+        .dark .status-berhasil {
+            background: rgba(5, 150, 105, 0.2);
+            color: #34D399;
+        }
+        .status-ditolak {
+            background: #FEE2E2;
+            color: #DC2626;
+        }
+        .dark .status-ditolak {
+            background: rgba(220, 38, 38, 0.2);
+            color: #F87171;
+        }
+        .search-input {
+            transition: all 0.3s ease;
+        }
         .search-input:focus {
-            box-shadow: 0 0 30px rgba(139, 92, 246, 0.3);
+            border-color: #8B5CF6;
+            box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.2);
         }
-
-        .timeline-dot {
-            animation: dotPulse 2s ease-in-out infinite;
+        .order-card {
+            transition: all 0.3s ease;
         }
-
-        @keyframes dotPulse {
-            0%, 100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(139, 92, 246, 0.4); }
-            50% { transform: scale(1.1); box-shadow: 0 0 0 10px rgba(139, 92, 246, 0); }
+        .order-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 40px -10px rgba(139, 92, 246, 0.15);
         }
-
-        ::-webkit-scrollbar { width: 8px; }
-        ::-webkit-scrollbar-track { background: #0F0F1A; }
-        ::-webkit-scrollbar-thumb { background: #6B21A8; border-radius: 4px; }
+        .timeline-item {
+            position: relative;
+            padding-left: 2rem;
+        }
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0.5rem;
+            width: 0.75rem;
+            height: 0.75rem;
+            border-radius: 50%;
+            background: #8B5CF6;
+        }
+        .timeline-item::after {
+            content: '';
+            position: absolute;
+            left: 0.35rem;
+            top: 1.25rem;
+            width: 2px;
+            height: calc(100% - 1rem);
+            background: #E5E7EB;
+        }
+        .dark .timeline-item::after {
+            background: #374151;
+        }
+        .timeline-item:last-child::after {
+            display: none;
+        }
+        .timeline-completed::before {
+            background: #10B981;
+        }
+        .timeline-pending::before {
+            background: #F59E0B;
+        }
+        .timeline-rejected::before {
+            background: #EF4444;
+        }
     </style>
-    <link rel="stylesheet" href="theme-fix.css">
-<base target="_blank">
 </head>
-<body class="bg-dark text-gray-100 min-h-screen">
-    <!-- Header -->
-    <header class="fixed top-0 left-0 right-0 z-50 glass">
+<body class="bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-white transition-colors duration-300 min-h-screen">
+
+    <!-- Navigation -->
+    <nav class="fixed w-full z-50 bg-white/80 dark:bg-gray-900/80 backdrop-blur-xl border-b border-gray-200 dark:border-gray-800">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex items-center justify-between h-16">
-                <a href="index.html" class="flex items-center space-x-3 group">
-                    <div class="w-10 h-10 rounded-xl btn-gradient flex items-center justify-center transform group-hover:rotate-12 transition-transform duration-300">
+            <div class="flex justify-between items-center h-16">
+                <a href="index.html" class="flex items-center space-x-3">
+                    <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-primary to-primary-light flex items-center justify-center shadow-lg">
                         <i class="fas fa-bolt text-white text-lg"></i>
                     </div>
-                    <span class="text-xl font-bold bg-gradient-to-r from-purple-400 to-violet-300 bg-clip-text text-transparent">
-                        SllowlyStore
-                    </span>
+                    <span class="text-xl font-bold gradient-text">SllowlyStore</span>
                 </a>
-                <div class="flex items-center space-x-3">
-                    <button id="themeToggle" class="w-10 h-10 rounded-xl glass flex items-center justify-center hover:bg-purple-500/20 transition-all duration-300 group">
-                        <i class="fas fa-sun text-yellow-400 group-hover:rotate-180 transition-transform duration-500" id="themeIcon"></i>
+                <div class="flex items-center space-x-4">
+                    <button onclick="toggleDarkMode()" class="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
+                        <i id="darkModeIcon" class="fas fa-moon text-gray-600 dark:text-yellow-400 text-lg"></i>
                     </button>
+                    <a href="index.html" class="text-gray-600 dark:text-gray-300 hover:text-primary transition-colors">
+                        <i class="fas fa-arrow-left mr-1"></i> Kembali
+                    </a>
                 </div>
             </div>
         </div>
-    </header>
+    </nav>
 
     <!-- Main Content -->
-    <main class="pt-24 pb-12 px-4 sm:px-6 lg:px-8">
-        <div class="max-w-3xl mx-auto">
-            <!-- Hero Search -->
-            <div class="text-center mb-12">
-                <div class="inline-flex items-center px-4 py-2 rounded-full glass mb-6">
-                    <i class="fas fa-search text-purple-400 mr-2"></i>
-                    <span class="text-sm text-purple-300">Cek Status Pesanan Anda</span>
-                </div>
-                <h1 class="text-3xl sm:text-4xl font-bold mb-4">
-                    <span class="bg-gradient-to-r from-purple-400 to-violet-300 bg-clip-text text-transparent">Lacak Pesanan</span>
-                </h1>
-                <p class="text-gray-400 max-w-lg mx-auto">Masukkan nomor invoice untuk melihat status dan detail pesanan Anda.</p>
+    <main class="pt-24 pb-12 px-4 sm:px-6 lg:px-8 max-w-4xl mx-auto">
+        <!-- Header -->
+        <div class="text-center mb-10">
+            <div class="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-gradient-to-br from-primary/20 to-primary-light/20 mb-4">
+                <i class="fas fa-search text-primary text-2xl"></i>
             </div>
+            <h1 class="text-3xl font-bold mb-2">Cek Status Pesanan</h1>
+            <p class="text-gray-600 dark:text-gray-400">Masukkan nomor invoice untuk melihat status pesanan Anda</p>
+        </div>
 
-            <!-- Search Box -->
-            <div class="glass rounded-3xl p-8 mb-8">
-                <div class="relative">
-                    <input type="text" id="invoiceSearch" 
-                        class="search-input w-full px-6 py-4 pl-14 rounded-2xl bg-surface border-2 border-purple-500/20 text-white text-lg placeholder-gray-500 focus:outline-none focus:border-purple-500 transition-all"
-                        placeholder="INV-XXXXXX"
-                        onkeypress="if(event.key==='Enter') searchInvoice()">
-                    <i class="fas fa-search absolute left-5 top-1/2 transform -translate-y-1/2 text-gray-500 text-lg"></i>
-                    <button onclick="searchInvoice()" class="absolute right-2 top-1/2 transform -translate-y-1/2 btn-gradient px-6 py-2 rounded-xl text-white font-medium hover:shadow-lg transition-all">
-                        Cari
-                    </button>
+        <!-- Search Form -->
+        <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-6 border border-gray-200 dark:border-gray-700 mb-8">
+            <div class="flex flex-col sm:flex-row gap-4">
+                <div class="flex-1 relative">
+                    <i class="fas fa-receipt absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+                    <input type="text" id="invoiceInput" class="search-input w-full pl-12 pr-4 py-4 rounded-xl border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 focus:outline-none text-lg font-mono" placeholder="INV-XXXXX" onkeypress="if(event.key==='Enter')searchOrder()">
                 </div>
-                <p class="text-xs text-gray-500 mt-3 ml-1">Contoh: INV-A1B2C3</p>
+                <button onclick="searchOrder()" class="btn-primary px-8 py-4 rounded-xl text-white font-semibold flex items-center justify-center space-x-2 min-w-[140px]">
+                    <i class="fas fa-search"></i>
+                    <span>Cari</span>
+                </button>
             </div>
+            <p class="text-sm text-gray-500 mt-3 ml-1">Contoh: INV-ABC12</p>
+        </div>
 
-            <!-- Search Result -->
-            <div id="searchResult" class="hidden">
-                <!-- Result rendered here -->
+        <!-- Recent Orders -->
+        <div id="recentOrdersSection" class="mb-8">
+            <h2 class="text-xl font-bold mb-4 flex items-center space-x-2">
+                <i class="fas fa-history text-primary"></i>
+                <span>Pesanan Terbaru</span>
+            </h2>
+            <div id="recentOrdersList" class="space-y-4">
+                <!-- Recent orders injected here -->
             </div>
+        </div>
 
-            <!-- Empty State -->
-            <div id="emptyState" class="text-center py-12">
-                <div class="w-24 h-24 rounded-full glass flex items-center justify-center mx-auto mb-6">
-                    <i class="fas fa-receipt text-4xl text-gray-600"></i>
-                </div>
-                <h3 class="text-xl font-semibold text-white mb-2">Belum Ada Pencarian</h3>
-                <p class="text-gray-500">Masukkan nomor invoice untuk melihat detail pesanan.</p>
-            </div>
+        <!-- Order Result -->
+        <div id="orderResult" class="hidden">
+            <!-- Order details injected here -->
+        </div>
 
-            <!-- Recent Orders -->
-            <div class="mt-12">
-                <h2 class="text-xl font-bold mb-6 flex items-center">
-                    <i class="fas fa-history text-purple-400 mr-3"></i>Pesanan Terbaru
-                </h2>
-                <div id="recentOrders" class="space-y-4">
-                    <!-- Recent orders rendered here -->
-                </div>
+        <!-- No Result -->
+        <div id="noResult" class="hidden text-center py-12">
+            <div class="inline-flex items-center justify-center w-20 h-20 rounded-full bg-gray-100 dark:bg-gray-800 mb-4">
+                <i class="fas fa-inbox text-gray-400 text-3xl"></i>
             </div>
+            <h3 class="text-xl font-bold mb-2">Pesanan Tidak Ditemukan</h3>
+            <p class="text-gray-600 dark:text-gray-400">Nomor invoice yang Anda masukkan tidak valid atau belum terdaftar.</p>
         </div>
     </main>
 
     <script src="script.js"></script>
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            initTheme();
-            renderRecentOrders();
+        document.addEventListener('DOMContentLoaded', function() {
+            initDarkMode();
+            loadRecentOrders();
+
+            // Check for invoice in URL
+            const urlParams = new URLSearchParams(window.location.search);
+            const invoice = urlParams.get('invoice');
+            if (invoice) {
+                document.getElementById('invoiceInput').value = invoice;
+                searchOrder();
+            }
         });
+
+        function loadRecentOrders() {
+            const orders = JSON.parse(localStorage.getItem('sllowly_orders') || '[]');
+            const recentOrders = orders.slice(-5).reverse(); // Last 5 orders
+            const container = document.getElementById('recentOrdersList');
+
+            if (recentOrders.length === 0) {
+                document.getElementById('recentOrdersSection').style.display = 'none';
+                return;
+            }
+
+            container.innerHTML = recentOrders.map(order => `
+                <div class="order-card bg-white dark:bg-gray-800 rounded-xl p-4 border border-gray-200 dark:border-gray-700 cursor-pointer" onclick="fillInvoice('${order.invoice}')">
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <div class="font-mono font-bold text-primary mb-1">${order.invoice}</div>
+                            <div class="text-sm text-gray-600 dark:text-gray-400">${order.customer.name}</div>
+                            <div class="text-xs text-gray-500 mt-1">${formatDate(order.date)}</div>
+                        </div>
+                        <div class="text-right">
+                            <span class="status-badge status-${order.status.toLowerCase()}">
+                                <i class="fas fa-${getStatusIcon(order.status)} mr-1"></i>
+                                ${order.status}
+                            </span>
+                            <div class="text-sm font-semibold mt-2">Rp${formatPrice(order.total)}</div>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function fillInvoice(invoice) {
+            document.getElementById('invoiceInput').value = invoice;
+            searchOrder();
+        }
+
+        function searchOrder() {
+            const invoice = document.getElementById('invoiceInput').value.trim().toUpperCase();
+            if (!invoice) {
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'Masukkan Invoice',
+                    text: 'Silakan masukkan nomor invoice',
+                    confirmButtonColor: '#7C3AED'
+                });
+                return;
+            }
+
+            const orders = JSON.parse(localStorage.getItem('sllowly_orders') || '[]');
+            const order = orders.find(o => o.invoice.toUpperCase() === invoice);
+
+            const resultDiv = document.getElementById('orderResult');
+            const noResultDiv = document.getElementById('noResult');
+            const recentSection = document.getElementById('recentOrdersSection');
+
+            if (!order) {
+                resultDiv.classList.add('hidden');
+                noResultDiv.classList.remove('hidden');
+                recentSection.style.display = 'none';
+                return;
+            }
+
+            noResultDiv.classList.add('hidden');
+            recentSection.style.display = 'none';
+            resultDiv.classList.remove('hidden');
+
+            const statusColor = getStatusColor(order.status);
+            const statusIcon = getStatusIcon(order.status);
+            const statusTimeline = getStatusTimeline(order.status);
+
+            resultDiv.innerHTML = `
+                <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-lg border border-gray-200 dark:border-gray-700 overflow-hidden">
+                    <!-- Header -->
+                    <div class="bg-gradient-to-r from-primary to-primary-light p-6 text-white">
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <p class="text-purple-200 text-sm mb-1">Nomor Invoice</p>
+                                <h2 class="text-2xl font-bold font-mono">${order.invoice}</h2>
+                            </div>
+                            <span class="status-badge ${statusColor} bg-white/20 text-white">
+                                <i class="fas fa-${statusIcon} mr-1"></i>
+                                ${order.status}
+                            </span>
+                        </div>
+                    </div>
+
+                    <!-- Customer Info -->
+                    <div class="p-6 border-b border-gray-200 dark:border-gray-700">
+                        <h3 class="font-bold mb-4 flex items-center space-x-2">
+                            <i class="fas fa-user text-primary"></i>
+                            <span>Informasi Pemesan</span>
+                        </h3>
+                        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                            <div class="p-3 bg-gray-50 dark:bg-gray-900 rounded-lg">
+                                <p class="text-xs text-gray-500 mb-1">Nama</p>
+                                <p class="font-medium">${order.customer.name}</p>
+                            </div>
+                            <div class="p-3 bg-gray-50 dark:bg-gray-900 rounded-lg">
+                                <p class="text-xs text-gray-500 mb-1">Email</p>
+                                <p class="font-medium">${order.customer.email}</p>
+                            </div>
+                            <div class="p-3 bg-gray-50 dark:bg-gray-900 rounded-lg">
+                                <p class="text-xs text-gray-500 mb-1">WhatsApp</p>
+                                <p class="font-medium">${order.customer.phone}</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Order Items -->
+                    <div class="p-6 border-b border-gray-200 dark:border-gray-700">
+                        <h3 class="font-bold mb-4 flex items-center space-x-2">
+                            <i class="fas fa-shopping-bag text-primary"></i>
+                            <span>Detail Pesanan</span>
+                        </h3>
+                        <div class="space-y-3">
+                            ${order.items.map(item => `
+                                <div class="flex justify-between items-center p-3 bg-gray-50 dark:bg-gray-900 rounded-lg">
+                                    <div class="flex items-center space-x-3">
+                                        <div class="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center">
+                                            <i class="fas fa-box text-primary text-xs"></i>
+                                        </div>
+                                        <div>
+                                            <p class="font-medium">${item.productName}</p>
+                                            <p class="text-sm text-gray-500">${item.qty} x Rp${formatPrice(item.price)}</p>
+                                        </div>
+                                    </div>
+                                    <span class="font-semibold">Rp${formatPrice(item.price * item.qty)}</span>
+                                </div>
+                            `).join('')}
+                        </div>
+                        <div class="mt-4 pt-4 border-t border-gray-200 dark:border-gray-700 flex justify-between items-center">
+                            <span class="font-bold text-lg">Total Pembayaran</span>
+                            <span class="font-bold text-2xl text-primary">Rp${formatPrice(order.total)}</span>
+                        </div>
+                    </div>
+
+                    <!-- Payment Info -->
+                    <div class="p-6 border-b border-gray-200 dark:border-gray-700">
+                        <h3 class="font-bold mb-4 flex items-center space-x-2">
+                            <i class="fas fa-credit-card text-primary"></i>
+                            <span>Informasi Pembayaran</span>
+                        </h3>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <div class="p-3 bg-gray-50 dark:bg-gray-900 rounded-lg">
+                                <p class="text-xs text-gray-500 mb-1">Metode Pembayaran</p>
+                                <p class="font-medium flex items-center space-x-2">
+                                    <i class="fas fa-${getPaymentIcon(order.paymentMethod)}"></i>
+                                    <span>${order.paymentMethod.toUpperCase()}</span>
+                                </p>
+                            </div>
+                            <div class="p-3 bg-gray-50 dark:bg-gray-900 rounded-lg">
+                                <p class="text-xs text-gray-500 mb-1">Tanggal Pesanan</p>
+                                <p class="font-medium">${formatDate(order.date)}</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Timeline -->
+                    <div class="p-6">
+                        <h3 class="font-bold mb-4 flex items-center space-x-2">
+                            <i class="fas fa-stream text-primary"></i>
+                            <span>Timeline Pesanan</span>
+                        </h3>
+                        <div class="space-y-6">
+                            ${statusTimeline}
+                        </div>
+                    </div>
+
+                    <!-- Proof Image -->
+                    ${order.proofImage ? `
+                    <div class="p-6 border-t border-gray-200 dark:border-gray-700">
+                        <h3 class="font-bold mb-4 flex items-center space-x-2">
+                            <i class="fas fa-image text-primary"></i>
+                            <span>Bukti Transfer</span>
+                        </h3>
+                        <img src="${order.proofImage}" class="max-w-full rounded-xl shadow-md cursor-pointer hover:opacity-90 transition-opacity" onclick="viewImage('${order.proofImage}')">
+                    </div>
+                    ` : ''}
+
+                    <!-- Actions -->
+                    <div class="p-6 border-t border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-900/50">
+                        <div class="flex flex-col sm:flex-row gap-3">
+                            <a href="https://wa.me/6285778843364?text=Halo%20admin,%20saya%20ingin%20menanyakan%20pesanan%20${order.invoice}" target="_blank" class="flex-1 btn-primary py-3 rounded-xl text-white font-semibold text-center flex items-center justify-center space-x-2">
+                                <i class="fab fa-whatsapp"></i>
+                                <span>Hubungi Admin</span>
+                            </a>
+                            <button onclick="window.print()" class="flex-1 py-3 rounded-xl border-2 border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 font-semibold hover:bg-gray-100 dark:hover:bg-gray-800 transition-all flex items-center justify-center space-x-2">
+                                <i class="fas fa-print"></i>
+                                <span>Cetak</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            // Scroll to result
+            resultDiv.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+
+        function getStatusColor(status) {
+            const colors = {
+                'Diproses': 'status-diproses',
+                'Berhasil': 'status-berhasil',
+                'Ditolak': 'status-ditolak'
+            };
+            return colors[status] || 'status-diproses';
+        }
+
+        function getStatusIcon(status) {
+            const icons = {
+                'Diproses': 'clock',
+                'Berhasil': 'check-circle',
+                'Ditolak': 'times-circle'
+            };
+            return icons[status] || 'clock';
+        }
+
+        function getPaymentIcon(method) {
+            const icons = {
+                'bca': 'university',
+                'seabank': 'university',
+                'dana': 'wallet',
+                'qris': 'qrcode'
+            };
+            return icons[method] || 'money-bill';
+        }
+
+        function getStatusTimeline(status) {
+            const steps = [
+                { title: 'Pesanan Dibuat', desc: 'Pesanan telah berhasil dibuat dan menunggu verifikasi', icon: 'file-alt', completed: true },
+                { title: 'Pembayaran Diterima', desc: 'Bukti transfer telah diupload dan sedang diverifikasi admin', icon: 'money-check-alt', completed: status !== 'Ditolak' },
+                { title: 'Pesanan Diproses', desc: 'Admin sedang memproses pesanan Anda', icon: 'cog', completed: status === 'Berhasil' || status === 'Ditolak' },
+                { title: status === 'Berhasil' ? 'Pesanan Selesai' : status === 'Ditolak' ? 'Pesanan Ditolak' : 'Menunggu Konfirmasi', desc: status === 'Berhasil' ? 'Pesanan telah berhasil diselesaikan' : status === 'Ditolak' ? 'Pesanan ditolak oleh admin' : 'Menunggu konfirmasi dari admin', icon: status === 'Berhasil' ? 'check-circle' : status === 'Ditolak' ? 'times-circle' : 'hourglass-half', completed: status === 'Berhasil' || status === 'Ditolak' }
+            ];
+
+            return steps.map((step, index) => {
+                const isActive = index === 0 || (index === 1 && status !== 'Ditolak') || (index === 2 && (status === 'Berhasil' || status === 'Ditolak')) || (index === 3 && (status === 'Berhasil' || status === 'Ditolak'));
+                const isCompleted = step.completed;
+
+                return `
+                    <div class="timeline-item ${isCompleted ? 'timeline-completed' : isActive ? 'timeline-pending' : ''}">
+                        <div class="flex items-start space-x-3">
+                            <div class="w-8 h-8 rounded-full ${isCompleted ? 'bg-green-100 dark:bg-green-900/30 text-green-600' : isActive ? 'bg-yellow-100 dark:bg-yellow-900/30 text-yellow-600' : 'bg-gray-100 dark:bg-gray-800 text-gray-400'} flex items-center justify-center flex-shrink-0">
+                                <i class="fas fa-${step.icon} text-sm"></i>
+                            </div>
+                            <div>
+                                <p class="font-semibold ${isCompleted ? 'text-green-600 dark:text-green-400' : isActive ? 'text-yellow-600 dark:text-yellow-400' : 'text-gray-400'}">${step.title}</p>
+                                <p class="text-sm text-gray-500">${step.desc}</p>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function viewImage(src) {
+            Swal.fire({
+                imageUrl: src,
+                imageAlt: 'Bukti Transfer',
+                showConfirmButton: false,
+                showCloseButton: true,
+                width: 'auto'
+            });
+        }
     </script>
 </body>
 </html>
