@@ -364,9 +364,9 @@
                     <span class="text-lg font-bold">SllowlyStore</span>
                 </div>
                 <div class="flex items-center space-x-6 text-sm text-gray-400">
-                    <a href="https://wa.me/6282123829824" target="_blank" class="flex items-center space-x-2 hover:text-green-400 transition-colors">
+                    <a href="#" onclick="window.open('https://wa.me/62' + getAdminWhatsApp(), '_blank'); return false;" class="flex items-center space-x-2 hover:text-green-400 transition-colors">
                         <i class="fab fa-whatsapp"></i>
-                        <span>0821-2382-9824</span>
+                        <span id="footerWANumber">0821-2382-9824</span>
                     </a>
                     <span class="hidden sm:inline">|</span>
                     <span class="flex items-center space-x-2">
@@ -481,6 +481,13 @@
             initDarkMode();
             animateStats();
             startOrderNotifications();
+
+            // Update footer WA number
+            const waNum = getAdminWhatsApp();
+            const footerEl = document.getElementById('footerWANumber');
+            if (footerEl && waNum) {
+                footerEl.textContent = '0' + waNum;
+            }
         });
 
         // Animate stats
