@@ -110,6 +110,7 @@
             box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.2);
         }
     </style>
+<base target="_blank">
 </head>
 <body class="bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-white transition-colors duration-300">
 
@@ -126,12 +127,12 @@
             <div class="space-y-4">
                 <div>
                     <label class="block text-sm font-medium mb-2">Username</label>
-                    <input type="text" id="loginUsername" class="w-full px-4 py-3 rounded-xl border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 focus:outline-none focus:border-primary" placeholder="admin" value="admin">
+                    <input type="text" id="loginUsername" class="w-full px-4 py-3 rounded-xl border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 focus:outline-none focus:border-primary" placeholder="Masukkan username">
                 </div>
                 <div>
                     <label class="block text-sm font-medium mb-2">Password</label>
                     <div class="relative">
-                        <input type="password" id="loginPassword" class="w-full px-4 py-3 rounded-xl border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 focus:outline-none focus:border-primary" placeholder="••••••" value="admin123">
+                        <input type="password" id="loginPassword" class="w-full px-4 py-3 rounded-xl border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 focus:outline-none focus:border-primary" placeholder="Masukkan password">
                         <button onclick="togglePassword()" class="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600">
                             <i id="passwordIcon" class="fas fa-eye"></i>
                         </button>
@@ -405,7 +406,7 @@
             const username = document.getElementById('loginUsername').value;
             const password = document.getElementById('loginPassword').value;
 
-            if (username === 'admin' && password === 'admin123') {
+            if (username === 'sllowly28' && password === 'sllowly28') {
                 sessionStorage.setItem('sllowly_admin', 'true');
                 showDashboard();
                 Swal.fire({
@@ -974,4 +975,4 @@
         }
     </script>
 </body>
-</html>
+</html>i.
