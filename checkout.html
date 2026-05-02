@@ -723,7 +723,8 @@
 
                 // Prepare WhatsApp message
                 const waMessage = generateWhatsAppMessage(order);
-                const waUrl = `https://wa.me/6282123829824?text=${encodeURIComponent(waMessage)}`;
+                const waNumber = getAdminWhatsApp();
+            const waUrl = `https://wa.me/62${waNumber}?text=${encodeURIComponent(waMessage)}`;
 
                 Swal.fire({
                     icon: 'success',
