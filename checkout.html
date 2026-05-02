@@ -752,19 +752,37 @@
 
         function generateWhatsAppMessage(order) {
             let items = order.items.map(item => 
-                `- ${item.productName} (${item.qty}x) = Rp${formatPrice(item.price * item.qty)}`
-            ).join('%0A');
+                `• ${item.productName}
+   Jumlah: ${item.qty}x
+   Harga: Rp${formatPrice(item.price * item.qty)}`
+            ).join('
 
-            return `*PESANAN BARU - SllowlyStore*%0A%0A` +
-                   `*Invoice:* ${order.invoice}%0A` +
-                   `*Nama:* ${order.customer.name}%0A` +
-                   `*Email:* ${order.customer.email}%0A` +
-                   `*WhatsApp:* ${order.customer.phone}%0A%0A` +
-                   `*Detail Pesanan:*%0A${items}%0A%0A` +
-                   `*Total:* Rp${formatPrice(order.total)}%0A` +
-                   `*Metode Pembayaran:* ${order.paymentMethod.toUpperCase()}%0A` +
-                   `*Status:* ${order.status}%0A%0A` +
-                   `Bukti transfer telah diupload di website.`;
+');
+
+            return `🛒 *PESANAN BARU - SllowlyStore*
+
+━━━━━━━━━━━━━━━━━━━━
+📋 *DATA PEMESAN*
+━━━━━━━━━━━━━━━━━━━━
+👤 Nama: ${order.customer.name}
+📧 Email: ${order.customer.email}
+📱 WhatsApp: ${order.customer.phone}
+
+━━━━━━━━━━━━━━━━━━━━
+📦 *DETAIL PESANAN*
+━━━━━━━━━━━━━━━━━━━━
+${items}
+
+━━━━━━━━━━━━━━━━━━━━
+💳 *RINGKASAN PEMBAYARAN*
+━━━━━━━━━━━━━━━━━━━━
+💰 Total Pembayaran: *Rp${formatPrice(order.total)}*
+🏦 Metode: ${order.paymentMethod.toUpperCase()}
+📊 Status: ${order.status}
+
+━━━━━━━━━━━━━━━━━━━━
+✅ Bukti transfer telah dikirim melalui website.
+🔔 Mohon segera diproses. Terima kasih!`;
         }
 
         function isValidEmail(email) {
