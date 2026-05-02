@@ -1,431 +1,502 @@
 <!DOCTYPE html>
-<html lang="id" class="dark">
+<html lang="id">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SllowlyStore - Toko Akun & Tools Digital</title>
+    <title>SllowlyStore - Toko Digital Terpercaya</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <link rel="stylesheet" href="theme-fix.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <script>
         tailwind.config = {
             darkMode: 'class',
             theme: {
                 extend: {
+                    fontFamily: { sans: ['Inter', 'sans-serif'] },
                     colors: {
-                        primary: '#6B21A8',
-                        secondary: '#8B5CF6',
-                        accent: '#A78BFA',
-                        dark: '#0F0F1A',
-                        darker: '#08080F',
-                        card: '#1A1A2E',
-                        surface: '#16162A',
+                        primary: { DEFAULT: '#7C3AED', light: '#8B5CF6', dark: '#6B21A8' },
+                        glass: 'rgba(255, 255, 255, 0.08)',
+                        glassBorder: 'rgba(255, 255, 255, 0.18)',
                     }
                 }
             }
         }
     </script>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
-        * { font-family: 'Inter', sans-serif; }
-
+        * { scroll-behavior: smooth; }
+        body { font-family: 'Inter', sans-serif; }
         .glass {
-            background: rgba(26, 26, 46, 0.7);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border: 1px solid rgba(139, 92, 246, 0.15);
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
-
-        .glass-light {
-            background: rgba(255, 255, 255, 0.7);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border: 1px solid rgba(139, 92, 246, 0.15);
+        .glass-dark {
+            background: rgba(17, 24, 39, 0.7);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
         }
-
-        .glow {
-            box-shadow: 0 0 30px rgba(107, 33, 168, 0.3), 0 0 60px rgba(139, 92, 246, 0.1);
+        .gradient-text {
+            background: linear-gradient(135deg, #8B5CF6 0%, #A78BFA 50%, #C4B5FD 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
-
-        .glow-hover:hover {
-            box-shadow: 0 0 40px rgba(107, 33, 168, 0.5), 0 0 80px rgba(139, 92, 246, 0.2);
+        .hero-gradient {
+            background: linear-gradient(135deg, #1e1b4b 0%, #312e81 25%, #4c1d95 50%, #5b21b6 75%, #7c3aed 100%);
         }
-
-        .btn-gradient {
-            background: linear-gradient(135deg, #6B21A8 0%, #8B5CF6 50%, #A78BFA 100%);
-            background-size: 200% 200%;
-            animation: gradientShift 3s ease infinite;
-        }
-
-        @keyframes gradientShift {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-
         .card-hover {
             transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         }
-
         .card-hover:hover {
             transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 25px 50px -12px rgba(139, 92, 246, 0.25);
         }
-
-        .float {
+        .btn-primary {
+            background: linear-gradient(135deg, #7C3AED 0%, #8B5CF6 100%);
+            transition: all 0.3s ease;
+        }
+        .btn-primary:hover {
+            background: linear-gradient(135deg, #6B21A8 0%, #7C3AED 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px -10px rgba(124, 58, 237, 0.5);
+        }
+        .floating {
             animation: float 6s ease-in-out infinite;
         }
-
         @keyframes float {
             0%, 100% { transform: translateY(0px); }
             50% { transform: translateY(-20px); }
         }
-
-        .particle {
-            position: absolute;
-            width: 4px;
-            height: 4px;
-            background: rgba(139, 92, 246, 0.4);
-            border-radius: 50%;
-            animation: particleFloat 15s infinite;
+        .glow {
+            box-shadow: 0 0 20px rgba(139, 92, 246, 0.3);
         }
-
-        @keyframes particleFloat {
-            0%, 100% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
-            10% { opacity: 1; }
-            90% { opacity: 1; }
-            100% { transform: translateY(-100vh) rotate(720deg); opacity: 0; }
-        }
-
         .shimmer {
             background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
             background-size: 200% 100%;
             animation: shimmer 2s infinite;
         }
-
         @keyframes shimmer {
             0% { background-position: -200% 0; }
             100% { background-position: 200% 0; }
         }
-
-        .scroll-reveal {
-            opacity: 0;
-            transform: translateY(30px);
-            transition: all 0.6s ease;
+        .blob {
+            position: absolute;
+            filter: blur(80px);
+            opacity: 0.4;
+            animation: blob 7s infinite;
         }
-
-        .scroll-reveal.visible {
-            opacity: 1;
-            transform: translateY(0);
+        @keyframes blob {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            33% { transform: translate(30px, -50px) scale(1.1); }
+            66% { transform: translate(-20px, 20px) scale(0.9); }
         }
-
-        .badge-glow {
-            animation: badgePulse 2s ease-in-out infinite;
+        .scroll-indicator {
+            animation: bounce 2s infinite;
         }
-
-        @keyframes badgePulse {
-            0%, 100% { box-shadow: 0 0 5px rgba(139, 92, 246, 0.5); }
-            50% { box-shadow: 0 0 20px rgba(139, 92, 246, 0.8); }
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-10px); }
+            60% { transform: translateY(-5px); }
         }
-
-        .cart-bounce {
-            animation: cartBounce 0.5s ease;
+        .product-img {
+            transition: transform 0.5s ease;
         }
-
-        @keyframes cartBounce {
+        .product-card:hover .product-img {
+            transform: scale(1.1) rotate(2deg);
+        }
+        .badge-popular {
+            background: linear-gradient(135deg, #F59E0B, #D97706);
+        }
+        .badge-new {
+            background: linear-gradient(135deg, #10B981, #059669);
+        }
+        .nav-blur {
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+        }
+        .cart-badge {
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
             0%, 100% { transform: scale(1); }
-            25% { transform: scale(1.3); }
-            50% { transform: scale(0.9); }
-            75% { transform: scale(1.1); }
+            50% { transform: scale(1.2); }
         }
-
-        /* Quantity Selector Styles */
-        .qty-btn {
-            transition: all 0.2s ease;
+        .loading-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.8);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s;
         }
-        .qty-btn:active {
-            transform: scale(0.9);
+        .loading-overlay.active {
+            opacity: 1;
+            pointer-events: all;
         }
-        .qty-btn:hover {
-            background: rgba(139, 92, 246, 0.3);
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border: 3px solid rgba(139, 92, 246, 0.3);
+            border-top-color: #8B5CF6;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
         }
-
-        .qty-input {
-            -moz-appearance: textfield;
-        }
-        .qty-input::-webkit-outer-spin-button,
-        .qty-input::-webkit-inner-spin-button {
-            -webkit-appearance: none;
-            margin: 0;
-        }
-
-        .qty-selector {
-            transition: all 0.3s ease;
-        }
-
-        .qty-selector:focus-within {
-            box-shadow: 0 0 20px rgba(139, 92, 246, 0.3);
-            border-color: rgba(139, 92, 246, 0.5);
-        }
-
-        .add-to-cart-anim {
-            animation: addToCartPulse 0.6s ease;
-        }
-
-        @keyframes addToCartPulse {
-            0% { transform: scale(1); }
-            30% { transform: scale(0.95); }
-            50% { transform: scale(1.05); }
-            100% { transform: scale(1); }
-        }
-
-        .stock-bar {
-            transition: width 0.5s ease;
-        }
-
-        .price-tag {
-            background: linear-gradient(135deg, rgba(107, 33, 168, 0.2), rgba(139, 92, 246, 0.1));
-        }
-
-        /* Product Logo Styles */
-        .product-logo {
-            transition: all 0.3s ease;
-        }
-        .card-hover:hover .product-logo {
-            transform: scale(1.1) rotate(5deg);
-        }
-
-        .product-icon-bg {
-            transition: all 0.4s ease;
-        }
-        .card-hover:hover .product-icon-bg {
-            filter: brightness(1.2);
-        }
-
-        ::-webkit-scrollbar { width: 8px; }
-        ::-webkit-scrollbar-track { background: #0F0F1A; }
-        ::-webkit-scrollbar-thumb { background: #6B21A8; border-radius: 4px; }
-        ::-webkit-scrollbar-thumb:hover { background: #8B5CF6; }
+        @keyframes spin { to { transform: rotate(360deg); } }
     </style>
-<base target="_blank">
 </head>
-<body class="bg-dark text-gray-100 min-h-screen overflow-x-hidden">
-    <!-- Particles Background -->
-    <div id="particles" class="fixed inset-0 pointer-events-none z-0 overflow-hidden"></div>
+<body class="bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-white transition-colors duration-300">
 
-    <!-- Header -->
-    <header class="fixed top-0 left-0 right-0 z-50 glass">
+    <!-- Loading Overlay -->
+    <div id="loadingOverlay" class="loading-overlay">
+        <div class="text-center">
+            <div class="spinner mx-auto mb-4"></div>
+            <p class="text-white font-medium">Memuat...</p>
+        </div>
+    </div>
+
+    <!-- Navigation -->
+    <nav id="navbar" class="fixed w-full z-50 transition-all duration-300 bg-white/80 dark:bg-gray-900/80 nav-blur border-b border-gray-200 dark:border-gray-800">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex items-center justify-between h-16">
+            <div class="flex justify-between items-center h-16">
                 <!-- Logo -->
                 <a href="index.html" class="flex items-center space-x-3 group">
-                    <div class="w-10 h-10 rounded-xl btn-gradient flex items-center justify-center transform group-hover:rotate-12 transition-transform duration-300">
+                    <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-primary to-primary-light flex items-center justify-center shadow-lg group-hover:shadow-primary/50 transition-all">
                         <i class="fas fa-bolt text-white text-lg"></i>
                     </div>
-                    <span class="text-xl font-bold bg-gradient-to-r from-purple-400 to-violet-300 bg-clip-text text-transparent">
-                        SllowlyStore
-                    </span>
+                    <span class="text-xl font-bold gradient-text">SllowlyStore</span>
                 </a>
 
-                <!-- Navigation -->
-                <nav class="hidden md:flex items-center space-x-1">
-                    <a href="#products" class="px-4 py-2 rounded-xl text-sm font-medium text-purple-300 hover:text-white hover:bg-purple-500/20 transition-all duration-300">
-                        <i class="fas fa-box mr-2"></i>Produk
-                    </a>
-                    <a href="invoice-status.html" class="px-4 py-2 rounded-xl text-sm font-medium text-gray-400 hover:text-white hover:bg-purple-500/20 transition-all duration-300">
-                        <i class="fas fa-search mr-2"></i>Cek Pesanan
-                    </a>
-                    <a href="admin.html" class="px-4 py-2 rounded-xl text-sm font-medium text-gray-400 hover:text-white hover:bg-purple-500/20 transition-all duration-300">
-                        <i class="fas fa-cog mr-2"></i>Admin
-                    </a>
-                </nav>
+                <!-- Desktop Menu -->
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="#products" class="text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-primary-light transition-colors font-medium">Produk</a>
+                    <a href="invoice-status.html" class="text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-primary-light transition-colors font-medium">Cek Pesanan</a>
+                    <a href="admin.html" class="text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-primary-light transition-colors font-medium">Admin</a>
 
-                <!-- Right Side -->
-                <div class="flex items-center space-x-3">
-                    <!-- Dark Mode Toggle -->
-                    <button id="themeToggle" class="w-10 h-10 rounded-xl glass flex items-center justify-center hover:bg-purple-500/20 transition-all duration-300 group">
-                        <i class="fas fa-sun text-yellow-400 group-hover:rotate-180 transition-transform duration-500" id="themeIcon"></i>
+                    <!-- Cart Button -->
+                    <button onclick="openCart()" class="relative p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
+                        <i class="fas fa-shopping-cart text-gray-600 dark:text-gray-300 text-lg"></i>
+                        <span id="cartCount" class="cart-badge absolute -top-1 -right-1 w-5 h-5 bg-primary text-white text-xs rounded-full flex items-center justify-center font-bold hidden">0</span>
                     </button>
 
-                    <!-- Cart -->
-                    <a href="checkout.html" class="relative w-10 h-10 rounded-xl glass flex items-center justify-center hover:bg-purple-500/20 transition-all duration-300 group" id="cartBtn">
-                        <i class="fas fa-shopping-cart text-purple-300 group-hover:text-white transition-colors"></i>
-                        <span id="cartCount" class="absolute -top-1 -right-1 w-5 h-5 rounded-full bg-gradient-to-r from-red-500 to-pink-500 text-xs flex items-center justify-center font-bold text-white hidden">0</span>
-                    </a>
+                    <!-- Dark Mode Toggle -->
+                    <button onclick="toggleDarkMode()" class="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
+                        <i id="darkModeIcon" class="fas fa-moon text-gray-600 dark:text-yellow-400 text-lg"></i>
+                    </button>
+                </div>
 
-                    <!-- Mobile Menu -->
-                    <button id="mobileMenuBtn" class="md:hidden w-10 h-10 rounded-xl glass flex items-center justify-center">
-                        <i class="fas fa-bars text-purple-300"></i>
+                <!-- Mobile Menu Button -->
+                <div class="md:hidden flex items-center space-x-4">
+                    <button onclick="openCart()" class="relative p-2">
+                        <i class="fas fa-shopping-cart text-gray-600 dark:text-gray-300 text-lg"></i>
+                        <span id="cartCountMobile" class="cart-badge absolute -top-1 -right-1 w-5 h-5 bg-primary text-white text-xs rounded-full flex items-center justify-center font-bold hidden">0</span>
+                    </button>
+                    <button onclick="toggleMobileMenu()" class="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800">
+                        <i class="fas fa-bars text-gray-600 dark:text-gray-300 text-xl"></i>
                     </button>
                 </div>
             </div>
         </div>
 
         <!-- Mobile Menu -->
-        <div id="mobileMenu" class="md:hidden hidden glass border-t border-purple-500/10">
-            <div class="px-4 py-3 space-y-2">
-                <a href="#products" class="block px-4 py-2 rounded-xl text-sm font-medium text-purple-300 bg-purple-500/10">
-                    <i class="fas fa-box mr-2"></i>Produk
-                </a>
-                <a href="invoice-status.html" class="block px-4 py-2 rounded-xl text-sm font-medium text-gray-400 hover:bg-purple-500/10 hover:text-white transition-all">
-                    <i class="fas fa-search mr-2"></i>Cek Pesanan
-                </a>
-                <a href="admin.html" class="block px-4 py-2 rounded-xl text-sm font-medium text-gray-400 hover:bg-purple-500/10 hover:text-white transition-all">
-                    <i class="fas fa-cog mr-2"></i>Admin
-                </a>
+        <div id="mobileMenu" class="md:hidden hidden bg-white dark:bg-gray-900 border-t border-gray-200 dark:border-gray-800">
+            <div class="px-4 py-3 space-y-3">
+                <a href="#products" class="block py-2 text-gray-600 dark:text-gray-300 hover:text-primary">Produk</a>
+                <a href="invoice-status.html" class="block py-2 text-gray-600 dark:text-gray-300 hover:text-primary">Cek Pesanan</a>
+                <a href="admin.html" class="block py-2 text-gray-600 dark:text-gray-300 hover:text-primary">Admin</a>
+                <button onclick="toggleDarkMode()" class="flex items-center space-x-2 py-2 text-gray-600 dark:text-gray-300">
+                    <i id="darkModeIconMobile" class="fas fa-moon"></i>
+                    <span>Dark Mode</span>
+                </button>
             </div>
         </div>
-    </header>
+    </nav>
 
     <!-- Hero Section -->
-    <section class="relative pt-32 pb-20 px-4 sm:px-6 lg:px-8 overflow-hidden">
-        <div class="absolute inset-0 bg-gradient-to-b from-purple-900/20 via-transparent to-transparent"></div>
-        <div class="max-w-7xl mx-auto relative z-10">
-            <div class="text-center">
-                <div class="inline-flex items-center px-4 py-2 rounded-full glass mb-6 badge-glow">
-                    <span class="w-2 h-2 rounded-full bg-green-400 mr-2 animate-pulse"></span>
-                    <span class="text-sm text-purple-300">Toko Digital Terpercaya</span>
-                </div>
-                <h1 class="text-4xl sm:text-5xl lg:text-7xl font-extrabold mb-6 leading-tight">
-                    <span class="bg-gradient-to-r from-purple-400 via-violet-300 to-purple-500 bg-clip-text text-transparent">
-                        Akun & Tools
-                    </span>
-                    <br>
-                    <span class="text-white">Berkualitas Tinggi</span>
-                </h1>
-                <p class="text-lg sm:text-xl text-gray-400 max-w-2xl mx-auto mb-10 leading-relaxed">
-                    Jual beli akun Facebook, Gmail, dan tools otomatis dengan harga terjangkau. 
-                    Proses cepat, aman, dan terpercaya.
-                </p>
-                <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
-                    <a href="#products" class="btn-gradient px-8 py-4 rounded-full text-white font-semibold text-lg hover:shadow-lg hover:shadow-purple-500/30 transition-all duration-300 transform hover:scale-105">
-                        <i class="fas fa-shopping-bag mr-2"></i>Lihat Produk
-                    </a>
-                    <a href="invoice-status.html" class="glass px-8 py-4 rounded-full text-purple-300 font-semibold text-lg hover:bg-purple-500/20 transition-all duration-300 border border-purple-500/30">
-                        <i class="fas fa-search mr-2"></i>Cek Pesanan
-                    </a>
-                </div>
+    <section class="relative min-h-screen flex items-center justify-center overflow-hidden hero-gradient">
+        <!-- Animated Blobs -->
+        <div class="blob w-96 h-96 bg-purple-500 rounded-full top-0 left-0"></div>
+        <div class="blob w-80 h-80 bg-indigo-500 rounded-full bottom-0 right-0 animation-delay-2000"></div>
+        <div class="blob w-72 h-72 bg-violet-400 rounded-full top-1/2 left-1/2 animation-delay-4000"></div>
 
-                <!-- Stats -->
-                <div class="mt-16 grid grid-cols-2 sm:grid-cols-4 gap-6 max-w-3xl mx-auto">
-                    <div class="glass rounded-2xl p-4 float" style="animation-delay: 0s;">
-                        <div class="text-2xl font-bold text-purple-400">500+</div>
-                        <div class="text-sm text-gray-500">Produk Terjual</div>
-                    </div>
-                    <div class="glass rounded-2xl p-4 float" style="animation-delay: 0.5s;">
-                        <div class="text-2xl font-bold text-purple-400">99%</div>
-                        <div class="text-sm text-gray-500">Pelanggan Puas</div>
-                    </div>
-                    <div class="glass rounded-2xl p-4 float" style="animation-delay: 1s;">
-                        <div class="text-2xl font-bold text-purple-400">24/7</div>
-                        <div class="text-sm text-gray-500">Layanan Support</div>
-                    </div>
-                    <div class="glass rounded-2xl p-4 float" style="animation-delay: 1.5s;">
-                        <div class="text-2xl font-bold text-purple-400">100%</div>
-                        <div class="text-sm text-gray-500">Aman & Terpercaya</div>
-                    </div>
+        <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <div class="floating mb-8">
+                <div class="inline-flex items-center px-4 py-2 rounded-full glass text-white text-sm font-medium mb-6 border border-white/20">
+                    <span class="w-2 h-2 bg-green-400 rounded-full mr-2 animate-pulse"></span>
+                    Toko Digital Terpercaya
                 </div>
             </div>
+
+            <h1 class="text-5xl md:text-7xl font-bold text-white mb-6 leading-tight">
+                Solusi Digital <br>
+                <span class="bg-gradient-to-r from-purple-300 via-violet-200 to-indigo-300 bg-clip-text text-transparent">Untuk Bisnis Anda</span>
+            </h1>
+
+            <p class="text-xl text-gray-300 mb-10 max-w-2xl mx-auto leading-relaxed">
+                Jual berbagai akun dan tools digital berkualitas dengan harga terjangkau. 
+                Proses cepat, aman, dan terpercaya.
+            </p>
+
+            <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
+                <a href="#products" class="btn-primary px-8 py-4 rounded-full text-white font-semibold text-lg shadow-lg hover:shadow-xl transition-all flex items-center space-x-2">
+                    <span>Lihat Produk</span>
+                    <i class="fas fa-arrow-right"></i>
+                </a>
+                <a href="invoice-status.html" class="px-8 py-4 rounded-full border-2 border-white/30 text-white font-semibold text-lg hover:bg-white/10 transition-all">
+                    Cek Pesanan
+                </a>
+            </div>
+
+            <!-- Stats -->
+            <div class="mt-16 grid grid-cols-3 gap-8 max-w-lg mx-auto">
+                <div class="glass rounded-2xl p-4">
+                    <div class="text-3xl font-bold text-white" id="statProducts">7+</div>
+                    <div class="text-sm text-gray-300">Produk</div>
+                </div>
+                <div class="glass rounded-2xl p-4">
+                    <div class="text-3xl font-bold text-white" id="statCustomers">500+</div>
+                    <div class="text-sm text-gray-300">Pelanggan</div>
+                </div>
+                <div class="glass rounded-2xl p-4">
+                    <div class="text-3xl font-bold text-white">24/7</div>
+                    <div class="text-sm text-gray-300">Support</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Scroll Indicator -->
+        <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 scroll-indicator">
+            <a href="#products" class="text-white/60 hover:text-white transition-colors">
+                <i class="fas fa-chevron-down text-2xl"></i>
+            </a>
         </div>
     </section>
 
-    <!-- Products Section - ETALASE LANGSUNG DI LANDING PAGE -->
-    <section id="products" class="py-20 px-4 sm:px-6 lg:px-8">
-        <div class="max-w-7xl mx-auto">
-            <div class="text-center mb-16 scroll-reveal">
-                <div class="inline-flex items-center px-4 py-2 rounded-full glass mb-4 badge-glow">
-                    <i class="fas fa-fire text-orange-400 mr-2"></i>
-                    <span class="text-sm text-purple-300">Produk Unggulan</span>
-                </div>
-                <h2 class="text-3xl sm:text-4xl font-bold mb-4">
-                    <span class="bg-gradient-to-r from-purple-400 to-violet-300 bg-clip-text text-transparent">Etalase Produk</span>
+    <!-- Products Section -->
+    <section id="products" class="py-20 bg-gray-50 dark:bg-gray-900">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <!-- Section Header -->
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-bold mb-4">
+                    <span class="gradient-text">Produk Unggulan</span>
                 </h2>
-                <p class="text-gray-400 max-w-xl mx-auto">Pilih produk dan atur jumlah yang diinginkan. Klik tombol + untuk menambah ke keranjang.</p>
+                <p class="text-gray-600 dark:text-gray-400 text-lg max-w-2xl mx-auto">
+                    Pilih produk digital terbaik untuk kebutuhan Anda. Semua produk telah melalui quality control.
+                </p>
             </div>
 
-            <!-- Product Grid with Color-Matching Logos -->
-            <div id="productGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-                <!-- Products rendered here with color-matching logos -->
+            <!-- Filter Buttons -->
+            <div class="flex flex-wrap justify-center gap-3 mb-12">
+                <button onclick="filterProducts('all')" class="filter-btn active px-6 py-2 rounded-full bg-primary text-white font-medium transition-all hover:shadow-lg" data-filter="all">
+                    Semua
+                </button>
+                <button onclick="filterProducts('facebook')" class="filter-btn px-6 py-2 rounded-full bg-gray-200 dark:bg-gray-800 text-gray-700 dark:text-gray-300 font-medium transition-all hover:bg-primary hover:text-white" data-filter="facebook">
+                    <i class="fab fa-facebook mr-2"></i>Facebook
+                </button>
+                <button onclick="filterProducts('gmail')" class="filter-btn px-6 py-2 rounded-full bg-gray-200 dark:bg-gray-800 text-gray-700 dark:text-gray-300 font-medium transition-all hover:bg-primary hover:text-white" data-filter="gmail">
+                    <i class="fab fa-google mr-2"></i>Gmail
+                </button>
+                <button onclick="filterProducts('tools')" class="filter-btn px-6 py-2 rounded-full bg-gray-200 dark:bg-gray-800 text-gray-700 dark:text-gray-300 font-medium transition-all hover:bg-primary hover:text-white" data-filter="tools">
+                    <i class="fas fa-tools mr-2"></i>Tools
+                </button>
+            </div>
+
+            <!-- Products Grid -->
+            <div id="productsGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Products will be injected here by JavaScript -->
             </div>
         </div>
     </section>
 
     <!-- Features Section -->
-    <section class="py-20 px-4 sm:px-6 lg:px-8">
-        <div class="max-w-7xl mx-auto">
-            <div class="text-center mb-16 scroll-reveal">
-                <h2 class="text-3xl sm:text-4xl font-bold mb-4">
-                    <span class="bg-gradient-to-r from-purple-400 to-violet-300 bg-clip-text text-transparent">Mengapa Memilih Kami?</span>
+    <section class="py-20 bg-white dark:bg-gray-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-bold mb-4">
+                    <span class="gradient-text">Mengapa Memilih Kami?</span>
                 </h2>
             </div>
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <div class="glass rounded-3xl p-8 card-hover scroll-reveal">
-                    <div class="w-16 h-16 rounded-2xl btn-gradient flex items-center justify-center mb-6">
+                <div class="glass-dark rounded-2xl p-8 text-center card-hover">
+                    <div class="w-16 h-16 mx-auto mb-6 rounded-2xl bg-gradient-to-br from-primary to-primary-light flex items-center justify-center">
                         <i class="fas fa-shield-alt text-white text-2xl"></i>
                     </div>
-                    <h3 class="text-xl font-bold mb-3 text-white">Aman & Terpercaya</h3>
-                    <p class="text-gray-400 leading-relaxed">Semua transaksi dilindungi dengan sistem verifikasi bukti transfer. Garansi uang kembali jika produk bermasalah.</p>
+                    <h3 class="text-xl font-bold mb-3">Aman & Terpercaya</h3>
+                    <p class="text-gray-400">Semua transaksi dilindungi dengan sistem validasi bukti transfer dan garansi produk.</p>
                 </div>
-                <div class="glass rounded-3xl p-8 card-hover scroll-reveal">
-                    <div class="w-16 h-16 rounded-2xl btn-gradient flex items-center justify-center mb-6">
+                <div class="glass-dark rounded-2xl p-8 text-center card-hover">
+                    <div class="w-16 h-16 mx-auto mb-6 rounded-2xl bg-gradient-to-br from-green-500 to-emerald-600 flex items-center justify-center">
                         <i class="fas fa-bolt text-white text-2xl"></i>
                     </div>
-                    <h3 class="text-xl font-bold mb-3 text-white">Proses Cepat</h3>
-                    <p class="text-gray-400 leading-relaxed">Pesanan diproses dalam hitungan menit setelah pembayaran dikonfirmasi. Tidak perlu menunggu lama.</p>
+                    <h3 class="text-xl font-bold mb-3">Proses Cepat</h3>
+                    <p class="text-gray-400">Pesanan diproses dalam hitungan menit setelah pembayaran dikonfirmasi admin.</p>
                 </div>
-                <div class="glass rounded-3xl p-8 card-hover scroll-reveal">
-                    <div class="w-16 h-16 rounded-2xl btn-gradient flex items-center justify-center mb-6">
+                <div class="glass-dark rounded-2xl p-8 text-center card-hover">
+                    <div class="w-16 h-16 mx-auto mb-6 rounded-2xl bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center">
                         <i class="fas fa-headset text-white text-2xl"></i>
                     </div>
-                    <h3 class="text-xl font-bold mb-3 text-white">Support 24/7</h3>
-                    <p class="text-gray-400 leading-relaxed">Tim support kami siap membantu kapan saja melalui WhatsApp. Respon cepat dan ramah.</p>
+                    <h3 class="text-xl font-bold mb-3">Support 24/7</h3>
+                    <p class="text-gray-400">Tim support siap membantu kapan saja melalui WhatsApp dengan respon cepat.</p>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- Footer -->
-    <footer class="border-t border-purple-500/10 py-12 px-4 sm:px-6 lg:px-8 mt-20">
-        <div class="max-w-7xl mx-auto">
-            <div class="flex flex-col md:flex-row items-center justify-between gap-6">
-                <div class="flex items-center space-x-3">
-                    <div class="w-10 h-10 rounded-xl btn-gradient flex items-center justify-center">
-                        <i class="fas fa-bolt text-white text-lg"></i>
+    <footer class="bg-gray-900 text-white py-12 border-t border-gray-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+                <div class="md:col-span-2">
+                    <div class="flex items-center space-x-3 mb-4">
+                        <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-primary to-primary-light flex items-center justify-center">
+                            <i class="fas fa-bolt text-white text-lg"></i>
+                        </div>
+                        <span class="text-2xl font-bold">SllowlyStore</span>
                     </div>
-                    <div>
-                        <span class="text-lg font-bold text-white">SllowlyStore</span>
-                        <p class="text-sm text-gray-500">Toko Digital Terpercaya</p>
+                    <p class="text-gray-400 mb-4 max-w-md">
+                        Toko digital terpercaya untuk kebutuhan akun dan tools. 
+                        Kami menyediakan produk berkualitas dengan harga kompetitif.
+                    </p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-primary transition-colors">
+                            <i class="fab fa-whatsapp"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-primary transition-colors">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-primary transition-colors">
+                            <i class="fab fa-telegram"></i>
+                        </a>
                     </div>
                 </div>
-                <div class="flex items-center space-x-6 text-sm text-gray-500">
-                    <span>© 2024 SllowlyStore. All rights reserved.</span>
+                <div>
+                    <h4 class="font-bold text-lg mb-4">Menu</h4>
+                    <ul class="space-y-2 text-gray-400">
+                        <li><a href="#products" class="hover:text-primary transition-colors">Produk</a></li>
+                        <li><a href="checkout.html" class="hover:text-primary transition-colors">Checkout</a></li>
+                        <li><a href="invoice-status.html" class="hover:text-primary transition-colors">Cek Pesanan</a></li>
+                        <li><a href="admin.html" class="hover:text-primary transition-colors">Admin</a></li>
+                    </ul>
                 </div>
-                <div class="flex items-center space-x-4">
-                    <a href="#" class="w-10 h-10 rounded-xl glass flex items-center justify-center hover:bg-purple-500/20 transition-all">
-                        <i class="fab fa-whatsapp text-green-400"></i>
-                    </a>
-                    <a href="#" class="w-10 h-10 rounded-xl glass flex items-center justify-center hover:bg-purple-500/20 transition-all">
-                        <i class="fab fa-telegram text-blue-400"></i>
-                    </a>
-                    <a href="#" class="w-10 h-10 rounded-xl glass flex items-center justify-center hover:bg-purple-500/20 transition-all">
-                        <i class="fab fa-instagram text-pink-400"></i>
-                    </a>
+                <div>
+                    <h4 class="font-bold text-lg mb-4">Kontak</h4>
+                    <ul class="space-y-2 text-gray-400">
+                        <li class="flex items-center space-x-2">
+                            <i class="fab fa-whatsapp text-green-500"></i>
+                            <span>0857-7884-3364</span>
+                        </li>
+                        <li class="flex items-center space-x-2">
+                            <i class="fas fa-envelope text-primary"></i>
+                            <span>admin@sllowlystore.com</span>
+                        </li>
+                        <li class="flex items-center space-x-2">
+                            <i class="fas fa-clock text-yellow-500"></i>
+                            <span>24 Jam Online</span>
+                        </li>
+                    </ul>
                 </div>
+            </div>
+            <div class="border-t border-gray-800 pt-8 text-center text-gray-500">
+                <p> 2026 SllowlyStore. All rights reserved.</p>
             </div>
         </div>
     </footer>
 
+    <!-- Cart Sidebar -->
+    <div id="cartSidebar" class="fixed inset-0 z-50 hidden">
+        <div class="absolute inset-0 bg-black/60 backdrop-blur-sm" onclick="closeCart()"></div>
+        <div class="absolute right-0 top-0 h-full w-full max-w-md bg-white dark:bg-gray-900 shadow-2xl transform transition-transform duration-300 translate-x-full" id="cartContent">
+            <div class="flex flex-col h-full">
+                <div class="flex items-center justify-between p-6 border-b border-gray-200 dark:border-gray-800">
+                    <h2 class="text-xl font-bold flex items-center space-x-2">
+                        <i class="fas fa-shopping-cart text-primary"></i>
+                        <span>Keranjang</span>
+                    </h2>
+                    <button onclick="closeCart()" class="w-10 h-10 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 flex items-center justify-center transition-colors">
+                        <i class="fas fa-times text-gray-500"></i>
+                    </button>
+                </div>
+                <div id="cartItems" class="flex-1 overflow-y-auto p-6 space-y-4">
+                    <!-- Cart items injected here -->
+                </div>
+                <div class="p-6 border-t border-gray-200 dark:border-gray-800 bg-gray-50 dark:bg-gray-800/50">
+                    <div class="flex justify-between items-center mb-4">
+                        <span class="text-gray-600 dark:text-gray-400">Total</span>
+                        <span id="cartTotal" class="text-2xl font-bold text-primary">Rp0</span>
+                    </div>
+                    <button onclick="goToCheckout()" class="w-full btn-primary py-3 rounded-xl text-white font-semibold shadow-lg hover:shadow-xl transition-all">
+                        Checkout Sekarang
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script src="script.js"></script>
     <script>
-        // Initialize index page with quantity selector and color-matching logos
-        document.addEventListener('DOMContentLoaded', () => {
-            initTheme();
-            initData();
-            renderProductsWithQty();
-            updateCartCount();
-            initParticles();
-            initScrollReveal();
-            initMobileMenu();
+        // Initialize products on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            initProducts();
+            renderProducts();
+            updateCartUI();
+            initDarkMode();
+            animateStats();
+        });
+
+        // Animate stats
+        function animateStats() {
+            const stats = document.querySelectorAll('[id^="stat"]');
+            stats.forEach(stat => {
+                const target = parseInt(stat.textContent);
+                let current = 0;
+                const increment = target / 50;
+                const timer = setInterval(() => {
+                    current += increment;
+                    if (current >= target) {
+                        stat.textContent = target + (stat.id === 'statProducts' ? '+' : '+');
+                        clearInterval(timer);
+                    } else {
+                        stat.textContent = Math.floor(current);
+                    }
+                }, 30);
+            });
+        }
+
+        // Filter products
+        function filterProducts(category) {
+            const buttons = document.querySelectorAll('.filter-btn');
+            buttons.forEach(btn => {
+                if (btn.dataset.filter === category) {
+                    btn.classList.remove('bg-gray-200', 'dark:bg-gray-800', 'text-gray-700', 'dark:text-gray-300');
+                    btn.classList.add('bg-primary', 'text-white');
+                } else {
+                    btn.classList.add('bg-gray-200', 'dark:bg-gray-800', 'text-gray-700', 'dark:text-gray-300');
+                    btn.classList.remove('bg-primary', 'text-white');
+                }
+            });
+            renderProducts(category);
+        }
+
+        // Mobile menu
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobileMenu');
+            menu.classList.toggle('hidden');
+        }
+
+        // Navbar scroll effect
+        window.addEventListener('scroll', () => {
+            const navbar = document.getElementById('navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('shadow-lg');
+            } else {
+                navbar.classList.remove('shadow-lg');
+            }
         });
     </script>
 </body>
