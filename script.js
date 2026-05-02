@@ -1,8 +1,3 @@
-// ==========================================
-// SllowlyStore - Main JavaScript
-// ==========================================
-
-// Default Products Data
 const defaultProducts = [
     {
         id: 'fb-tools',
@@ -97,10 +92,6 @@ const defaultProducts = [
     }
 ];
 
-// ==========================================
-// UTILITY FUNCTIONS
-// ==========================================
-
 function formatPrice(price) {
     return price.toLocaleString('id-ID');
 }
@@ -140,10 +131,6 @@ function hideLoading() {
     }
 }
 
-// ==========================================
-// DARK MODE
-// ==========================================
-
 function initDarkMode() {
     const darkMode = localStorage.getItem('sllowly_darkmode') === 'true';
     if (darkMode) {
@@ -171,10 +158,6 @@ function updateDarkModeIcons() {
     });
 }
 
-// ==========================================
-// PRODUCTS
-// ==========================================
-
 function initProducts() {
     if (!localStorage.getItem('sllowly_products')) {
         localStorage.setItem('sllowly_products', JSON.stringify(defaultProducts));
@@ -193,43 +176,43 @@ function renderProducts(filter = 'all') {
     const filtered = filter === 'all' ? products : products.filter(p => p.category === filter);
 
     grid.innerHTML = filtered.map(product => `
-        <div class="product-card bg-white dark:bg-gray-800 rounded-2xl overflow-hidden border border-gray-200 dark:border-gray-700 shadow-lg card-hover group">
-            <div class="relative h-48 overflow-hidden bg-gradient-to-br from-gray-100 to-gray-200 dark:from-gray-700 dark:to-gray-800 flex items-center justify-center">
-                <div class="product-img w-24 h-24 rounded-2xl bg-gradient-to-br from-primary/20 to-primary-light/20 flex items-center justify-center">
-                    <i class="${product.icon} text-4xl text-primary"></i>
+        <div class="product-card bg-white dark:bg-gray-800 rounded-2xl overflow-hidden border border-gray-200 dark:border-gray-700 shadow-md hover:shadow-xl card-hover group">
+            <div class="relative h-44 overflow-hidden bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-700 dark:to-gray-800 flex items-center justify-center">
+                <div class="product-img w-20 h-20 rounded-2xl bg-gradient-to-br from-primary/10 to-primary-light/10 flex items-center justify-center shadow-inner">
+                    <i class="${product.icon} text-3xl text-primary"></i>
                 </div>
-                ${product.badge ? `<span class="absolute top-4 left-4 ${product.badgeColor} text-white text-xs font-bold px-3 py-1 rounded-full shadow-lg">${product.badge}</span>` : ''}
-                <div class="absolute top-4 right-4 bg-white/90 dark:bg-gray-900/90 backdrop-blur-sm rounded-full px-3 py-1 text-xs font-bold text-primary shadow-lg">
-                    Stok: ${product.stock}
-                </div>
-                <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end justify-center pb-4">
-                    <button onclick="quickAddToCart('${product.id}')" class="bg-white text-primary px-6 py-2 rounded-full font-semibold shadow-lg hover:bg-primary hover:text-white transition-all transform translate-y-4 group-hover:translate-y-0">
-                        <i class="fas fa-cart-plus mr-2"></i>Tambah
+                ${product.badge ? `<span class="absolute top-3 left-3 ${product.badgeColor} text-white text-xs font-bold px-2.5 py-1 rounded-full shadow-md">${product.badge}</span>` : ''}
+                ${product.stock < 50 ? `<span class="absolute top-3 right-3 bg-red-500 text-white text-xs font-bold px-2.5 py-1 rounded-full shadow-md">Stok Menipis</span>` : `<span class="absolute top-3 right-3 bg-green-500/90 text-white text-xs font-bold px-2.5 py-1 rounded-full shadow-md">Tersedia</span>`}
+                <div class="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end justify-center pb-3">
+                    <button onclick="quickAddToCart('${product.id}')" class="bg-white text-primary px-5 py-2 rounded-full font-semibold shadow-lg hover:bg-primary hover:text-white transition-all transform translate-y-3 group-hover:translate-y-0 text-sm">
+                        <i class="fas fa-cart-plus mr-1"></i>Tambah
                     </button>
                 </div>
             </div>
-            <div class="p-6">
-                <div class="flex items-center space-x-2 mb-2">
-                    <span class="px-2 py-1 rounded-md bg-primary/10 text-primary text-xs font-medium capitalize">${product.category}</span>
+            <div class="p-5">
+                <div class="flex items-center justify-between mb-2">
+                    <span class="px-2 py-0.5 rounded bg-primary/10 text-primary text-xs font-semibold uppercase tracking-wide">${product.category}</span>
+                    <span class="text-xs text-gray-400">Stok: ${product.stock}</span>
                 </div>
-                <h3 class="text-lg font-bold mb-2 group-hover:text-primary transition-colors">${product.name}</h3>
-                <p class="text-gray-500 dark:text-gray-400 text-sm mb-4 line-clamp-2">${product.description}</p>
-                <div class="flex items-center justify-between">
+                <h3 class="text-base font-bold mb-1.5 group-hover:text-primary transition-colors leading-tight">${product.name}</h3>
+                <p class="text-gray-500 dark:text-gray-400 text-xs mb-3 line-clamp-2 leading-relaxed">${product.description}</p>
+                <div class="flex items-center justify-between mb-3">
                     <div>
-                        <span class="text-2xl font-bold text-primary">Rp${formatPrice(product.price)}</span>
-                    </div>
-                    <div class="flex space-x-2">
-                        <button onclick="decreaseQty('${product.id}')" class="w-8 h-8 rounded-lg border border-gray-300 dark:border-gray-600 flex items-center justify-center hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">
-                            <i class="fas fa-minus text-xs"></i>
-                        </button>
-                        <input type="number" id="qty-${product.id}" value="1" min="1" max="${product.stock}" class="w-12 h-8 text-center border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-sm focus:outline-none focus:border-primary">
-                        <button onclick="increaseQty('${product.id}')" class="w-8 h-8 rounded-lg border border-gray-300 dark:border-gray-600 flex items-center justify-center hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">
-                            <i class="fas fa-plus text-xs"></i>
-                        </button>
+                        <span class="text-xs text-gray-400 line-through">Rp${formatPrice(Math.round(product.price * 1.2))}</span>
+                        <div class="text-xl font-bold text-primary">Rp${formatPrice(product.price)}</div>
                     </div>
                 </div>
-                <button onclick="addToCart('${product.id}')" class="w-full mt-4 btn-primary py-3 rounded-xl text-white font-semibold shadow-lg hover:shadow-xl transition-all flex items-center justify-center space-x-2">
-                    <i class="fas fa-shopping-cart"></i>
+                <div class="flex items-center space-x-2 mb-3">
+                    <button onclick="decreaseQty('${product.id}')" class="w-7 h-7 rounded-lg border border-gray-300 dark:border-gray-600 flex items-center justify-center hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">
+                        <i class="fas fa-minus text-xs text-gray-500"></i>
+                    </button>
+                    <input type="number" id="qty-${product.id}" value="1" min="1" max="${product.stock}" class="w-10 h-7 text-center border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-sm focus:outline-none focus:border-primary" readonly>
+                    <button onclick="increaseQty('${product.id}')" class="w-7 h-7 rounded-lg border border-gray-300 dark:border-gray-600 flex items-center justify-center hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">
+                        <i class="fas fa-plus text-xs text-gray-500"></i>
+                    </button>
+                </div>
+                <button onclick="addToCart('${product.id}')" class="w-full btn-primary py-2.5 rounded-xl text-white font-semibold shadow-md hover:shadow-lg transition-all flex items-center justify-center space-x-2 text-sm">
+                    <i class="fas fa-shopping-bag"></i>
                     <span>Beli Sekarang</span>
                 </button>
             </div>
@@ -258,10 +241,6 @@ function decreaseQty(productId) {
         }
     }
 }
-
-// ==========================================
-// CART
-// ==========================================
 
 function getCart() {
     return JSON.parse(localStorage.getItem('sllowly_cart') || '[]');
@@ -512,10 +491,6 @@ function goToCheckout() {
     window.location.href = 'checkout.html';
 }
 
-// ==========================================
-// STOCK MANAGEMENT
-// ==========================================
-
 function updateStockAfterOrder(cart) {
     const products = getProducts();
     cart.forEach(item => {
@@ -526,10 +501,6 @@ function updateStockAfterOrder(cart) {
     });
     localStorage.setItem('sllowly_products', JSON.stringify(products));
 }
-
-// ==========================================
-// STATUS ICONS
-// ==========================================
 
 function getStatusIcon(status) {
     const icons = {
