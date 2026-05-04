@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Dashboard - SllowlyStore</title>
+    <title>Admin Dashboard - Cici Store</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
@@ -16,7 +16,7 @@
                 extend: {
                     fontFamily: { sans: ['Inter', 'sans-serif'] },
                     colors: {
-                        primary: { DEFAULT: '#7C3AED', light: '#8B5CF6', dark: '#6B21A8' },
+                        primary: { DEFAULT: '#EC4899', light: '#F472B6', dark: '#BE185D' },
                     }
                 }
             }
@@ -25,64 +25,44 @@
     <style>
         * { scroll-behavior: smooth; }
         body { font-family: 'Inter', sans-serif; }
-        .glass {
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
         .gradient-text {
-            background: linear-gradient(135deg, #8B5CF6 0%, #A78BFA 50%, #C4B5FD 100%);
+            background: linear-gradient(135deg, #EC4899 0%, #F472B6 50%, #FBB6D0 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
         }
         .btn-primary {
-            background: linear-gradient(135deg, #7C3AED 0%, #8B5CF6 100%);
+            background: linear-gradient(135deg, #EC4899 0%, #F472B6 100%);
             transition: all 0.3s ease;
         }
         .btn-primary:hover {
-            background: linear-gradient(135deg, #6B21A8 0%, #7C3AED 100%);
+            background: linear-gradient(135deg, #BE185D 0%, #EC4899 100%);
             transform: translateY(-2px);
-            box-shadow: 0 10px 30px -10px rgba(124, 58, 237, 0.5);
+            box-shadow: 0 10px 30px -10px rgba(236, 72, 153, 0.5);
         }
         .sidebar-item {
             transition: all 0.3s ease;
         }
         .sidebar-item:hover, .sidebar-item.active {
-            background: rgba(139, 92, 246, 0.1);
-            color: #8B5CF6;
-            border-right: 3px solid #8B5CF6;
+            background: rgba(236, 72, 153, 0.1);
+            color: #EC4899;
+            border-right: 3px solid #EC4899;
         }
         .sidebar-item.active {
-            background: rgba(139, 92, 246, 0.15);
+            background: rgba(236, 72, 153, 0.15);
         }
         .stat-card {
             transition: all 0.3s ease;
         }
         .stat-card:hover {
             transform: translateY(-4px);
-            box-shadow: 0 20px 40px -10px rgba(139, 92, 246, 0.15);
+            box-shadow: 0 20px 40px -10px rgba(236, 72, 153, 0.15);
         }
         .order-row {
             transition: all 0.2s ease;
         }
         .order-row:hover {
-            background: rgba(139, 92, 246, 0.05);
-        }
-        .status-select {
-            transition: all 0.3s ease;
-        }
-        .status-select:focus {
-            box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.2);
-        }
-        .tab-btn {
-            transition: all 0.3s ease;
-            border-bottom: 2px solid transparent;
-        }
-        .tab-btn.active {
-            color: #8B5CF6;
-            border-bottom-color: #8B5CF6;
+            background: rgba(236, 72, 153, 0.05);
         }
         .modal-overlay {
             background: rgba(0, 0, 0, 0.6);
@@ -95,43 +75,33 @@
             from { opacity: 0; transform: translateY(10px); }
             to { opacity: 1; transform: translateY(0); }
         }
-        .stock-input {
-            transition: all 0.3s ease;
-        }
-        .stock-input:focus {
-            border-color: #8B5CF6;
-            box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.2);
-        }
-        .price-input {
-            transition: all 0.3s ease;
-        }
-        .price-input:focus {
-            border-color: #8B5CF6;
-            box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.2);
+        .input-field:focus {
+            border-color: #EC4899;
+            box-shadow: 0 0 0 3px rgba(236, 72, 153, 0.2);
         }
     </style>
 </head>
 <body class="bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-white transition-colors duration-300">
 
     <!-- Login Screen -->
-    <div id="loginScreen" class="fixed inset-0 z-50 flex items-center justify-center bg-gradient-to-br from-gray-900 via-purple-900 to-gray-900">
+    <div id="loginScreen" class="fixed inset-0 z-50 flex items-center justify-center bg-gradient-to-br from-gray-900 via-pink-900 to-gray-900">
         <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-2xl p-8 w-full max-w-md mx-4 animate-fade-in">
             <div class="text-center mb-8">
-                <div class="w-16 h-16 mx-auto rounded-2xl bg-gradient-to-br from-primary to-primary-light flex items-center justify-center mb-4 shadow-lg">
+                <div class="w-16 h-16 mx-auto rounded-2xl bg-gradient-to-br from-pink-500 to-pink-600 flex items-center justify-center mb-4 shadow-lg">
                     <i class="fas fa-lock text-white text-2xl"></i>
                 </div>
                 <h1 class="text-2xl font-bold gradient-text">Admin Login</h1>
-                <p class="text-gray-500 mt-2">SllowlyStore Dashboard</p>
+                <p class="text-gray-500 mt-2">Cici Store Dashboard</p>
             </div>
             <div class="space-y-4">
                 <div>
                     <label class="block text-sm font-medium mb-2">Username</label>
-                    <input type="text" id="loginUsername" class="w-full px-4 py-3 rounded-xl border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 focus:outline-none focus:border-primary" placeholder="Masukkan username">
+                    <input type="text" id="loginUsername" class="w-full px-4 py-3 rounded-xl border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 focus:outline-none focus:border-pink-500" placeholder="Masukkan username">
                 </div>
                 <div>
                     <label class="block text-sm font-medium mb-2">Password</label>
                     <div class="relative">
-                        <input type="password" id="loginPassword" class="w-full px-4 py-3 rounded-xl border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 focus:outline-none focus:border-primary" placeholder="Masukkan password">
+                        <input type="password" id="loginPassword" class="w-full px-4 py-3 rounded-xl border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 focus:outline-none focus:border-pink-500" placeholder="Masukkan password">
                         <button onclick="togglePassword()" class="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600">
                             <i id="passwordIcon" class="fas fa-eye"></i>
                         </button>
@@ -142,7 +112,7 @@
                 </button>
             </div>
             <div class="mt-6 text-center">
-                <a href="index.html" class="text-sm text-gray-500 hover:text-primary transition-colors">
+                <a href="index.html" class="text-sm text-gray-500 hover:text-pink-500 transition-colors">
                     <i class="fas fa-arrow-left mr-1"></i> Kembali ke Toko
                 </a>
             </div>
@@ -151,63 +121,55 @@
 
     <!-- Admin Dashboard -->
     <div id="dashboard" class="hidden min-h-screen">
-        <!-- Sidebar -->
-        <aside id="sidebar" class="fixed left-0 top-0 h-full w-64 bg-white dark:bg-gray-800 border-r border-gray-200 dark:border-gray-700 z-40 transform -translate-x-full lg:translate-x-0 transition-transform duration-300">
-            <div class="p-6 border-b border-gray-200 dark:border-gray-700">
+        <aside id="sidebar" class="fixed left-0 top-0 h-full w-64 bg-white dark:bg-gray-800 border-r border-pink-200/20 dark:border-pink-500/10 z-40 transform -translate-x-full lg:translate-x-0 transition-transform duration-300">
+            <div class="p-6 border-b border-pink-200/20 dark:border-pink-500/10">
                 <div class="flex items-center space-x-3">
-                    <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-primary to-primary-light flex items-center justify-center shadow-lg">
-                        <i class="fas fa-bolt text-white text-lg"></i>
+                    <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-pink-500 to-pink-600 flex items-center justify-center shadow-lg">
+                        <i class="fas fa-heart text-white text-lg"></i>
                     </div>
                     <div>
-                        <span class="text-lg font-bold">SllowlyStore</span>
+                        <span class="text-lg font-bold">Cici Store</span>
                         <p class="text-xs text-gray-500">Admin Panel</p>
                     </div>
                 </div>
             </div>
             <nav class="p-4 space-y-1">
                 <button onclick="showTab('dashboard')" class="sidebar-item active w-full flex items-center space-x-3 px-4 py-3 rounded-lg text-left" data-tab="dashboard">
-                    <i class="fas fa-chart-line w-5"></i>
-                    <span>Dashboard</span>
+                    <i class="fas fa-chart-line w-5"></i><span>Dashboard</span>
                 </button>
                 <button onclick="showTab('orders')" class="sidebar-item w-full flex items-center space-x-3 px-4 py-3 rounded-lg text-left" data-tab="orders">
-                    <i class="fas fa-shopping-cart w-5"></i>
-                    <span>Pesanan</span>
-                    <span id="sidebarOrderCount" class="ml-auto bg-primary text-white text-xs px-2 py-1 rounded-full hidden">0</span>
+                    <i class="fas fa-shopping-cart w-5"></i><span>Pesanan</span>
+                    <span id="sidebarOrderCount" class="ml-auto bg-pink-500 text-white text-xs px-2 py-1 rounded-full hidden">0</span>
                 </button>
                 <button onclick="showTab('products')" class="sidebar-item w-full flex items-center space-x-3 px-4 py-3 rounded-lg text-left" data-tab="products">
-                    <i class="fas fa-box w-5"></i>
-                    <span>Produk</span>
+                    <i class="fas fa-box w-5"></i><span>Produk</span>
                 </button>
                 <button onclick="showTab('settings')" class="sidebar-item w-full flex items-center space-x-3 px-4 py-3 rounded-lg text-left" data-tab="settings">
-                    <i class="fas fa-cog w-5"></i>
-                    <span>Pengaturan</span>
+                    <i class="fas fa-cog w-5"></i><span>Pengaturan</span>
                 </button>
             </nav>
-            <div class="absolute bottom-0 left-0 right-0 p-4 border-t border-gray-200 dark:border-gray-700">
+            <div class="absolute bottom-0 left-0 right-0 p-4 border-t border-pink-200/20 dark:border-pink-500/10">
                 <button onclick="logout()" class="w-full flex items-center space-x-3 px-4 py-3 rounded-lg text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors">
-                    <i class="fas fa-sign-out-alt w-5"></i>
-                    <span>Logout</span>
+                    <i class="fas fa-sign-out-alt w-5"></i><span>Logout</span>
                 </button>
             </div>
         </aside>
 
-        <!-- Main Content -->
         <div class="lg:ml-64 min-h-screen">
-            <!-- Top Bar -->
-            <header class="sticky top-0 z-30 bg-white/80 dark:bg-gray-900/80 backdrop-blur-xl border-b border-gray-200 dark:border-gray-800 px-6 py-4">
+            <header class="sticky top-0 z-30 bg-white/80 dark:bg-gray-900/80 backdrop-blur-xl border-b border-pink-200/20 dark:border-pink-500/10 px-6 py-4">
                 <div class="flex justify-between items-center">
                     <div class="flex items-center space-x-4">
-                        <button onclick="toggleSidebar()" class="lg:hidden p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800">
+                        <button onclick="toggleSidebar()" class="lg:hidden p-2 rounded-lg hover:bg-pink-50 dark:hover:bg-pink-500/10">
                             <i class="fas fa-bars text-gray-600 dark:text-gray-300"></i>
                         </button>
                         <h2 id="pageTitle" class="text-xl font-bold">Dashboard</h2>
                     </div>
                     <div class="flex items-center space-x-4">
-                        <button onclick="toggleDarkMode()" class="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
+                        <button onclick="toggleDarkMode()" class="p-2 rounded-full hover:bg-pink-50 dark:hover:bg-pink-500/10 transition-colors">
                             <i id="darkModeIcon" class="fas fa-moon text-gray-600 dark:text-yellow-400 text-lg"></i>
                         </button>
                         <div class="flex items-center space-x-3">
-                            <div class="w-8 h-8 rounded-full bg-gradient-to-br from-primary to-primary-light flex items-center justify-center">
+                            <div class="w-8 h-8 rounded-full bg-gradient-to-br from-pink-500 to-pink-600 flex items-center justify-center">
                                 <i class="fas fa-user text-white text-sm"></i>
                             </div>
                             <span class="hidden sm:block font-medium">Admin</span>
@@ -216,191 +178,258 @@
                 </div>
             </header>
 
-            <!-- Content Area -->
             <div class="p-6">
                 <!-- Dashboard Tab -->
                 <div id="tab-dashboard" class="tab-content">
-                    <!-- Stats Cards -->
                     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-                        <div class="stat-card bg-white dark:bg-gray-800 rounded-2xl p-6 border border-gray-200 dark:border-gray-700">
+                        <div class="stat-card bg-white dark:bg-gray-800 rounded-2xl p-6 border border-pink-200/20 dark:border-pink-500/10">
                             <div class="flex items-center justify-between mb-4">
-                                <div class="w-12 h-12 rounded-xl bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center">
-                                    <i class="fas fa-shopping-cart text-blue-600 dark:text-blue-400 text-xl"></i>
+                                <div class="w-12 h-12 rounded-xl bg-pink-100 dark:bg-pink-900/30 flex items-center justify-center">
+                                    <i class="fas fa-shopping-cart text-pink-600 dark:text-pink-400 text-xl"></i>
                                 </div>
-                                <span class="text-sm text-green-500 font-medium"><i class="fas fa-arrow-up mr-1"></i>12%</span>
                             </div>
                             <h3 class="text-2xl font-bold" id="statTotalOrders">0</h3>
                             <p class="text-gray-500 text-sm">Total Pesanan</p>
                         </div>
-                        <div class="stat-card bg-white dark:bg-gray-800 rounded-2xl p-6 border border-gray-200 dark:border-gray-700">
+                        <div class="stat-card bg-white dark:bg-gray-800 rounded-2xl p-6 border border-pink-200/20 dark:border-pink-500/10">
                             <div class="flex items-center justify-between mb-4">
                                 <div class="w-12 h-12 rounded-xl bg-green-100 dark:bg-green-900/30 flex items-center justify-center">
                                     <i class="fas fa-check-circle text-green-600 dark:text-green-400 text-xl"></i>
                                 </div>
-                                <span class="text-sm text-green-500 font-medium"><i class="fas fa-arrow-up mr-1"></i>8%</span>
                             </div>
                             <h3 class="text-2xl font-bold" id="statSuccessOrders">0</h3>
                             <p class="text-gray-500 text-sm">Pesanan Berhasil</p>
                         </div>
-                        <div class="stat-card bg-white dark:bg-gray-800 rounded-2xl p-6 border border-gray-200 dark:border-gray-700">
+                        <div class="stat-card bg-white dark:bg-gray-800 rounded-2xl p-6 border border-pink-200/20 dark:border-pink-500/10">
                             <div class="flex items-center justify-between mb-4">
                                 <div class="w-12 h-12 rounded-xl bg-yellow-100 dark:bg-yellow-900/30 flex items-center justify-center">
                                     <i class="fas fa-clock text-yellow-600 dark:text-yellow-400 text-xl"></i>
                                 </div>
-                                <span class="text-sm text-gray-500 font-medium">Aktif</span>
                             </div>
                             <h3 class="text-2xl font-bold" id="statPendingOrders">0</h3>
                             <p class="text-gray-500 text-sm">Sedang Diproses</p>
                         </div>
-                        <div class="stat-card bg-white dark:bg-gray-800 rounded-2xl p-6 border border-gray-200 dark:border-gray-700">
+                        <div class="stat-card bg-white dark:bg-gray-800 rounded-2xl p-6 border border-pink-200/20 dark:border-pink-500/10">
                             <div class="flex items-center justify-between mb-4">
-                                <div class="w-12 h-12 rounded-xl bg-purple-100 dark:bg-purple-900/30 flex items-center justify-center">
-                                    <i class="fas fa-money-bill-wave text-purple-600 dark:text-purple-400 text-xl"></i>
+                                <div class="w-12 h-12 rounded-xl bg-pink-100 dark:bg-pink-900/30 flex items-center justify-center">
+                                    <i class="fas fa-money-bill-wave text-pink-600 dark:text-pink-400 text-xl"></i>
                                 </div>
-                                <span class="text-sm text-green-500 font-medium"><i class="fas fa-arrow-up mr-1"></i>15%</span>
                             </div>
                             <h3 class="text-2xl font-bold" id="statRevenue">Rp0</h3>
                             <p class="text-gray-500 text-sm">Total Pendapatan</p>
                         </div>
                     </div>
 
-                    <!-- Charts -->
                     <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
-                        <div class="bg-white dark:bg-gray-800 rounded-2xl p-6 border border-gray-200 dark:border-gray-700">
+                        <div class="bg-white dark:bg-gray-800 rounded-2xl p-6 border border-pink-200/20 dark:border-pink-500/10">
                             <h3 class="font-bold mb-4">Statistik Pesanan</h3>
                             <canvas id="ordersChart" height="200"></canvas>
                         </div>
-                        <div class="bg-white dark:bg-gray-800 rounded-2xl p-6 border border-gray-200 dark:border-gray-700">
+                        <div class="bg-white dark:bg-gray-800 rounded-2xl p-6 border border-pink-200/20 dark:border-pink-500/10">
                             <h3 class="font-bold mb-4">Distribusi Status</h3>
                             <canvas id="statusChart" height="200"></canvas>
                         </div>
                     </div>
 
-                    <!-- Recent Orders -->
-                    <div class="bg-white dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700 overflow-hidden">
+                    <div class="bg-white dark:bg-gray-800 rounded-2xl border border-pink-200/20 dark:border-pink-500/10 overflow-hidden">
                         <div class="p-6 border-b border-gray-200 dark:border-gray-700 flex justify-between items-center">
                             <h3 class="font-bold">Pesanan Terbaru</h3>
-                            <button onclick="showTab('orders')" class="text-primary hover:text-primary-light text-sm font-medium">
+                            <button onclick="showTab('orders')" class="text-pink-500 hover:text-pink-400 text-sm font-medium">
                                 Lihat Semua <i class="fas fa-arrow-right ml-1"></i>
                             </button>
                         </div>
-                        <div id="recentOrdersTable" class="overflow-x-auto">
-                            <!-- Table content injected here -->
-                        </div>
+                        <div id="recentOrdersTable" class="overflow-x-auto"></div>
                     </div>
                 </div>
 
                 <!-- Orders Tab -->
                 <div id="tab-orders" class="tab-content hidden">
-                    <div class="bg-white dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700 overflow-hidden">
+                    <div class="bg-white dark:bg-gray-800 rounded-2xl border border-pink-200/20 dark:border-pink-500/10 overflow-hidden">
                         <div class="p-6 border-b border-gray-200 dark:border-gray-700">
                             <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
                                 <h3 class="font-bold text-lg">Daftar Pesanan</h3>
                                 <div class="flex space-x-2">
-                                    <button onclick="filterOrders('all')" class="order-filter px-4 py-2 rounded-lg text-sm font-medium bg-primary text-white" data-filter="all">Semua</button>
+                                    <button onclick="filterOrders('all')" class="order-filter px-4 py-2 rounded-lg text-sm font-medium bg-pink-500 text-white" data-filter="all">Semua</button>
                                     <button onclick="filterOrders('Diproses')" class="order-filter px-4 py-2 rounded-lg text-sm font-medium bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300" data-filter="Diproses">Diproses</button>
                                     <button onclick="filterOrders('Berhasil')" class="order-filter px-4 py-2 rounded-lg text-sm font-medium bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300" data-filter="Berhasil">Berhasil</button>
                                     <button onclick="filterOrders('Ditolak')" class="order-filter px-4 py-2 rounded-lg text-sm font-medium bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300" data-filter="Ditolak">Ditolak</button>
                                 </div>
                             </div>
                         </div>
-                        <div id="ordersTableContainer" class="overflow-x-auto">
-                            <!-- Orders table injected here -->
-                        </div>
+                        <div id="ordersTableContainer" class="overflow-x-auto"></div>
                     </div>
                 </div>
 
                 <!-- Products Tab -->
                 <div id="tab-products" class="tab-content hidden">
-                    <div class="bg-white dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700 overflow-hidden">
-                        <div class="p-6 border-b border-gray-200 dark:border-gray-700">
-                            <h3 class="font-bold text-lg">Manajemen Produk</h3>
-                            <p class="text-sm text-gray-500 mt-1">Atur stok dan harga produk</p>
+                    <div class="bg-white dark:bg-gray-800 rounded-2xl border border-pink-200/20 dark:border-pink-500/10 overflow-hidden">
+                        <div class="p-6 border-b border-gray-200 dark:border-gray-700 flex justify-between items-center">
+                            <div>
+                                <h3 class="font-bold text-lg">Manajemen Produk</h3>
+                                <p class="text-sm text-gray-500 mt-1">Tambah, edit, atau hapus produk</p>
+                            </div>
+                            <button onclick="openProductModal()" class="btn-primary px-4 py-2 rounded-lg text-white font-semibold text-sm">
+                                <i class="fas fa-plus mr-2"></i>Tambah Produk
+                            </button>
                         </div>
-                        <div id="productsTableContainer" class="overflow-x-auto">
-                            <!-- Products table injected here -->
-                        </div>
+                        <div id="productsTableContainer" class="overflow-x-auto"></div>
                     </div>
                 </div>
 
                 <!-- Settings Tab -->
                 <div id="tab-settings" class="tab-content hidden">
                     <div class="max-w-2xl">
-                        <!-- WhatsApp Settings -->
-                        <div class="bg-white dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700 p-6 mb-6">
+                        <div class="bg-white dark:bg-gray-800 rounded-2xl border border-pink-200/20 dark:border-pink-500/10 p-6 mb-6">
                             <div class="flex items-center space-x-3 mb-6">
                                 <div class="w-10 h-10 rounded-xl bg-green-100 dark:bg-green-900/30 flex items-center justify-center">
                                     <i class="fab fa-whatsapp text-green-600 dark:text-green-400 text-xl"></i>
                                 </div>
                                 <div>
                                     <h3 class="font-bold text-lg">Pengaturan WhatsApp</h3>
-                                    <p class="text-sm text-gray-500">Nomor untuk notifikasi order customer</p>
+                                    <p class="text-sm text-gray-500">Nomor untuk notifikasi order</p>
                                 </div>
                             </div>
-
                             <div class="space-y-4">
                                 <div>
                                     <label class="block text-sm font-medium mb-2">Nomor WhatsApp Admin <span class="text-red-500">*</span></label>
                                     <div class="relative">
                                         <span class="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 font-medium">+62</span>
-                                        <input type="tel" id="waNumber" class="w-full pl-14 pr-4 py-3 rounded-xl border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 focus:outline-none focus:border-primary font-mono text-lg" placeholder="81234567890" maxlength="13">
+                                        <input type="tel" id="waNumber" class="w-full pl-14 pr-4 py-3 rounded-xl border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 focus:outline-none focus:border-pink-500 font-mono text-lg" placeholder="81234567890" maxlength="13">
                                     </div>
-                                    <p class="text-xs text-gray-500 mt-2">
-                                        <i class="fas fa-info-circle mr-1"></i>
-                                        Format: 81234567890 (tanpa awalan 0)
-                                    </p>
+                                    <p class="text-xs text-gray-500 mt-2"><i class="fas fa-info-circle mr-1"></i>Format: 81234567890 (tanpa awalan 0)</p>
                                 </div>
-
                                 <div class="p-4 bg-gray-50 dark:bg-gray-900 rounded-xl">
-                                    <p class="text-sm font-medium mb-2">Preview Link WhatsApp:</p>
-                                    <code id="waPreview" class="text-xs text-primary break-all">https://wa.me/62...</code>
+                                    <p class="text-sm font-medium mb-2">Preview Link:</p>
+                                    <code id="waPreview" class="text-xs text-pink-500 break-all">https://wa.me/62...</code>
                                 </div>
                             </div>
-
                             <div class="flex space-x-3 mt-6">
                                 <button onclick="saveWASettings()" class="flex-1 btn-primary py-3 rounded-xl text-white font-semibold">
-                                    <i class="fas fa-save mr-2"></i> Simpan Nomor
+                                    <i class="fas fa-save mr-2"></i>Simpan Nomor
                                 </button>
                                 <button onclick="testWA()" class="px-6 py-3 rounded-xl border-2 border-green-500 text-green-600 font-semibold hover:bg-green-50 transition-all">
-                                    <i class="fab fa-whatsapp mr-2"></i> Test
+                                    <i class="fab fa-whatsapp mr-2"></i>Test
                                 </button>
                             </div>
                         </div>
 
-                        <!-- Store Settings -->
-                        <div class="bg-white dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700 p-6 mb-6">
+                        <div class="bg-white dark:bg-gray-800 rounded-2xl border border-pink-200/20 dark:border-pink-500/10 p-6 mb-6">
                             <h3 class="font-bold text-lg mb-6">Pengaturan Toko</h3>
                             <div class="space-y-4">
                                 <div>
                                     <label class="block text-sm font-medium mb-2">Nama Toko</label>
-                                    <input type="text" id="storeName" class="w-full px-4 py-3 rounded-xl border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 focus:outline-none focus:border-primary" value="SllowlyStore">
+                                    <input type="text" id="storeName" class="w-full px-4 py-3 rounded-xl border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 focus:outline-none focus:border-pink-500" value="Cici Store">
                                 </div>
                                 <div>
                                     <label class="block text-sm font-medium mb-2">Email Admin</label>
-                                    <input type="email" id="storeEmail" class="w-full px-4 py-3 rounded-xl border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 focus:outline-none focus:border-primary" value="admin@sllowlystore.com">
+                                    <input type="email" id="storeEmail" class="w-full px-4 py-3 rounded-xl border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 focus:outline-none focus:border-pink-500" value="admin@cicistore.com">
                                 </div>
                             </div>
                             <button onclick="saveStoreSettings()" class="mt-6 btn-primary px-6 py-3 rounded-xl text-white font-semibold">
-                                <i class="fas fa-save mr-2"></i> Simpan Pengaturan
+                                <i class="fas fa-save mr-2"></i>Simpan
                             </button>
                         </div>
 
-                        <!-- Danger Zone -->
-                        <div class="bg-white dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700 p-6">
+                        <div class="bg-white dark:bg-gray-800 rounded-2xl border border-pink-200/20 dark:border-pink-500/10 p-6">
                             <h3 class="font-bold text-lg mb-4 text-red-500">Zona Berbahaya</h3>
                             <div class="space-y-4">
                                 <div class="flex justify-between items-center p-4 bg-red-50 dark:bg-red-900/20 rounded-xl border border-red-200 dark:border-red-800">
                                     <div>
                                         <p class="font-medium">Reset Semua Data</p>
-                                        <p class="text-sm text-gray-500">Hapus semua pesanan dan data toko</p>
+                                        <p class="text-sm text-gray-500">Hapus semua pesanan dan produk</p>
                                     </div>
                                     <button onclick="resetAllData()" class="px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition-colors">
-                                        <i class="fas fa-trash-alt mr-1"></i> Reset
+                                        <i class="fas fa-trash-alt mr-1"></i>Reset
                                     </button>
                                 </div>
                             </div>
                         </div>
                     </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Product Modal (Add/Edit) -->
+    <div id="productModal" class="fixed inset-0 z-50 hidden">
+        <div class="modal-overlay absolute inset-0" onclick="closeProductModal()"></div>
+        <div class="absolute inset-4 lg:inset-auto lg:top-1/2 lg:left-1/2 lg:transform lg:-translate-x-1/2 lg:-translate-y-1/2 bg-white dark:bg-gray-800 rounded-2xl shadow-2xl w-full lg:w-full lg:max-w-lg overflow-hidden flex flex-col animate-fade-in max-h-[90vh]">
+            <div class="p-6 border-b border-gray-200 dark:border-gray-700 flex justify-between items-center">
+                <h3 class="text-xl font-bold" id="modalTitle">Tambah Produk</h3>
+                <button onclick="closeProductModal()" class="w-10 h-10 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700 flex items-center justify-center">
+                    <i class="fas fa-times text-gray-500"></i>
+                </button>
+            </div>
+            <div class="flex-1 overflow-y-auto p-6">
+                <form id="productForm" class="space-y-4">
+                    <input type="hidden" id="productId">
+                    <div>
+                        <label class="block text-sm font-medium mb-2">Nama Produk <span class="text-red-500">*</span></label>
+                        <input type="text" id="prodName" class="input-field w-full px-4 py-3 rounded-xl border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 focus:outline-none" placeholder="Nama produk" required>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium mb-2">Deskripsi Singkat</label>
+                        <input type="text" id="prodShortDesc" class="input-field w-full px-4 py-3 rounded-xl border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 focus:outline-none" placeholder="Deskripsi singkat">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium mb-2">Deskripsi Lengkap <span class="text-red-500">*</span></label>
+                        <textarea id="prodDesc" rows="4" class="input-field w-full px-4 py-3 rounded-xl border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 focus:outline-none" placeholder="Deskripsi lengkap (gunakan enter untuk poin baru)" required></textarea>
+                        <p class="text-xs text-gray-500 mt-1">Setiap baris akan menjadi poin deskripsi</p>
+                    </div>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-sm font-medium mb-2">Harga (Rp) <span class="text-red-500">*</span></label>
+                            <input type="number" id="prodPrice" class="input-field w-full px-4 py-3 rounded-xl border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 focus:outline-none" placeholder="5000" required>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium mb-2">Stok <span class="text-red-500">*</span></label>
+                            <input type="number" id="prodStock" class="input-field w-full px-4 py-3 rounded-xl border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 focus:outline-none" placeholder="999" required>
+                        </div>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium mb-2">Kategori <span class="text-red-500">*</span></label>
+                        <select id="prodCategory" class="input-field w-full px-4 py-3 rounded-xl border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 focus:outline-none" required>
+                            <option value="michat">Michat</option>
+                            <option value="gmail">Gmail</option>
+                            <option value="whatsapp">WhatsApp</option>
+                            <option value="youtube">YouTube</option>
+                            <option value="lainnya">Lainnya</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium mb-2">Icon (FontAwesome)</label>
+                        <select id="prodIcon" class="input-field w-full px-4 py-3 rounded-xl border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 focus:outline-none">
+                            <option value="fas fa-comments">Chat (Michat)</option>
+                            <option value="fab fa-google">Google (Gmail)</option>
+                            <option value="fab fa-whatsapp">WhatsApp</option>
+                            <option value="fab fa-youtube">YouTube</option>
+                            <option value="fas fa-star">Star</option>
+                            <option value="fas fa-bolt">Bolt</option>
+                            <option value="fas fa-crown">Crown</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium mb-2">Badge (Opsional)</label>
+                        <select id="prodBadge" class="input-field w-full px-4 py-3 rounded-xl border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 focus:outline-none">
+                            <option value="">Tidak ada</option>
+                            <option value="Best Seller">Best Seller</option>
+                            <option value="Popular">Popular</option>
+                            <option value="New">New</option>
+                            <option value="Hot">Hot</option>
+                            <option value="Premium">Premium</option>
+                            <option value="Best Deal">Best Deal</option>
+                        </select>
+                    </div>
+                </form>
+            </div>
+            <div class="p-6 border-t border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-900/50">
+                <div class="flex space-x-3">
+                    <button onclick="closeProductModal()" class="flex-1 py-3 rounded-xl border-2 border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 font-semibold hover:bg-gray-100 dark:hover:bg-gray-800 transition-all">
+                        Batal
+                    </button>
+                    <button onclick="saveProduct()" class="flex-1 btn-primary py-3 rounded-xl text-white font-semibold">
+                        <i class="fas fa-save mr-2"></i>Simpan
+                    </button>
                 </div>
             </div>
         </div>
@@ -412,13 +441,11 @@
         <div class="absolute inset-4 lg:inset-10 bg-white dark:bg-gray-800 rounded-2xl shadow-2xl overflow-hidden flex flex-col animate-fade-in">
             <div class="p-6 border-b border-gray-200 dark:border-gray-700 flex justify-between items-center">
                 <h3 class="text-xl font-bold">Detail Pesanan</h3>
-                <button onclick="closeOrderModal()" class="w-10 h-10 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700 flex items-center justify-center transition-colors">
+                <button onclick="closeOrderModal()" class="w-10 h-10 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700 flex items-center justify-center">
                     <i class="fas fa-times text-gray-500"></i>
                 </button>
             </div>
-            <div id="orderModalContent" class="flex-1 overflow-y-auto p-6">
-                <!-- Content injected here -->
-            </div>
+            <div id="orderModalContent" class="flex-1 overflow-y-auto p-6"></div>
         </div>
     </div>
 
@@ -427,12 +454,12 @@
         let currentTab = 'dashboard';
         let ordersChart = null;
         let statusChart = null;
+        let editingProductId = null;
 
         document.addEventListener('DOMContentLoaded', function() {
             initDarkMode();
             checkLogin();
-
-            // WA number input listener
+            
             const waInput = document.getElementById('waNumber');
             if (waInput) {
                 waInput.addEventListener('input', function() {
@@ -446,10 +473,8 @@
         });
 
         function checkLogin() {
-            const isLoggedIn = sessionStorage.getItem('sllowly_admin') === 'true';
-            if (isLoggedIn) {
-                showDashboard();
-            }
+            const isLoggedIn = sessionStorage.getItem('cici_admin') === 'true';
+            if (isLoggedIn) showDashboard();
         }
 
         function login() {
@@ -457,28 +482,16 @@
             const password = document.getElementById('loginPassword').value;
 
             if (username === 'sllowly28' && password === 'sllowly28') {
-                sessionStorage.setItem('sllowly_admin', 'true');
+                sessionStorage.setItem('cici_admin', 'true');
                 showDashboard();
-                Swal.fire({
-                    icon: 'success',
-                    title: 'Login Berhasil',
-                    text: 'Selamat datang di Admin Dashboard',
-                    confirmButtonColor: '#7C3AED',
-                    timer: 1500,
-                    showConfirmButton: false
-                });
+                Swal.fire({ icon: 'success', title: 'Login Berhasil', timer: 1500, showConfirmButton: false });
             } else {
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Login Gagal',
-                    text: 'Username atau password salah',
-                    confirmButtonColor: '#7C3AED'
-                });
+                Swal.fire({ icon: 'error', title: 'Login Gagal', text: 'Username atau password salah', confirmButtonColor: '#EC4899' });
             }
         }
 
         function logout() {
-            sessionStorage.removeItem('sllowly_admin');
+            sessionStorage.removeItem('cici_admin');
             location.reload();
         }
 
@@ -504,42 +517,23 @@
         }
 
         function toggleSidebar() {
-            const sidebar = document.getElementById('sidebar');
-            sidebar.classList.toggle('-translate-x-full');
+            document.getElementById('sidebar').classList.toggle('-translate-x-full');
         }
 
         function showTab(tab) {
             currentTab = tab;
-
-            // Update sidebar
             document.querySelectorAll('.sidebar-item').forEach(item => {
                 item.classList.remove('active');
-                if (item.dataset.tab === tab) {
-                    item.classList.add('active');
-                }
+                if (item.dataset.tab === tab) item.classList.add('active');
             });
-
-            // Update content
-            document.querySelectorAll('.tab-content').forEach(content => {
-                content.classList.add('hidden');
-            });
+            document.querySelectorAll('.tab-content').forEach(content => content.classList.add('hidden'));
             document.getElementById('tab-' + tab).classList.remove('hidden');
-
-            // Update title
-            const titles = {
-                'dashboard': 'Dashboard',
-                'orders': 'Pesanan',
-                'products': 'Produk',
-                'settings': 'Pengaturan'
-            };
+            
+            const titles = { 'dashboard': 'Dashboard', 'orders': 'Pesanan', 'products': 'Produk', 'settings': 'Pengaturan' };
             document.getElementById('pageTitle').textContent = titles[tab];
-
-            // Close sidebar on mobile
-            if (window.innerWidth < 1024) {
-                document.getElementById('sidebar').classList.add('-translate-x-full');
-            }
-
-            // Refresh data
+            
+            if (window.innerWidth < 1024) document.getElementById('sidebar').classList.add('-translate-x-full');
+            
             if (tab === 'dashboard') updateDashboard();
             if (tab === 'orders') renderOrdersTable();
             if (tab === 'products') renderProductsTable();
@@ -547,33 +541,21 @@
         }
 
         function updateDashboard() {
-            const orders = JSON.parse(localStorage.getItem('sllowly_orders') || '[]');
-            const products = JSON.parse(localStorage.getItem('sllowly_products') || '[]');
+            const orders = JSON.parse(localStorage.getItem('cici_orders') || '[]');
+            
+            document.getElementById('statTotalOrders').textContent = orders.length;
+            document.getElementById('statSuccessOrders').textContent = orders.filter(o => o.status === 'Berhasil').length;
+            document.getElementById('statPendingOrders').textContent = orders.filter(o => o.status === 'Diproses').length;
+            document.getElementById('statRevenue').textContent = 'Rp' + formatPrice(orders.filter(o => o.status === 'Berhasil').reduce((sum, o) => sum + o.total, 0));
 
-            // Stats
-            const totalOrders = orders.length;
-            const successOrders = orders.filter(o => o.status === 'Berhasil').length;
-            const pendingOrders = orders.filter(o => o.status === 'Diproses').length;
-            const revenue = orders.filter(o => o.status === 'Berhasil').reduce((sum, o) => sum + o.total, 0);
-
-            document.getElementById('statTotalOrders').textContent = totalOrders;
-            document.getElementById('statSuccessOrders').textContent = successOrders;
-            document.getElementById('statPendingOrders').textContent = pendingOrders;
-            document.getElementById('statRevenue').textContent = 'Rp' + formatPrice(revenue);
-
-            // Sidebar count
+            const pendingCount = orders.filter(o => o.status === 'Diproses').length;
             const sidebarCount = document.getElementById('sidebarOrderCount');
-            if (pendingOrders > 0) {
-                sidebarCount.textContent = pendingOrders;
+            if (pendingCount > 0) {
+                sidebarCount.textContent = pendingCount;
                 sidebarCount.classList.remove('hidden');
-            } else {
-                sidebarCount.classList.add('hidden');
-            }
+            } else sidebarCount.classList.add('hidden');
 
-            // Recent orders table
             renderRecentOrdersTable(orders.slice(-5).reverse());
-
-            // Charts
             renderCharts(orders);
         }
 
@@ -583,102 +565,65 @@
                 container.innerHTML = '<div class="p-8 text-center text-gray-500">Belum ada pesanan</div>';
                 return;
             }
-
             container.innerHTML = `
                 <table class="w-full">
                     <thead class="bg-gray-50 dark:bg-gray-900/50">
-                        <tr>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Invoice</th>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Customer</th>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Total</th>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Status</th>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Aksi</th>
-                        </tr>
+                        <tr><th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Invoice</th><th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Customer</th><th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Total</th><th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Status</th><th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Aksi</th></tr>
                     </thead>
                     <tbody class="divide-y divide-gray-200 dark:divide-gray-700">
                         ${orders.map(order => `
                             <tr class="order-row">
-                                <td class="px-6 py-4 font-mono font-medium text-primary">${order.invoice}</td>
-                                <td class="px-6 py-4">
-                                    <div class="font-medium">${order.customer.name}</div>
-                                    <div class="text-sm text-gray-500">${order.customer.phone}</div>
-                                </td>
+                                <td class="px-6 py-4 font-mono font-medium text-pink-500">${order.invoice}</td>
+                                <td class="px-6 py-4"><div class="font-medium">${order.customer.name}</div><div class="text-sm text-gray-500">${order.customer.phone}</div></td>
                                 <td class="px-6 py-4 font-semibold">Rp${formatPrice(order.total)}</td>
-                                <td class="px-6 py-4">
-                                    <span class="status-badge status-${order.status.toLowerCase()}">
-                                        <i class="fas fa-${getStatusIcon(order.status)} mr-1"></i>
-                                        ${order.status}
-                                    </span>
-                                </td>
-                                <td class="px-6 py-4">
-                                    <button onclick="viewOrderDetail('${order.invoice}')" class="text-primary hover:text-primary-light transition-colors">
-                                        <i class="fas fa-eye"></i>
-                                    </button>
-                                </td>
+                                <td class="px-6 py-4"><span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold ${getStatusClass(order.status)}"><i class="fas fa-${getStatusIcon(order.status)} mr-1"></i>${order.status}</span></td>
+                                <td class="px-6 py-4"><button onclick="viewOrderDetail('${order.invoice}')" class="text-pink-500 hover:text-pink-400"><i class="fas fa-eye"></i></button></td>
                             </tr>
                         `).join('')}
                     </tbody>
-                </table>
-            `;
+                </table>`;
         }
 
         let currentOrderFilter = 'all';
-
         function filterOrders(filter) {
             currentOrderFilter = filter;
             document.querySelectorAll('.order-filter').forEach(btn => {
                 if (btn.dataset.filter === filter) {
                     btn.classList.remove('bg-gray-100', 'dark:bg-gray-700', 'text-gray-700', 'dark:text-gray-300');
-                    btn.classList.add('bg-primary', 'text-white');
+                    btn.classList.add('bg-pink-500', 'text-white');
                 } else {
                     btn.classList.add('bg-gray-100', 'dark:bg-gray-700', 'text-gray-700', 'dark:text-gray-300');
-                    btn.classList.remove('bg-primary', 'text-white');
+                    btn.classList.remove('bg-pink-500', 'text-white');
                 }
             });
             renderOrdersTable();
         }
 
         function renderOrdersTable() {
-            const orders = JSON.parse(localStorage.getItem('sllowly_orders') || '[]');
-            const filtered = currentOrderFilter === 'all' 
-                ? orders.reverse() 
-                : orders.filter(o => o.status === currentOrderFilter).reverse();
-
+            const orders = JSON.parse(localStorage.getItem('cici_orders') || '[]');
+            const filtered = currentOrderFilter === 'all' ? orders.reverse() : orders.filter(o => o.status === currentOrderFilter).reverse();
             const container = document.getElementById('ordersTableContainer');
+            
             if (filtered.length === 0) {
                 container.innerHTML = '<div class="p-8 text-center text-gray-500">Tidak ada pesanan</div>';
                 return;
             }
-
+            
             container.innerHTML = `
                 <table class="w-full">
                     <thead class="bg-gray-50 dark:bg-gray-900/50">
-                        <tr>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Invoice</th>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Tanggal</th>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Customer</th>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Produk</th>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Total</th>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Status</th>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Aksi</th>
-                        </tr>
+                        <tr><th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Invoice</th><th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Tanggal</th><th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Customer</th><th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Produk</th><th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Total</th><th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Status</th><th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Aksi</th></tr>
                     </thead>
                     <tbody class="divide-y divide-gray-200 dark:divide-gray-700">
                         ${filtered.map(order => `
                             <tr class="order-row">
-                                <td class="px-6 py-4 font-mono font-medium text-primary">${order.invoice}</td>
+                                <td class="px-6 py-4 font-mono font-medium text-pink-500">${order.invoice}</td>
                                 <td class="px-6 py-4 text-sm text-gray-500">${formatDate(order.date)}</td>
-                                <td class="px-6 py-4">
-                                    <div class="font-medium">${order.customer.name}</div>
-                                    <div class="text-sm text-gray-500">${order.customer.phone}</div>
-                                </td>
-                                <td class="px-6 py-4">
-                                    <div class="text-sm">${order.items.length} item</div>
-                                    <div class="text-xs text-gray-500">${order.items.map(i => i.productName).join(', ')}</div>
-                                </td>
+                                <td class="px-6 py-4"><div class="font-medium">${order.customer.name}</div><div class="text-sm text-gray-500">${order.customer.phone}</div></td>
+                                <td class="px-6 py-4"><div class="text-sm">${order.items.length} item</div><div class="text-xs text-gray-500">${order.items.map(i => i.productName).join(', ')}</div></td>
                                 <td class="px-6 py-4 font-semibold">Rp${formatPrice(order.total)}</td>
                                 <td class="px-6 py-4">
-                                    <select onchange="updateOrderStatus('${order.invoice}', this.value)" class="status-select px-3 py-1 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-sm focus:outline-none">
+                                    <select onchange="updateOrderStatus('${order.invoice}', this.value)" class="px-3 py-1 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-sm focus:outline-none focus:border-pink-500">
                                         <option value="Diproses" ${order.status === 'Diproses' ? 'selected' : ''}>Diproses</option>
                                         <option value="Berhasil" ${order.status === 'Berhasil' ? 'selected' : ''}>Berhasil</option>
                                         <option value="Ditolak" ${order.status === 'Ditolak' ? 'selected' : ''}>Ditolak</option>
@@ -686,43 +631,33 @@
                                 </td>
                                 <td class="px-6 py-4">
                                     <div class="flex space-x-2">
-                                        <button onclick="viewOrderDetail('${order.invoice}')" class="w-8 h-8 rounded-lg bg-blue-100 dark:bg-blue-900/30 text-blue-600 flex items-center justify-center hover:bg-blue-200 transition-colors" title="Lihat Detail">
-                                            <i class="fas fa-eye text-sm"></i>
-                                        </button>
-                                        <button onclick="deleteOrder('${order.invoice}')" class="w-8 h-8 rounded-lg bg-red-100 dark:bg-red-900/30 text-red-600 flex items-center justify-center hover:bg-red-200 transition-colors" title="Hapus">
-                                            <i class="fas fa-trash text-sm"></i>
-                                        </button>
+                                        <button onclick="viewOrderDetail('${order.invoice}')" class="w-8 h-8 rounded-lg bg-blue-100 dark:bg-blue-900/30 text-blue-600 flex items-center justify-center hover:bg-blue-200"><i class="fas fa-eye text-sm"></i></button>
+                                        <button onclick="deleteOrder('${order.invoice}')" class="w-8 h-8 rounded-lg bg-red-100 dark:bg-red-900/30 text-red-600 flex items-center justify-center hover:bg-red-200"><i class="fas fa-trash text-sm"></i></button>
                                     </div>
                                 </td>
                             </tr>
                         `).join('')}
                     </tbody>
-                </table>
-            `;
+                </table>`;
         }
 
+        // PRODUCT MANAGEMENT
         function renderProductsTable() {
-            const products = JSON.parse(localStorage.getItem('sllowly_products') || '[]');
+            const products = getProducts();
             const container = document.getElementById('productsTableContainer');
-
+            
             container.innerHTML = `
                 <table class="w-full">
                     <thead class="bg-gray-50 dark:bg-gray-900/50">
-                        <tr>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Produk</th>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Kategori</th>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Harga</th>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Stok</th>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Aksi</th>
-                        </tr>
+                        <tr><th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Produk</th><th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Kategori</th><th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Harga</th><th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Stok</th><th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Aksi</th></tr>
                     </thead>
                     <tbody class="divide-y divide-gray-200 dark:divide-gray-700">
                         ${products.map(product => `
                             <tr class="order-row">
                                 <td class="px-6 py-4">
                                     <div class="flex items-center space-x-3">
-                                        <div class="w-10 h-10 rounded-lg bg-gradient-to-br from-primary/20 to-primary-light/20 flex items-center justify-center">
-                                            <i class="${product.icon} text-primary"></i>
+                                        <div class="w-10 h-10 rounded-lg bg-gradient-to-br from-pink-400/20 to-pink-600/20 flex items-center justify-center">
+                                            <i class="${product.icon} text-pink-500"></i>
                                         </div>
                                         <div>
                                             <div class="font-medium">${product.name}</div>
@@ -730,150 +665,112 @@
                                         </div>
                                     </div>
                                 </td>
+                                <td class="px-6 py-4"><span class="px-3 py-1 rounded-full text-xs font-medium bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 capitalize">${product.category}</span></td>
+                                <td class="px-6 py-4 font-semibold">Rp${formatPrice(product.price)}</td>
+                                <td class="px-6 py-4">${product.stock}</td>
                                 <td class="px-6 py-4">
-                                    <span class="px-3 py-1 rounded-full text-xs font-medium bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 capitalize">
-                                        ${product.category}
-                                    </span>
-                                </td>
-                                <td class="px-6 py-4">
-                                    <input type="number" value="${product.price}" onchange="updateProductPrice('${product.id}', this.value)" class="price-input w-32 px-3 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-sm focus:outline-none">
-                                </td>
-                                <td class="px-6 py-4">
-                                    <input type="number" value="${product.stock}" onchange="updateProductStock('${product.id}', this.value)" class="stock-input w-24 px-3 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-sm focus:outline-none">
-                                </td>
-                                <td class="px-6 py-4">
-                                    <button onclick="saveProductChanges('${product.id}')" class="px-4 py-2 bg-primary text-white rounded-lg text-sm hover:bg-primary-dark transition-colors">
-                                        <i class="fas fa-save mr-1"></i> Simpan
-                                    </button>
+                                    <div class="flex space-x-2">
+                                        <button onclick="editProduct('${product.id}')" class="w-8 h-8 rounded-lg bg-blue-100 dark:bg-blue-900/30 text-blue-600 flex items-center justify-center hover:bg-blue-200"><i class="fas fa-edit text-sm"></i></button>
+                                        <button onclick="deleteProduct('${product.id}')" class="w-8 h-8 rounded-lg bg-red-100 dark:bg-red-900/30 text-red-600 flex items-center justify-center hover:bg-red-200"><i class="fas fa-trash text-sm"></i></button>
+                                    </div>
                                 </td>
                             </tr>
                         `).join('')}
                     </tbody>
-                </table>
-            `;
+                </table>`;
         }
 
-        function updateOrderStatus(invoice, status) {
-            const orders = JSON.parse(localStorage.getItem('sllowly_orders') || '[]');
-            const order = orders.find(o => o.invoice === invoice);
-            if (order) {
-                order.status = status;
-                localStorage.setItem('sllowly_orders', JSON.stringify(orders));
-
-                Swal.fire({
-                    icon: 'success',
-                    title: 'Status Diperbarui',
-                    text: `Pesanan ${invoice} sekarang ${status}`,
-                    confirmButtonColor: '#7C3AED',
-                    timer: 1500,
-                    showConfirmButton: false
-                });
-
-                updateDashboard();
+        function openProductModal(productId = null) {
+            editingProductId = productId;
+            const modal = document.getElementById('productModal');
+            const title = document.getElementById('modalTitle');
+            
+            if (productId) {
+                const products = getProducts();
+                const product = products.find(p => p.id === productId);
+                if (product) {
+                    title.textContent = 'Edit Produk';
+                    document.getElementById('productId').value = product.id;
+                    document.getElementById('prodName').value = product.name;
+                    document.getElementById('prodShortDesc').value = product.shortDesc || '';
+                    document.getElementById('prodDesc').value = product.description.replace(/\\n/g, '\\n');
+                    document.getElementById('prodPrice').value = product.price;
+                    document.getElementById('prodStock').value = product.stock;
+                    document.getElementById('prodCategory').value = product.category;
+                    document.getElementById('prodIcon').value = product.icon;
+                    document.getElementById('prodBadge').value = product.badge || '';
+                }
+            } else {
+                title.textContent = 'Tambah Produk';
+                document.getElementById('productForm').reset();
+                document.getElementById('productId').value = '';
             }
+            
+            modal.classList.remove('hidden');
         }
 
-        function viewOrderDetail(invoice) {
-            const orders = JSON.parse(localStorage.getItem('sllowly_orders') || '[]');
-            const order = orders.find(o => o.invoice === invoice);
-            if (!order) return;
-
-            const content = document.getElementById('orderModalContent');
-            content.innerHTML = `
-                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                    <div>
-                        <h4 class="font-bold mb-4 text-primary">Informasi Customer</h4>
-                        <div class="space-y-3 bg-gray-50 dark:bg-gray-900 rounded-xl p-4">
-                            <div class="flex justify-between">
-                                <span class="text-gray-500">Nama</span>
-                                <span class="font-medium">${order.customer.name}</span>
-                            </div>
-                            <div class="flex justify-between">
-                                <span class="text-gray-500">Email</span>
-                                <span class="font-medium">${order.customer.email}</span>
-                            </div>
-                            <div class="flex justify-between">
-                                <span class="text-gray-500">WhatsApp</span>
-                                <span class="font-medium">${order.customer.phone}</span>
-                            </div>
-                        </div>
-
-                        <h4 class="font-bold mb-4 mt-6 text-primary">Informasi Pembayaran</h4>
-                        <div class="space-y-3 bg-gray-50 dark:bg-gray-900 rounded-xl p-4">
-                            <div class="flex justify-between">
-                                <span class="text-gray-500">Metode</span>
-                                <span class="font-medium uppercase">${order.paymentMethod}</span>
-                            </div>
-                            <div class="flex justify-between">
-                                <span class="text-gray-500">Total</span>
-                                <span class="font-bold text-primary">Rp${formatPrice(order.total)}</span>
-                            </div>
-                            <div class="flex justify-between">
-                                <span class="text-gray-500">Tanggal</span>
-                                <span class="font-medium">${formatDate(order.date)}</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div>
-                        <h4 class="font-bold mb-4 text-primary">Detail Produk</h4>
-                        <div class="space-y-3">
-                            ${order.items.map(item => `
-                                <div class="flex justify-between items-center p-4 bg-gray-50 dark:bg-gray-900 rounded-xl">
-                                    <div>
-                                        <div class="font-medium">${item.productName}</div>
-                                        <div class="text-sm text-gray-500">${item.qty} x Rp${formatPrice(item.price)}</div>
-                                    </div>
-                                    <span class="font-semibold">Rp${formatPrice(item.price * item.qty)}</span>
-                                </div>
-                            `).join('')}
-                        </div>
-
-                        ${order.proofImage ? `
-                        <h4 class="font-bold mb-4 mt-6 text-primary">Bukti Transfer</h4>
-                        <img src="${order.proofImage}" class="w-full rounded-xl shadow-md cursor-pointer hover:opacity-90 transition-opacity" onclick="viewProofImage('${order.proofImage}')">
-                        ` : '<div class="mt-6 p-4 bg-yellow-50 dark:bg-yellow-900/20 rounded-xl text-yellow-700 dark:text-yellow-300"><i class="fas fa-exclamation-triangle mr-2"></i> Belum ada bukti transfer</div>'}
-                    </div>
-                </div>
-
-                <div class="mt-6 pt-6 border-t border-gray-200 dark:border-gray-700">
-                    <h4 class="font-bold mb-4">Ubah Status</h4>
-                    <div class="flex space-x-3">
-                        <button onclick="updateOrderStatus('${order.invoice}', 'Diproses'); closeOrderModal();" class="flex-1 py-3 rounded-xl bg-yellow-100 dark:bg-yellow-900/30 text-yellow-700 dark:text-yellow-300 font-semibold hover:bg-yellow-200 transition-colors">
-                            <i class="fas fa-clock mr-2"></i> Diproses
-                        </button>
-                        <button onclick="updateOrderStatus('${order.invoice}', 'Berhasil'); closeOrderModal();" class="flex-1 py-3 rounded-xl bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-300 font-semibold hover:bg-green-200 transition-colors">
-                            <i class="fas fa-check mr-2"></i> Berhasil
-                        </button>
-                        <button onclick="updateOrderStatus('${order.invoice}', 'Ditolak'); closeOrderModal();" class="flex-1 py-3 rounded-xl bg-red-100 dark:bg-red-900/30 text-red-700 dark:text-red-300 font-semibold hover:bg-red-200 transition-colors">
-                            <i class="fas fa-times mr-2"></i> Ditolak
-                        </button>
-                    </div>
-                </div>
-            `;
-
-            document.getElementById('orderModal').classList.remove('hidden');
+        function closeProductModal() {
+            document.getElementById('productModal').classList.add('hidden');
+            editingProductId = null;
         }
 
-        function closeOrderModal() {
-            document.getElementById('orderModal').classList.add('hidden');
-        }
+        function saveProduct() {
+            const name = document.getElementById('prodName').value.trim();
+            const shortDesc = document.getElementById('prodShortDesc').value.trim();
+            const description = document.getElementById('prodDesc').value.trim();
+            const price = parseInt(document.getElementById('prodPrice').value) || 0;
+            const stock = parseInt(document.getElementById('prodStock').value) || 0;
+            const category = document.getElementById('prodCategory').value;
+            const icon = document.getElementById('prodIcon').value;
+            const badge = document.getElementById('prodBadge').value;
 
-        function viewProofImage(src) {
+            if (!name || !description || price <= 0) {
+                Swal.fire({ icon: 'error', title: 'Data Tidak Lengkap', text: 'Mohon isi nama, deskripsi, dan harga produk', confirmButtonColor: '#EC4899' });
+                return;
+            }
+
+            let products = getProducts();
+            
+            if (editingProductId) {
+                const index = products.findIndex(p => p.id === editingProductId);
+                if (index !== -1) {
+                    products[index] = {
+                        ...products[index],
+                        name, shortDesc, description, price, stock, category, icon, badge,
+                        badgeColor: badge ? 'bg-pink-500' : null
+                    };
+                }
+            } else {
+                const newId = 'prod-' + Date.now();
+                products.push({
+                    id: newId,
+                    name, shortDesc, description, price, stock, category, icon, badge,
+                    badgeColor: badge ? 'bg-pink-500' : null
+                });
+            }
+
+            saveProducts(products);
+            closeProductModal();
+            renderProductsTable();
+            
             Swal.fire({
-                imageUrl: src,
-                imageAlt: 'Bukti Transfer',
-                showConfirmButton: false,
-                showCloseButton: true,
-                width: 'auto'
+                icon: 'success',
+                title: editingProductId ? 'Produk Diperbarui' : 'Produk Ditambahkan',
+                confirmButtonColor: '#EC4899',
+                timer: 1500,
+                showConfirmButton: false
             });
         }
 
-        function deleteOrder(invoice) {
+        function editProduct(productId) {
+            openProductModal(productId);
+        }
+
+        function deleteProduct(productId) {
             Swal.fire({
                 icon: 'warning',
-                title: 'Hapus Pesanan?',
-                text: `Pesanan ${invoice} akan dihapus permanen`,
+                title: 'Hapus Produk?',
+                text: 'Produk akan dihapus permanen',
                 showCancelButton: true,
                 confirmButtonColor: '#EF4444',
                 cancelButtonColor: '#6B7280',
@@ -881,55 +778,94 @@
                 cancelButtonText: 'Batal'
             }).then((result) => {
                 if (result.isConfirmed) {
-                    let orders = JSON.parse(localStorage.getItem('sllowly_orders') || '[]');
-                    orders = orders.filter(o => o.invoice !== invoice);
-                    localStorage.setItem('sllowly_orders', JSON.stringify(orders));
-                    renderOrdersTable();
-                    updateDashboard();
-                    Swal.fire({
-                        icon: 'success',
-                        title: 'Dihapus',
-                        text: 'Pesanan berhasil dihapus',
-                        confirmButtonColor: '#7C3AED',
-                        timer: 1500,
-                        showConfirmButton: false
-                    });
+                    let products = getProducts();
+                    products = products.filter(p => p.id !== productId);
+                    saveProducts(products);
+                    renderProductsTable();
+                    Swal.fire({ icon: 'success', title: 'Dihapus', timer: 1500, showConfirmButton: false });
                 }
             });
         }
 
-        function updateProductPrice(productId, newPrice) {
-            const products = JSON.parse(localStorage.getItem('sllowly_products') || '[]');
-            const product = products.find(p => p.id === productId);
-            if (product) {
-                product.price = parseInt(newPrice) || 0;
-                localStorage.setItem('sllowly_products', JSON.stringify(products));
+        function updateOrderStatus(invoice, status) {
+            const orders = JSON.parse(localStorage.getItem('cici_orders') || '[]');
+            const order = orders.find(o => o.invoice === invoice);
+            if (order) {
+                order.status = status;
+                localStorage.setItem('cici_orders', JSON.stringify(orders));
+                Swal.fire({ icon: 'success', title: 'Status Diperbarui', text: `Pesanan ${invoice} sekarang ${status}`, confirmButtonColor: '#EC4899', timer: 1500, showConfirmButton: false });
+                updateDashboard();
             }
         }
 
-        function updateProductStock(productId, newStock) {
-            const products = JSON.parse(localStorage.getItem('sllowly_products') || '[]');
-            const product = products.find(p => p.id === productId);
-            if (product) {
-                product.stock = parseInt(newStock) || 0;
-                localStorage.setItem('sllowly_products', JSON.stringify(products));
-            }
+        function viewOrderDetail(invoice) {
+            const orders = JSON.parse(localStorage.getItem('cici_orders') || '[]');
+            const order = orders.find(o => o.invoice === invoice);
+            if (!order) return;
+
+            const content = document.getElementById('orderModalContent');
+            content.innerHTML = `
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                    <div>
+                        <h4 class="font-bold mb-4 text-pink-500">Informasi Customer</h4>
+                        <div class="space-y-3 bg-gray-50 dark:bg-gray-900 rounded-xl p-4">
+                            <div class="flex justify-between"><span class="text-gray-500">Nama</span><span class="font-medium">${order.customer.name}</span></div>
+                            <div class="flex justify-between"><span class="text-gray-500">Email</span><span class="font-medium">${order.customer.email}</span></div>
+                            <div class="flex justify-between"><span class="text-gray-500">WhatsApp</span><span class="font-medium">${order.customer.phone}</span></div>
+                        </div>
+                        <h4 class="font-bold mb-4 mt-6 text-pink-500">Informasi Pembayaran</h4>
+                        <div class="space-y-3 bg-gray-50 dark:bg-gray-900 rounded-xl p-4">
+                            <div class="flex justify-between"><span class="text-gray-500">Total</span><span class="font-bold text-pink-500">Rp${formatPrice(order.total)}</span></div>
+                            <div class="flex justify-between"><span class="text-gray-500">Tanggal</span><span class="font-medium">${formatDate(order.date)}</span></div>
+                        </div>
+                    </div>
+                    <div>
+                        <h4 class="font-bold mb-4 text-pink-500">Detail Produk</h4>
+                        <div class="space-y-3">
+                            ${order.items.map(item => `
+                                <div class="flex justify-between items-center p-4 bg-gray-50 dark:bg-gray-900 rounded-xl">
+                                    <div><div class="font-medium">${item.productName}</div><div class="text-sm text-gray-500">${item.qty} x Rp${formatPrice(item.price)}</div></div>
+                                    <span class="font-semibold">Rp${formatPrice(item.price * item.qty)}</span>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                </div>
+                <div class="mt-6 pt-6 border-t border-gray-200 dark:border-gray-700">
+                    <h4 class="font-bold mb-4">Ubah Status</h4>
+                    <div class="flex space-x-3">
+                        <button onclick="updateOrderStatus('${order.invoice}', 'Diproses'); closeOrderModal();" class="flex-1 py-3 rounded-xl bg-yellow-100 dark:bg-yellow-900/30 text-yellow-700 dark:text-yellow-300 font-semibold hover:bg-yellow-200"><i class="fas fa-clock mr-2"></i>Diproses</button>
+                        <button onclick="updateOrderStatus('${order.invoice}', 'Berhasil'); closeOrderModal();" class="flex-1 py-3 rounded-xl bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-300 font-semibold hover:bg-green-200"><i class="fas fa-check mr-2"></i>Berhasil</button>
+                        <button onclick="updateOrderStatus('${order.invoice}', 'Ditolak'); closeOrderModal();" class="flex-1 py-3 rounded-xl bg-red-100 dark:bg-red-900/30 text-red-700 dark:text-red-300 font-semibold hover:bg-red-200"><i class="fas fa-times mr-2"></i>Ditolak</button>
+                    </div>
+                </div>`;
+            document.getElementById('orderModal').classList.remove('hidden');
         }
 
-        function saveProductChanges(productId) {
+        function closeOrderModal() {
+            document.getElementById('orderModal').classList.add('hidden');
+        }
+
+        function deleteOrder(invoice) {
             Swal.fire({
-                icon: 'success',
-                title: 'Tersimpan',
-                text: 'Perubahan produk berhasil disimpan',
-                confirmButtonColor: '#7C3AED',
-                timer: 1500,
-                showConfirmButton: false
+                icon: 'warning', title: 'Hapus Pesanan?', text: `Pesanan ${invoice} akan dihapus`,
+                showCancelButton: true, confirmButtonColor: '#EF4444', cancelButtonColor: '#6B7280',
+                confirmButtonText: 'Ya, Hapus', cancelButtonText: 'Batal'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    let orders = JSON.parse(localStorage.getItem('cici_orders') || '[]');
+                    orders = orders.filter(o => o.invoice !== invoice);
+                    localStorage.setItem('cici_orders', JSON.stringify(orders));
+                    renderOrdersTable();
+                    updateDashboard();
+                    Swal.fire({ icon: 'success', title: 'Dihapus', timer: 1500, showConfirmButton: false });
+                }
             });
         }
 
-        // WhatsApp Settings Functions
+        // WhatsApp Settings
         function loadWASettings() {
-            const saved = localStorage.getItem('sllowly_wa_number');
+            const saved = localStorage.getItem('cici_wa_number');
             const input = document.getElementById('waNumber');
             if (saved && input) {
                 input.value = saved;
@@ -939,121 +875,67 @@
 
         function updateWAPreview(number) {
             const preview = document.getElementById('waPreview');
-            if (preview && number) {
-                preview.textContent = `https://wa.me/62${number}`;
-            }
+            if (preview && number) preview.textContent = 'https://wa.me/62' + number;
         }
 
         function saveWASettings() {
             const number = document.getElementById('waNumber').value.trim().replace(/\D/g, '');
-
             if (!number || number.length < 10) {
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Nomor Tidak Valid',
-                    text: 'Masukkan nomor WhatsApp minimal 10 digit (tanpa awalan 0)',
-                    confirmButtonColor: '#7C3AED'
-                });
+                Swal.fire({ icon: 'error', title: 'Nomor Tidak Valid', text: 'Masukkan nomor minimal 10 digit', confirmButtonColor: '#EC4899' });
                 return;
             }
-
-            localStorage.setItem('sllowly_wa_number', number);
+            localStorage.setItem('cici_wa_number', number);
             updateWAPreview(number);
-
-            Swal.fire({
-                icon: 'success',
-                title: 'Nomor Tersimpan!',
-                html: `<p>Nomor WhatsApp admin diperbarui ke:</p><p class="font-bold text-primary mt-2">+62 ${number}</p>`,
-                confirmButtonColor: '#7C3AED'
-            });
+            Swal.fire({ icon: 'success', title: 'Nomor Tersimpan!', html: `<p>Nomor diperbarui ke:</p><p class="font-bold text-pink-500 mt-2">+62 ${number}</p>`, confirmButtonColor: '#EC4899' });
         }
 
         function testWA() {
-            const number = localStorage.getItem('sllowly_wa_number') || document.getElementById('waNumber').value.replace(/\D/g, '');
-            if (!number) {
-                Swal.fire({
-                    icon: 'warning',
-                    title: 'Nomor Belum Diatur',
-                    text: 'Simpan nomor terlebih dahulu',
-                    confirmButtonColor: '#7C3AED'
-                });
-                return;
-            }
-            window.open(`https://wa.me/62${number}?text=Test%20notifikasi%20dari%20SllowlyStore`, '_blank');
+            const number = localStorage.getItem('cici_wa_number') || document.getElementById('waNumber').value.replace(/\D/g, '');
+            if (!number) { Swal.fire({ icon: 'warning', title: 'Nomor Belum Diatur', confirmButtonColor: '#EC4899' }); return; }
+            window.open(`https://wa.me/62${number}?text=Test%20notifikasi%20dari%20Cici%20Store`, '_blank');
         }
 
         function saveStoreSettings() {
-            Swal.fire({
-                icon: 'success',
-                title: 'Pengaturan Tersimpan',
-                confirmButtonColor: '#7C3AED',
-                timer: 1500,
-                showConfirmButton: false
-            });
+            Swal.fire({ icon: 'success', title: 'Pengaturan Tersimpan', confirmButtonColor: '#EC4899', timer: 1500, showConfirmButton: false });
         }
 
         function resetAllData() {
             Swal.fire({
-                icon: 'warning',
-                title: 'Reset Semua Data?',
-                text: 'Semua pesanan dan data akan dihapus. Ini tidak bisa dibatalkan!',
-                showCancelButton: true,
-                confirmButtonColor: '#EF4444',
-                cancelButtonColor: '#6B7280',
-                confirmButtonText: 'Ya, Reset Semua',
-                cancelButtonText: 'Batal'
+                icon: 'warning', title: 'Reset Semua Data?', text: 'Semua data akan dihapus!',
+                showCancelButton: true, confirmButtonColor: '#EF4444', cancelButtonColor: '#6B7280',
+                confirmButtonText: 'Ya, Reset', cancelButtonText: 'Batal'
             }).then((result) => {
                 if (result.isConfirmed) {
-                    localStorage.removeItem('sllowly_orders');
-                    localStorage.removeItem('sllowly_cart');
-                    initProducts(); // Reset products to default
+                    localStorage.removeItem('cici_orders');
+                    localStorage.removeItem('cici_cart');
+                    localStorage.removeItem('cici_products');
+                    initProducts();
                     updateDashboard();
-                    Swal.fire({
-                        icon: 'success',
-                        title: 'Data Direset',
-                        text: 'Semua data telah direset ke default',
-                        confirmButtonColor: '#7C3AED'
-                    });
+                    Swal.fire({ icon: 'success', title: 'Data Direset', confirmButtonColor: '#EC4899' });
                 }
             });
         }
 
+        function getStatusClass(status) {
+            return 'status-' + status.toLowerCase();
+        }
+
         function renderCharts(orders) {
-            // Orders by date chart
             const dates = {};
             orders.forEach(order => {
                 const date = new Date(order.date).toLocaleDateString('id-ID');
                 dates[date] = (dates[date] || 0) + 1;
             });
-
             const chartLabels = Object.keys(dates).slice(-7);
             const chartData = Object.values(dates).slice(-7);
 
             if (ordersChart) ordersChart.destroy();
-            const ctx1 = document.getElementById('ordersChart').getContext('2d');
-            ordersChart = new Chart(ctx1, {
+            ordersChart = new Chart(document.getElementById('ordersChart').getContext('2d'), {
                 type: 'line',
-                data: {
-                    labels: chartLabels,
-                    datasets: [{
-                        label: 'Pesanan',
-                        data: chartData,
-                        borderColor: '#8B5CF6',
-                        backgroundColor: 'rgba(139, 92, 246, 0.1)',
-                        fill: true,
-                        tension: 0.4
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    plugins: { legend: { display: false } },
-                    scales: {
-                        y: { beginAtZero: true, ticks: { stepSize: 1 } }
-                    }
-                }
+                data: { labels: chartLabels, datasets: [{ label: 'Pesanan', data: chartData, borderColor: '#EC4899', backgroundColor: 'rgba(236, 72, 153, 0.1)', fill: true, tension: 0.4 }] },
+                options: { responsive: true, plugins: { legend: { display: false } }, scales: { y: { beginAtZero: true, ticks: { stepSize: 1 } } } }
             });
 
-            // Status distribution chart
             const statusCounts = {
                 'Diproses': orders.filter(o => o.status === 'Diproses').length,
                 'Berhasil': orders.filter(o => o.status === 'Berhasil').length,
@@ -1061,22 +943,10 @@
             };
 
             if (statusChart) statusChart.destroy();
-            const ctx2 = document.getElementById('statusChart').getContext('2d');
-            statusChart = new Chart(ctx2, {
+            statusChart = new Chart(document.getElementById('statusChart').getContext('2d'), {
                 type: 'doughnut',
-                data: {
-                    labels: Object.keys(statusCounts),
-                    datasets: [{
-                        data: Object.values(statusCounts),
-                        backgroundColor: ['#F59E0B', '#10B981', '#EF4444']
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    plugins: {
-                        legend: { position: 'bottom' }
-                    }
-                }
+                data: { labels: Object.keys(statusCounts), datasets: [{ data: Object.values(statusCounts), backgroundColor: ['#F59E0B', '#10B981', '#EF4444'] }] },
+                options: { responsive: true, plugins: { legend: { position: 'bottom' } } }
             });
         }
     </script>
