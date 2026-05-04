@@ -46,6 +46,19 @@
             border-color: #EC4899;
             box-shadow: 0 0 0 3px rgba(236, 72, 153, 0.2);
         }
+        .input-field.error {
+            border-color: #EF4444;
+            background-color: #FEF2F2;
+        }
+        .error-message {
+            color: #EF4444;
+            font-size: 0.75rem;
+            margin-top: 0.25rem;
+            display: none;
+        }
+        .error-message.show {
+            display: block;
+        }
         .loading-overlay {
             position: fixed;
             inset: 0;
@@ -123,14 +136,17 @@
                     <div>
                         <label class="block text-sm font-medium mb-2">Nama Lengkap <span class="text-red-500">*</span></label>
                         <input type="text" id="customerName" class="input-field w-full px-4 py-3 rounded-xl border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 focus:outline-none" placeholder="Masukkan nama lengkap">
+                        <div class="error-message" id="nameError">Nama lengkap harus diisi</div>
                     </div>
                     <div>
                         <label class="block text-sm font-medium mb-2">Email <span class="text-red-500">*</span></label>
                         <input type="email" id="customerEmail" class="input-field w-full px-4 py-3 rounded-xl border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 focus:outline-none" placeholder="email@example.com">
+                        <div class="error-message" id="emailError">Masukkan alamat email yang valid (contoh: nama@domain.com)</div>
                     </div>
                     <div>
                         <label class="block text-sm font-medium mb-2">Nomor WhatsApp <span class="text-red-500">*</span></label>
                         <input type="tel" id="customerPhone" class="input-field w-full px-4 py-3 rounded-xl border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 focus:outline-none" placeholder="08xxxxxxxxxx">
+                        <div class="error-message" id="phoneError">Masukkan nomor WhatsApp yang valid (10-15 digit angka)</div>
                     </div>
                 </div>
             </div>
@@ -205,7 +221,153 @@
             initProducts();
             loadCartForCheckout();
             initDarkMode();
+            initValidationListeners();
         });
+
+        function initValidationListeners() {
+            // Real-time validation untuk email
+            const emailInput = document.getElementById('customerEmail');
+            emailInput.addEventListener('input', function() {
+                validateEmailRealTime();
+            });
+            emailInput.addEventListener('blur', function() {
+                validateEmailRealTime();
+            });
+
+            // Real-time validation untuk phone
+            const phoneInput = document.getElementById('customerPhone');
+            phoneInput.addEventListener('input', function() {
+                validatePhoneRealTime();
+            });
+            phoneInput.addEventListener('blur', function() {
+                validatePhoneRealTime();
+            });
+
+            // Real-time validation untuk name
+            const nameInput = document.getElementById('customerName');
+            nameInput.addEventListener('input', function() {
+                validateNameRealTime();
+            });
+            nameInput.addEventListener('blur', function() {
+                validateNameRealTime();
+            });
+        }
+
+        function validateEmailRealTime() {
+            const email = document.getElementById('customerEmail').value.trim();
+            const emailError = document.getElementById('emailError');
+            const emailField = document.getElementById('customerEmail');
+            
+            // Regex email yang valid dan sederhana
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            
+            if (email === '') {
+                emailError.classList.remove('show');
+                emailField.classList.remove('error');
+                return true;
+            }
+            
+            if (!emailRegex.test(email)) {
+                emailError.classList.add('show');
+                emailField.classList.add('error');
+                return false;
+            } else {
+                emailError.classList.remove('show');
+                emailField.classList.remove('error');
+                return true;
+            }
+        }
+
+        function validatePhoneRealTime() {
+            const phone = document.getElementById('customerPhone').value.trim();
+            const phoneError = document.getElementById('phoneError');
+            const phoneField = document.getElementById('customerPhone');
+            
+            // Hanya angka, 10-15 digit
+            const phoneRegex = /^[0-9]{10,15}$/;
+            const cleanPhone = phone.replace(/\\D/g, '');
+            
+            if (phone === '') {
+                phoneError.classList.remove('show');
+                phoneField.classList.remove('error');
+                return true;
+            }
+            
+            if (!phoneRegex.test(cleanPhone)) {
+                phoneError.classList.add('show');
+                phoneField.classList.add('error');
+                return false;
+            } else {
+                phoneError.classList.remove('show');
+                phoneField.classList.remove('error');
+                return true;
+            }
+        }
+
+        function validateNameRealTime() {
+            const name = document.getElementById('customerName').value.trim();
+            const nameError = document.getElementById('nameError');
+            const nameField = document.getElementById('customerName');
+            
+            if (name === '') {
+                nameError.classList.remove('show');
+                nameField.classList.remove('error');
+                return true;
+            }
+            
+            if (name.length < 2) {
+                nameError.classList.add('show');
+                nameField.classList.add('error');
+                return false;
+            } else {
+                nameError.classList.remove('show');
+                nameField.classList.remove('error');
+                return true;
+            }
+        }
+
+        function validateAllFields() {
+            const name = document.getElementById('customerName').value.trim();
+            const email = document.getElementById('customerEmail').value.trim();
+            const phone = document.getElementById('customerPhone').value.trim();
+            
+            let isValid = true;
+            
+            // Validasi nama
+            if (!name || name.length < 2) {
+                document.getElementById('nameError').classList.add('show');
+                document.getElementById('customerName').classList.add('error');
+                isValid = false;
+            } else {
+                document.getElementById('nameError').classList.remove('show');
+                document.getElementById('customerName').classList.remove('error');
+            }
+            
+            // Validasi email dengan regex yang benar
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!email || !emailRegex.test(email)) {
+                document.getElementById('emailError').classList.add('show');
+                document.getElementById('customerEmail').classList.add('error');
+                isValid = false;
+            } else {
+                document.getElementById('emailError').classList.remove('show');
+                document.getElementById('customerEmail').classList.remove('error');
+            }
+            
+            // Validasi phone
+            const phoneRegex = /^[0-9]{10,15}$/;
+            const cleanPhone = phone.replace(/\\D/g, '');
+            if (!phone || !phoneRegex.test(cleanPhone)) {
+                document.getElementById('phoneError').classList.add('show');
+                document.getElementById('customerPhone').classList.add('error');
+                isValid = false;
+            } else {
+                document.getElementById('phoneError').classList.remove('show');
+                document.getElementById('customerPhone').classList.remove('error');
+            }
+            
+            return isValid;
+        }
 
         function loadCartForCheckout() {
             const cart = JSON.parse(localStorage.getItem('cici_cart') || '[]');
@@ -257,39 +419,23 @@
         }
 
         function submitOrder() {
+            // Validasi semua field terlebih dahulu
+            if (!validateAllFields()) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Data Tidak Valid',
+                    html: 'Mohon periksa kembali data pemesan:<br>' +
+                          '- Nama lengkap minimal 2 karakter<br>' +
+                          '- Email harus valid (contoh: nama@domain.com)<br>' +
+                          '- Nomor WhatsApp 10-15 digit angka',
+                    confirmButtonColor: '#EC4899'
+                });
+                return;
+            }
+
             const name = document.getElementById('customerName').value.trim();
             const email = document.getElementById('customerEmail').value.trim();
             const phone = document.getElementById('customerPhone').value.trim();
-
-            if (!name || !email || !phone) {
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Data Belum Lengkap',
-                    text: 'Mohon lengkapi semua data pemesan',
-                    confirmButtonColor: '#EC4899'
-                });
-                return;
-            }
-
-            if (!/^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/.test(email)) {
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Email Tidak Valid',
-                    text: 'Mohon masukkan alamat email yang valid',
-                    confirmButtonColor: '#EC4899'
-                });
-                return;
-            }
-
-            if (!/^[0-9]{10,15}$/.test(phone.replace(/\\D/g, ''))) {
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Nomor Tidak Valid',
-                    text: 'Mohon masukkan nomor WhatsApp yang valid',
-                    confirmButtonColor: '#EC4899'
-                });
-                return;
-            }
 
             showLoading();
 
