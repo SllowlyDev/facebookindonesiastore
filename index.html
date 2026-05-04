@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SllowlyStore - Toko Digital Terpercaya</title>
+    <title>Cici Store - Toko Digital</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
@@ -15,9 +15,7 @@
                 extend: {
                     fontFamily: { sans: ['Inter', 'sans-serif'] },
                     colors: {
-                        primary: { DEFAULT: '#7C3AED', light: '#8B5CF6', dark: '#6B21A8' },
-                        glass: 'rgba(255, 255, 255, 0.08)',
-                        glassBorder: 'rgba(255, 255, 255, 0.18)',
+                        primary: { DEFAULT: '#EC4899', light: '#F472B6', dark: '#BE185D' },
                     }
                 }
             }
@@ -30,38 +28,32 @@
             background: rgba(255, 255, 255, 0.05);
             backdrop-filter: blur(16px);
             -webkit-backdrop-filter: blur(16px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-        .glass-dark {
-            background: rgba(17, 24, 39, 0.7);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            border: 1px solid rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(236, 72, 153, 0.1);
         }
         .gradient-text {
-            background: linear-gradient(135deg, #8B5CF6 0%, #A78BFA 50%, #C4B5FD 100%);
+            background: linear-gradient(135deg, #EC4899 0%, #F472B6 50%, #FBB6D0 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
         }
         .hero-gradient {
-            background: linear-gradient(135deg, #1e1b4b 0%, #312e81 25%, #4c1d95 50%, #5b21b6 75%, #7c3aed 100%);
+            background: linear-gradient(135deg, #1a0b1a 0%, #2d1b2d 25%, #3d1f3d 50%, #4a2040 75%, #5b2148 100%);
         }
         .card-hover {
             transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         }
         .card-hover:hover {
             transform: translateY(-8px) scale(1.02);
-            box-shadow: 0 25px 50px -12px rgba(139, 92, 246, 0.25);
+            box-shadow: 0 25px 50px -12px rgba(236, 72, 153, 0.25);
         }
         .btn-primary {
-            background: linear-gradient(135deg, #7C3AED 0%, #8B5CF6 100%);
+            background: linear-gradient(135deg, #EC4899 0%, #F472B6 100%);
             transition: all 0.3s ease;
         }
         .btn-primary:hover {
-            background: linear-gradient(135deg, #6B21A8 0%, #7C3AED 100%);
+            background: linear-gradient(135deg, #BE185D 0%, #EC4899 100%);
             transform: translateY(-2px);
-            box-shadow: 0 10px 30px -10px rgba(124, 58, 237, 0.5);
+            box-shadow: 0 10px 30px -10px rgba(236, 72, 153, 0.5);
         }
         .floating {
             animation: float 6s ease-in-out infinite;
@@ -70,22 +62,10 @@
             0%, 100% { transform: translateY(0px); }
             50% { transform: translateY(-20px); }
         }
-        .glow {
-            box-shadow: 0 0 20px rgba(139, 92, 246, 0.3);
-        }
-        .shimmer {
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
-            background-size: 200% 100%;
-            animation: shimmer 2s infinite;
-        }
-        @keyframes shimmer {
-            0% { background-position: -200% 0; }
-            100% { background-position: 200% 0; }
-        }
         .blob {
             position: absolute;
             filter: blur(80px);
-            opacity: 0.4;
+            opacity: 0.3;
             animation: blob 7s infinite;
         }
         @keyframes blob {
@@ -106,12 +86,6 @@
         }
         .product-card:hover .product-img {
             transform: scale(1.1) rotate(2deg);
-        }
-        .badge-popular {
-            background: linear-gradient(135deg, #F59E0B, #D97706);
-        }
-        .badge-new {
-            background: linear-gradient(135deg, #10B981, #059669);
         }
         .nav-blur {
             backdrop-filter: blur(20px);
@@ -143,12 +117,23 @@
         .spinner {
             width: 50px;
             height: 50px;
-            border: 3px solid rgba(139, 92, 246, 0.3);
-            border-top-color: #8B5CF6;
+            border: 3px solid rgba(236, 72, 153, 0.3);
+            border-top-color: #EC4899;
             border-radius: 50%;
             animation: spin 1s linear infinite;
         }
         @keyframes spin { to { transform: rotate(360deg); } }
+        .notification-toast {
+            animation: slideIn 0.4s ease, fadeOut 0.4s ease 3.6s;
+        }
+        @keyframes slideIn {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+        @keyframes fadeOut {
+            from { opacity: 1; }
+            to { opacity: 0; }
+        }
     </style>
 </head>
 <body class="bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-white transition-colors duration-300">
@@ -161,55 +146,50 @@
         </div>
     </div>
 
+    <!-- Live Order Notifications -->
+    <div id="orderNotifications" class="fixed top-20 right-4 z-40 space-y-2 pointer-events-none max-w-xs"></div>
+
     <!-- Navigation -->
-    <nav id="navbar" class="fixed w-full z-50 transition-all duration-300 bg-white/80 dark:bg-gray-900/80 nav-blur border-b border-gray-200 dark:border-gray-800">
+    <nav id="navbar" class="fixed w-full z-50 transition-all duration-300 bg-white/80 dark:bg-gray-900/80 nav-blur border-b border-pink-200/20 dark:border-pink-500/10">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center h-16">
-                <!-- Logo -->
                 <a href="index.html" class="flex items-center space-x-3 group">
-                    <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-primary to-primary-light flex items-center justify-center shadow-lg group-hover:shadow-primary/50 transition-all">
-                        <i class="fas fa-bolt text-white text-lg"></i>
+                    <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-pink-500 to-pink-600 flex items-center justify-center shadow-lg shadow-pink-500/30 group-hover:shadow-pink-500/50 transition-all">
+                        <i class="fas fa-heart text-white text-lg"></i>
                     </div>
-                    <span class="text-xl font-bold gradient-text">SllowlyStore</span>
+                    <span class="text-xl font-bold gradient-text">Cici Store</span>
                 </a>
 
-                <!-- Desktop Menu -->
                 <div class="hidden md:flex items-center space-x-8">
-                    <a href="#products" class="text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-primary-light transition-colors font-medium">Produk</a>
-                    <a href="invoice-status.html" class="text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-primary-light transition-colors font-medium">Cek Pesanan</a>
-                    <a href="admin.html" class="text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-primary-light transition-colors font-medium">Admin</a>
-
-                    <!-- Cart Button -->
-                    <button onclick="openCart()" class="relative p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
-                        <i class="fas fa-shopping-cart text-gray-600 dark:text-gray-300 text-lg"></i>
-                        <span id="cartCount" class="cart-badge absolute -top-1 -right-1 w-5 h-5 bg-primary text-white text-xs rounded-full flex items-center justify-center font-bold hidden">0</span>
+                    <a href="#products" class="text-gray-600 dark:text-gray-300 hover:text-pink-500 dark:hover:text-pink-400 transition-colors font-medium">Produk</a>
+                    <a href="invoice-status.html" class="text-gray-600 dark:text-gray-300 hover:text-pink-500 dark:hover:text-pink-400 transition-colors font-medium">Cek Pesanan</a>
+                    <a href="admin.html" class="text-gray-600 dark:text-gray-300 hover:text-pink-500 dark:hover:text-pink-400 transition-colors font-medium">Admin</a>
+                    <button onclick="openCart()" class="relative p-2 rounded-full hover:bg-pink-50 dark:hover:bg-pink-500/10 transition-colors">
+                        <i class="fas fa-shopping-bag text-gray-600 dark:text-gray-300 text-lg"></i>
+                        <span id="cartCount" class="cart-badge absolute -top-1 -right-1 w-5 h-5 bg-pink-500 text-white text-xs rounded-full flex items-center justify-center font-bold hidden">0</span>
                     </button>
-
-                    <!-- Dark Mode Toggle -->
-                    <button onclick="toggleDarkMode()" class="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
+                    <button onclick="toggleDarkMode()" class="p-2 rounded-full hover:bg-pink-50 dark:hover:bg-pink-500/10 transition-colors">
                         <i id="darkModeIcon" class="fas fa-moon text-gray-600 dark:text-yellow-400 text-lg"></i>
                     </button>
                 </div>
 
-                <!-- Mobile Menu Button -->
                 <div class="md:hidden flex items-center space-x-4">
                     <button onclick="openCart()" class="relative p-2">
-                        <i class="fas fa-shopping-cart text-gray-600 dark:text-gray-300 text-lg"></i>
-                        <span id="cartCountMobile" class="cart-badge absolute -top-1 -right-1 w-5 h-5 bg-primary text-white text-xs rounded-full flex items-center justify-center font-bold hidden">0</span>
+                        <i class="fas fa-shopping-bag text-gray-600 dark:text-gray-300 text-lg"></i>
+                        <span id="cartCountMobile" class="cart-badge absolute -top-1 -right-1 w-5 h-5 bg-pink-500 text-white text-xs rounded-full flex items-center justify-center font-bold hidden">0</span>
                     </button>
-                    <button onclick="toggleMobileMenu()" class="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800">
+                    <button onclick="toggleMobileMenu()" class="p-2 rounded-lg hover:bg-pink-50 dark:hover:bg-pink-500/10">
                         <i class="fas fa-bars text-gray-600 dark:text-gray-300 text-xl"></i>
                     </button>
                 </div>
             </div>
         </div>
 
-        <!-- Mobile Menu -->
-        <div id="mobileMenu" class="md:hidden hidden bg-white dark:bg-gray-900 border-t border-gray-200 dark:border-gray-800">
+        <div id="mobileMenu" class="md:hidden hidden bg-white dark:bg-gray-900 border-t border-pink-200/20 dark:border-pink-500/10">
             <div class="px-4 py-3 space-y-3">
-                <a href="#products" class="block py-2 text-gray-600 dark:text-gray-300 hover:text-primary">Produk</a>
-                <a href="invoice-status.html" class="block py-2 text-gray-600 dark:text-gray-300 hover:text-primary">Cek Pesanan</a>
-                <a href="admin.html" class="block py-2 text-gray-600 dark:text-gray-300 hover:text-primary">Admin</a>
+                <a href="#products" class="block py-2 text-gray-600 dark:text-gray-300 hover:text-pink-500">Produk</a>
+                <a href="invoice-status.html" class="block py-2 text-gray-600 dark:text-gray-300 hover:text-pink-500">Cek Pesanan</a>
+                <a href="admin.html" class="block py-2 text-gray-600 dark:text-gray-300 hover:text-pink-500">Admin</a>
                 <button onclick="toggleDarkMode()" class="flex items-center space-x-2 py-2 text-gray-600 dark:text-gray-300">
                     <i id="darkModeIconMobile" class="fas fa-moon"></i>
                     <span>Dark Mode</span>
@@ -218,36 +198,30 @@
         </div>
     </nav>
 
-    <!-- Live Order Notifications -->
-    <div id="orderNotifications" class="fixed top-20 right-4 z-40 space-y-2 pointer-events-none">
-        <!-- Notifications injected here -->
-    </div>
-
     <!-- Hero Section -->
     <section class="relative min-h-screen flex items-center justify-center overflow-hidden hero-gradient">
-        <!-- Animated Blobs -->
-        <div class="blob w-96 h-96 bg-purple-500 rounded-full top-0 left-0"></div>
-        <div class="blob w-80 h-80 bg-indigo-500 rounded-full bottom-0 right-0 animation-delay-2000"></div>
-        <div class="blob w-72 h-72 bg-violet-400 rounded-full top-1/2 left-1/2 animation-delay-4000"></div>
+        <div class="blob w-96 h-96 bg-pink-600 rounded-full top-0 left-0"></div>
+        <div class="blob w-80 h-80 bg-pink-400 rounded-full bottom-0 right-0 animation-delay-2000"></div>
+        <div class="blob w-72 h-72 bg-pink-300 rounded-full top-1/2 left-1/2 animation-delay-4000"></div>
 
         <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <div class="floating mb-8">
-                <div class="inline-flex items-center px-4 py-2 rounded-full glass text-white text-sm font-medium mb-6 border border-white/20">
+                <div class="inline-flex items-center px-4 py-2 rounded-full glass text-white text-sm font-medium mb-6 border border-pink-500/20">
                     <span class="w-2 h-2 bg-green-400 rounded-full mr-2 animate-pulse"></span>
-                    Toko Digital Terpercaya
+                    50+ Orang Sudah Berbelanja Hari Ini
                 </div>
             </div>
-
+            
             <h1 class="text-5xl md:text-7xl font-bold text-white mb-6 leading-tight">
-                Solusi Digital <br>
-                <span class="bg-gradient-to-r from-purple-300 via-violet-200 to-indigo-300 bg-clip-text text-transparent">Untuk Bisnis Anda</span>
+                Cici Store <br>
+                <span class="bg-gradient-to-r from-pink-300 via-pink-200 to-pink-100 bg-clip-text text-transparent">Toko Digital Terpercaya</span>
             </h1>
-
+            
             <p class="text-xl text-gray-300 mb-10 max-w-2xl mx-auto leading-relaxed">
-                Jual berbagai akun dan tools digital berkualitas dengan harga terjangkau. 
+                Jual berbagai akun digital berkualitas dengan harga terjangkau. 
                 Proses cepat, aman, dan terpercaya.
             </p>
-
+            
             <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
                 <a href="#products" class="btn-primary px-8 py-4 rounded-full text-white font-semibold text-lg shadow-lg hover:shadow-xl transition-all flex items-center space-x-2">
                     <span>Lihat Produk</span>
@@ -258,14 +232,13 @@
                 </a>
             </div>
 
-            <!-- Stats -->
             <div class="mt-16 grid grid-cols-3 gap-8 max-w-lg mx-auto">
                 <div class="glass rounded-2xl p-4">
                     <div class="text-3xl font-bold text-white" id="statProducts">7+</div>
                     <div class="text-sm text-gray-300">Produk</div>
                 </div>
                 <div class="glass rounded-2xl p-4">
-                    <div class="text-3xl font-bold text-white" id="statCustomers">500+</div>
+                    <div class="text-3xl font-bold text-white" id="statCustomers">1.2K+</div>
                     <div class="text-sm text-gray-300">Pelanggan</div>
                 </div>
                 <div class="glass rounded-2xl p-4">
@@ -275,7 +248,6 @@
             </div>
         </div>
 
-        <!-- Scroll Indicator -->
         <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 scroll-indicator">
             <a href="#products" class="text-white/60 hover:text-white transition-colors">
                 <i class="fas fa-chevron-down text-2xl"></i>
@@ -286,36 +258,24 @@
     <!-- Products Section -->
     <section id="products" class="py-20 bg-gray-50 dark:bg-gray-900">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <!-- Section Header -->
             <div class="text-center mb-16">
                 <h2 class="text-4xl font-bold mb-4">
                     <span class="gradient-text">Produk Unggulan</span>
                 </h2>
                 <p class="text-gray-600 dark:text-gray-400 text-lg max-w-2xl mx-auto">
-                    Pilih produk digital terbaik untuk kebutuhan Anda. Semua produk telah melalui quality control.
+                    Pilih produk digital terbaik untuk kebutuhan Anda.
                 </p>
             </div>
 
-            <!-- Filter Buttons -->
             <div class="flex flex-wrap justify-center gap-3 mb-12">
-                <button onclick="filterProducts('all')" class="filter-btn active px-6 py-2 rounded-full bg-primary text-white font-medium transition-all hover:shadow-lg" data-filter="all">
-                    Semua
-                </button>
-                <button onclick="filterProducts('facebook')" class="filter-btn px-6 py-2 rounded-full bg-gray-200 dark:bg-gray-800 text-gray-700 dark:text-gray-300 font-medium transition-all hover:bg-primary hover:text-white" data-filter="facebook">
-                    <i class="fab fa-facebook mr-2"></i>Facebook
-                </button>
-                <button onclick="filterProducts('gmail')" class="filter-btn px-6 py-2 rounded-full bg-gray-200 dark:bg-gray-800 text-gray-700 dark:text-gray-300 font-medium transition-all hover:bg-primary hover:text-white" data-filter="gmail">
-                    <i class="fab fa-google mr-2"></i>Gmail
-                </button>
-                <button onclick="filterProducts('tools')" class="filter-btn px-6 py-2 rounded-full bg-gray-200 dark:bg-gray-800 text-gray-700 dark:text-gray-300 font-medium transition-all hover:bg-primary hover:text-white" data-filter="tools">
-                    <i class="fas fa-tools mr-2"></i>Tools
-                </button>
+                <button onclick="filterProducts('all')" class="filter-btn active px-6 py-2 rounded-full bg-pink-500 text-white font-medium transition-all hover:shadow-lg" data-filter="all">Semua</button>
+                <button onclick="filterProducts('michat')" class="filter-btn px-6 py-2 rounded-full bg-gray-200 dark:bg-gray-800 text-gray-700 dark:text-gray-300 font-medium transition-all hover:bg-pink-500 hover:text-white" data-filter="michat">Michat</button>
+                <button onclick="filterProducts('gmail')" class="filter-btn px-6 py-2 rounded-full bg-gray-200 dark:bg-gray-800 text-gray-700 dark:text-gray-300 font-medium transition-all hover:bg-pink-500 hover:text-white" data-filter="gmail">Gmail</button>
+                <button onclick="filterProducts('whatsapp')" class="filter-btn px-6 py-2 rounded-full bg-gray-200 dark:bg-gray-800 text-gray-700 dark:text-gray-300 font-medium transition-all hover:bg-pink-500 hover:text-white" data-filter="whatsapp">WhatsApp</button>
+                <button onclick="filterProducts('youtube')" class="filter-btn px-6 py-2 rounded-full bg-gray-200 dark:bg-gray-800 text-gray-700 dark:text-gray-300 font-medium transition-all hover:bg-pink-500 hover:text-white" data-filter="youtube">YouTube</button>
             </div>
 
-            <!-- Products Grid -->
-            <div id="productsGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <!-- Products will be injected here by JavaScript -->
-            </div>
+            <div id="productsGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"></div>
         </div>
     </section>
 
@@ -324,58 +284,52 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-16">
                 <h2 class="text-4xl font-bold mb-4">
-                    <span class="gradient-text">Mengapa Memilih Kami?</span>
+                    <span class="gradient-text">Kenapa Pilih Cici Store?</span>
                 </h2>
             </div>
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <div class="glass-dark rounded-2xl p-8 text-center card-hover">
-                    <div class="w-16 h-16 mx-auto mb-6 rounded-2xl bg-gradient-to-br from-primary to-primary-light flex items-center justify-center">
+                <div class="glass rounded-2xl p-8 text-center card-hover bg-white/5 dark:bg-gray-800/50">
+                    <div class="w-16 h-16 mx-auto mb-6 rounded-2xl bg-gradient-to-br from-pink-500 to-pink-600 flex items-center justify-center">
                         <i class="fas fa-shield-alt text-white text-2xl"></i>
                     </div>
                     <h3 class="text-xl font-bold mb-3">Aman & Terpercaya</h3>
-                    <p class="text-gray-400">Semua transaksi dilindungi dengan sistem validasi bukti transfer dan garansi produk.</p>
+                    <p class="text-gray-400">Garansi verifikasi untuk setiap produk yang kami jual.</p>
                 </div>
-                <div class="glass-dark rounded-2xl p-8 text-center card-hover">
-                    <div class="w-16 h-16 mx-auto mb-6 rounded-2xl bg-gradient-to-br from-green-500 to-emerald-600 flex items-center justify-center">
+                <div class="glass rounded-2xl p-8 text-center card-hover bg-white/5 dark:bg-gray-800/50">
+                    <div class="w-16 h-16 mx-auto mb-6 rounded-2xl bg-gradient-to-br from-pink-400 to-pink-500 flex items-center justify-center">
                         <i class="fas fa-bolt text-white text-2xl"></i>
                     </div>
                     <h3 class="text-xl font-bold mb-3">Proses Cepat</h3>
-                    <p class="text-gray-400">Pesanan diproses dalam hitungan menit setelah pembayaran dikonfirmasi admin.</p>
+                    <p class="text-gray-400">Pesanan diproses dalam hitungan menit setelah pembayaran.</p>
                 </div>
-                <div class="glass-dark rounded-2xl p-8 text-center card-hover">
-                    <div class="w-16 h-16 mx-auto mb-6 rounded-2xl bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center">
+                <div class="glass rounded-2xl p-8 text-center card-hover bg-white/5 dark:bg-gray-800/50">
+                    <div class="w-16 h-16 mx-auto mb-6 rounded-2xl bg-gradient-to-br from-pink-300 to-pink-400 flex items-center justify-center">
                         <i class="fas fa-headset text-white text-2xl"></i>
                     </div>
                     <h3 class="text-xl font-bold mb-3">Support 24/7</h3>
-                    <p class="text-gray-400">Tim support siap membantu kapan saja melalui WhatsApp dengan respon cepat.</p>
+                    <p class="text-gray-400">Tim support siap membantu kapan saja via WhatsApp.</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Footer -->
-    <footer class="bg-gray-900 text-white py-6 border-t border-gray-800">
+    <!-- Compact Footer -->
+    <footer class="bg-gray-900 text-white py-4 border-t border-pink-500/10">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex flex-col md:flex-row justify-between items-center gap-4">
-                <div class="flex items-center space-x-3">
-                    <div class="w-8 h-8 rounded-lg bg-gradient-to-br from-primary to-primary-light flex items-center justify-center">
-                        <i class="fas fa-bolt text-white text-sm"></i>
-                    </div>
-                    <span class="text-lg font-bold">SllowlyStore</span>
+            <div class="flex flex-col md:flex-row justify-between items-center gap-3 text-sm">
+                <div class="flex items-center space-x-2">
+                    <i class="fas fa-heart text-pink-500"></i>
+                    <span class="font-bold">Cici Store</span>
                 </div>
-                <div class="flex items-center space-x-6 text-sm text-gray-400">
-                    <a href="#" onclick="window.open('https://wa.me/62' + getAdminWhatsApp(), '_blank'); return false;" class="flex items-center space-x-2 hover:text-green-400 transition-colors">
-                        <i class="fab fa-whatsapp"></i>
-                        <span id="footerWANumber">0821-2382-9824</span>
+                <div class="flex items-center space-x-4 text-gray-400">
+                    <a href="#" onclick="window.open('https://wa.me/62' + getAdminWhatsApp(), '_blank'); return false;" class="hover:text-pink-400 transition-colors">
+                        <i class="fab fa-whatsapp mr-1"></i>WhatsApp
                     </a>
                     <span class="hidden sm:inline">|</span>
-                    <span class="flex items-center space-x-2">
-                        <i class="fas fa-clock text-yellow-500"></i>
-                        <span>24 Jam Online</span>
-                    </span>
+                    <span><i class="fas fa-clock text-pink-500 mr-1"></i>24 Jam</span>
                 </div>
-                <div class="text-sm text-gray-500">
-                     2026 SllowlyStore
+                <div class="text-gray-500 text-xs">
+                     2026 Cici Store
                 </div>
             </div>
         </div>
@@ -386,22 +340,20 @@
         <div class="absolute inset-0 bg-black/60 backdrop-blur-sm" onclick="closeCart()"></div>
         <div class="absolute right-0 top-0 h-full w-full max-w-md bg-white dark:bg-gray-900 shadow-2xl transform transition-transform duration-300 translate-x-full" id="cartContent">
             <div class="flex flex-col h-full">
-                <div class="flex items-center justify-between p-6 border-b border-gray-200 dark:border-gray-800">
+                <div class="flex items-center justify-between p-6 border-b border-pink-200/20 dark:border-pink-500/10">
                     <h2 class="text-xl font-bold flex items-center space-x-2">
-                        <i class="fas fa-shopping-cart text-primary"></i>
+                        <i class="fas fa-shopping-bag text-pink-500"></i>
                         <span>Keranjang</span>
                     </h2>
-                    <button onclick="closeCart()" class="w-10 h-10 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 flex items-center justify-center transition-colors">
+                    <button onclick="closeCart()" class="w-10 h-10 rounded-full hover:bg-pink-50 dark:hover:bg-pink-500/10 flex items-center justify-center transition-colors">
                         <i class="fas fa-times text-gray-500"></i>
                     </button>
                 </div>
-                <div id="cartItems" class="flex-1 overflow-y-auto p-6 space-y-4">
-                    <!-- Cart items injected here -->
-                </div>
-                <div class="p-6 border-t border-gray-200 dark:border-gray-800 bg-gray-50 dark:bg-gray-800/50">
+                <div id="cartItems" class="flex-1 overflow-y-auto p-6 space-y-4"></div>
+                <div class="p-6 border-t border-pink-200/20 dark:border-pink-500/10 bg-gray-50 dark:bg-gray-800/50">
                     <div class="flex justify-between items-center mb-4">
                         <span class="text-gray-600 dark:text-gray-400">Total</span>
-                        <span id="cartTotal" class="text-2xl font-bold text-primary">Rp0</span>
+                        <span id="cartTotal" class="text-2xl font-bold text-pink-500">Rp0</span>
                     </div>
                     <button onclick="goToCheckout()" class="w-full btn-primary py-3 rounded-xl text-white font-semibold shadow-lg hover:shadow-xl transition-all">
                         Checkout Sekarang
@@ -413,67 +365,58 @@
 
     <script src="script.js"></script>
     <script>
-        // Order notification messages
-        const orderMessages = [
-            { name: 'Ahmad', product: 'Tools Auto Create Facebook', time: '2 menit lalu' },
-            { name: 'Budi', product: 'Akun Facebook Fresh', time: '5 menit lalu' },
-            { name: 'Citra', product: 'Akun Gmail Fresh', time: '8 menit lalu' },
-            { name: 'Dewi', product: 'Akun Facebook Medium', time: '12 menit lalu' },
-            { name: 'Eko', product: 'Akun Facebook Mentah', time: '15 menit lalu' },
-            { name: 'Fani', product: 'Akun Gmail Bekas', time: '18 menit lalu' },
-            { name: 'Gita', product: 'Tools Auto Create Facebook', time: '21 menit lalu' },
-            { name: 'Hadi', product: 'Akun Facebook Fresh Low', time: '25 menit lalu' }
+        // 50+ Buyer Names for Notifications
+        const buyerNames = [
+            'Ahmad', 'Budi', 'Citra', 'Dewi', 'Eko', 'Fani', 'Gita', 'Hadi', 'Indah', 'Joko',
+            'Kartika', 'Lina', 'Maman', 'Nina', 'Oka', 'Putri', 'Qori', 'Rina', 'Sari', 'Tono',
+            'Umi', 'Vina', 'Wawan', 'Xena', 'Yanti', 'Zainal', 'Adi', 'Bayu', 'Cici', 'Dani',
+            'Eka', 'Fajar', 'Gita', 'Hani', 'Irfan', 'Jaya', 'Kiki', 'Lutfi', 'Maya', 'Nanda',
+            'Opik', 'Pandu', 'Qonita', 'Rudi', 'Sinta', 'Tari', 'Udin', 'Vera', 'Wati', 'Yusuf',
+            'Zara', 'Andi', 'Bella', 'Caca', 'Dedi', 'Elisa', 'Ferdi', 'Gisel', 'Hendra', 'Intan'
         ];
+
+        const buyerProducts = [
+            'Michat Fresh 1 Hari', 'Michat Fresh Permanen', 'Gmail Fresh 1 Hari',
+            'Gmail Fresh Permanen', 'WhatsApp Fresh Indonesia', 'WhatsApp Fresh Luar Negeri',
+            'YouTube Premium 1 Bulan'
+        ];
+
+        const timeAgo = ['baru saja', '1 menit lalu', '2 menit lalu', '3 menit lalu', '5 menit lalu'];
 
         function showOrderNotification() {
             const container = document.getElementById('orderNotifications');
             if (!container) return;
-
-            const msg = orderMessages[Math.floor(Math.random() * orderMessages.length)];
+            
+            const name = buyerNames[Math.floor(Math.random() * buyerNames.length)];
+            const product = buyerProducts[Math.floor(Math.random() * buyerProducts.length)];
+            const time = timeAgo[Math.floor(Math.random() * timeAgo.length)];
+            
             const notif = document.createElement('div');
-            notif.className = 'bg-white dark:bg-gray-800 rounded-xl shadow-lg border border-gray-200 dark:border-gray-700 p-3 flex items-center space-x-3 transform translate-x-full opacity-0 transition-all duration-500 pointer-events-auto max-w-xs';
+            notif.className = 'notification-toast bg-white dark:bg-gray-800 rounded-xl shadow-lg border border-pink-200/30 dark:border-pink-500/20 p-3 flex items-center space-x-3 pointer-events-auto';
             notif.innerHTML = `
-                <div class="w-10 h-10 rounded-full bg-gradient-to-br from-green-400 to-green-600 flex items-center justify-center flex-shrink-0">
+                <div class="w-10 h-10 rounded-full bg-gradient-to-br from-pink-400 to-pink-600 flex items-center justify-center flex-shrink-0">
                     <i class="fas fa-check text-white text-sm"></i>
                 </div>
                 <div class="flex-1 min-w-0">
-                    <p class="text-sm font-semibold text-gray-900 dark:text-white truncate">${msg.name}</p>
-                    <p class="text-xs text-gray-500">Berhasil order ${msg.product}</p>
-                    <p class="text-xs text-gray-400">${msg.time}</p>
+                    <p class="text-sm font-semibold text-gray-900 dark:text-white">${name}</p>
+                    <p class="text-xs text-gray-500">Beli ${product}</p>
+                    <p class="text-xs text-pink-500">${time}</p>
                 </div>
             `;
-
+            
             container.appendChild(notif);
-
-            // Animate in
-            setTimeout(() => {
-                notif.classList.remove('translate-x-full', 'opacity-0');
-            }, 100);
-
-            // Remove after 4 seconds
-            setTimeout(() => {
-                notif.classList.add('translate-x-full', 'opacity-0');
-                setTimeout(() => {
-                    notif.remove();
-                }, 500);
-            }, 4000);
+            setTimeout(() => notif.remove(), 4000);
         }
 
-        // Show notifications periodically
         function startOrderNotifications() {
-            // Show first notification after 3 seconds
             setTimeout(() => {
                 showOrderNotification();
-                // Then every 8-15 seconds
                 setInterval(() => {
-                    if (Math.random() > 0.3) { // 70% chance to show
-                        showOrderNotification();
-                    }
-                }, 8000 + Math.random() * 7000);
-            }, 3000);
+                    if (Math.random() > 0.2) showOrderNotification();
+                }, 5000 + Math.random() * 5000);
+            }, 2000);
         }
 
-        // Initialize products on page load
         document.addEventListener('DOMContentLoaded', function() {
             initProducts();
             renderProducts();
@@ -481,16 +424,8 @@
             initDarkMode();
             animateStats();
             startOrderNotifications();
-
-            // Update footer WA number
-            const waNum = getAdminWhatsApp();
-            const footerEl = document.getElementById('footerWANumber');
-            if (footerEl && waNum) {
-                footerEl.textContent = '0' + waNum;
-            }
         });
 
-        // Animate stats
         function animateStats() {
             const stats = document.querySelectorAll('[id^="stat"]');
             stats.forEach(stat => {
@@ -500,44 +435,38 @@
                 const timer = setInterval(() => {
                     current += increment;
                     if (current >= target) {
-                        stat.textContent = target + (stat.id === 'statProducts' ? '+' : '+');
+                        stat.textContent = stat.textContent;
                         clearInterval(timer);
                     } else {
-                        stat.textContent = Math.floor(current);
+                        stat.textContent = Math.floor(current) + (stat.id === 'statProducts' ? '+' : '+');
                     }
                 }, 30);
             });
         }
 
-        // Filter products
         function filterProducts(category) {
             const buttons = document.querySelectorAll('.filter-btn');
             buttons.forEach(btn => {
                 if (btn.dataset.filter === category) {
                     btn.classList.remove('bg-gray-200', 'dark:bg-gray-800', 'text-gray-700', 'dark:text-gray-300');
-                    btn.classList.add('bg-primary', 'text-white');
+                    btn.classList.add('bg-pink-500', 'text-white');
                 } else {
                     btn.classList.add('bg-gray-200', 'dark:bg-gray-800', 'text-gray-700', 'dark:text-gray-300');
-                    btn.classList.remove('bg-primary', 'text-white');
+                    btn.classList.remove('bg-pink-500', 'text-white');
                 }
             });
             renderProducts(category);
         }
 
-        // Mobile menu
         function toggleMobileMenu() {
             const menu = document.getElementById('mobileMenu');
             menu.classList.toggle('hidden');
         }
 
-        // Navbar scroll effect
         window.addEventListener('scroll', () => {
             const navbar = document.getElementById('navbar');
-            if (window.scrollY > 50) {
-                navbar.classList.add('shadow-lg');
-            } else {
-                navbar.classList.remove('shadow-lg');
-            }
+            if (window.scrollY > 50) navbar.classList.add('shadow-lg');
+            else navbar.classList.remove('shadow-lg');
         });
     </script>
 </body>
